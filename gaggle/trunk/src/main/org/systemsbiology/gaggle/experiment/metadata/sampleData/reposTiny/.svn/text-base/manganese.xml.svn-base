@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<experiment name="manganese concentrations" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:metals:manganese'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/manganese.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/manganese.lambda </uri>
+  </dataset>
+
+  <condition alias='Mn_1_vs_C.sig'>
+    <variable name='concentration' value='800' units='micromolar'/>
+  </condition>
+
+  <condition alias='Mn_2_vs_C.sig'>
+    <variable name='concentration' value='1000' units='micromolar'/>
+  </condition>
+
+  <condition alias='Mn_3_vs_C.sig'>
+    <variable name='concentration' value='1500' units='micromolar'/>
+  </condition>
+
+ </experiment>

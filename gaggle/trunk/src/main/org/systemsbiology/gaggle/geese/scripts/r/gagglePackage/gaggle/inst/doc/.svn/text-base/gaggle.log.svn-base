@@ -1,0 +1,299 @@
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2006.3.9)  2 MAY 2006 11:45
+**/Users/mpshannon/svnWork/gaggle/org/systemsbiology/gaggle/geese/scripts/r/gag
+glePackage/gaggle/inst/doc/gaggle.tex
+
+(/Users/mpshannon/svnWork/gaggle/org/systemsbiology/gaggle/geese/scripts/r/gagg
+lePackage/gaggle/inst/doc/gaggle.tex{/sw/share/texmf/pdftex/config/pdftex.cfg}
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+(/sw/share/texmf/tex/latex/base/article.cls
+Document Class: article 2001/04/21 v1.4e Standard LaTeX document class
+(/sw/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/sw/share/texmf/tex/latex/psnfss/times.sty
+Package: times 2002/09/08 PSNFSS-v9.0a (SPQR) 
+)
+(/sw/share/texmf/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2003/01/22 v6.73n Hypertext links for LaTeX
+
+(/sw/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+\@linkdim=\dimen103
+\Hy@linkcounter=\count87
+\Hy@pagecounter=\count88
+
+(/sw/share/texmf/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2003/01/22 v6.73n Hyperref: PDFDocEncoding definition (HO)
+)
+(/sw/share/texmf/tex/latex/config/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive and teTeX
+)
+Package hyperref Info: Hyper figures OFF on input line 1792.
+Package hyperref Info: Link nesting OFF on input line 1797.
+Package hyperref Info: Hyper index ON on input line 1800.
+Package hyperref Info: Plain pages ON on input line 1805.
+Package hyperref Info: Backreferencing OFF on input line 1812.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 1916.
+(/sw/share/texmf/tex/latex/misc/url.sty
+\Urlmuskip=\muskip10
+Package: url 1999/03/28  ver 1.5x  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 2055.
+\Fld@menulength=\count89
+\Field@Width=\dimen104
+\Fld@charsize=\dimen105
+\Choice@toks=\toks15
+\Field@toks=\toks16
+Package hyperref Info: Hyper figures OFF on input line 2513.
+Package hyperref Info: Link nesting OFF on input line 2518.
+Package hyperref Info: Hyper index ON on input line 2521.
+Package hyperref Info: backreferencing OFF on input line 2528.
+Package hyperref Info: Link coloring OFF on input line 2533.
+\c@Item=\count90
+\c@Hfootnote=\count91
+)
+*hyperref using default driver hpdftex*
+(/sw/share/texmf/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2003/01/22 v6.73n Hyperref driver for pdfTeX
+
+(/sw/share/texmf/tex/latex/psnfss/pifont.sty
+Package: pifont 2002/09/08 PSNFSS-v9.0a Pi font support (SPQR) 
+LaTeX Font Info:    Try loading font information for U+pzd on input line 62.
+
+(/sw/share/texmf/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Try loading font information for U+psy on input line 63.
+
+(/sw/share/texmf/tex/latex/psnfss/upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+))
+\Fld@listcount=\count92
+\@outlinefile=\write3
+)
+(/sw/share/texmf/tex/latex/natbib/natbib.sty
+Package: natbib 2000/07/24 7.0a (PWD)
+\bibhang=\skip43
+\bibsep=\skip44
+LaTeX Info: Redefining \cite on input line 508.
+\c@NAT@ctr=\count93
+)
+(/sw/share/texmf/tex/latex/misc/comment.sty
+\CommentStream=\write4
+ Excluding comment 'comment')
+(/Library/Frameworks/R.framework/Resources/share/texmf/Sweave.sty
+
+LaTeX Warning: You have requested package `/Library/Frameworks/R.framework/Reso
+urces/share/texmf/Sweave',
+               but the package provides `Sweave'.
+
+Package: Sweave 
+(/sw/share/texmf/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/sw/share/texmf/tex/latex/base/fontenc.sty
+Package: fontenc 2001/06/05 v1.94 Standard LaTeX package
+
+(/sw/share/texmf/tex/latex/base/t1enc.def
+File: t1enc.def 2001/06/05 v1.94 Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 38.
+))
+(/sw/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/sw/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/sw/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/sw/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2001/08/31 v1.1 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 80.
+
+(/sw/share/texmf/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count94
+))
+\Gin@req@height=\dimen106
+\Gin@req@width=\dimen107
+)
+(/sw/share/texmf/tex/latex/ae/ae.sty
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+
+(/sw/share/texmf/tex/latex/base/fontenc.sty
+Package: fontenc 2001/06/05 v1.94 Standard LaTeX package
+
+(/sw/share/texmf/tex/latex/base/t1enc.def
+File: t1enc.def 2001/06/05 v1.94 Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 38.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 95.
+
+(/sw/share/texmf/tex/latex/ae/t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)))
+(/sw/share/texmf/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2000/03/21
+
+Style option: `fancyvrb' v2.7, with DG/SPQR fixes <2000/03/21> (tvz)
+\FV@CodeLineNo=\count95
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count96
+\FV@StepNumber=\count97
+\FV@OutFile=\write5
+))
+(./gaggle.aux)
+\openout1 = `gaggle.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+Package hyperref Info: Link coloring OFF on input line 38.
+ (/sw/share/texmf/tex/latex/hyperref/nameref.sty
+Package: nameref 2001/01/27 v2.19 Cross-referencing by name of section
+\c@section@level=\count98
+)
+LaTeX Info: Redefining \ref on input line 38.
+LaTeX Info: Redefining \pageref on input line 38.
+ (./gaggle.out)
+(./gaggle.out)
+\openout3 = `gaggle.out'.
+
+ (/sw/share/texmf/tex/context/base/supp-pdf.tex
+(/sw/share/texmf/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Missing
+\protectiondepth=\count99
+\scratchcounter=\count100
+\scratchtoks=\toks17
+\scratchdimen=\dimen108
+\scratchskip=\skip45
+\scratchmuskip=\muskip11
+\scratchbox=\box27
+\scratchread=\read2
+\scratchwrite=\write6
+\zeropoint=\dimen109
+\minusone=\count101
+\thousandpoint=\dimen110
+\emptytoks=\toks18
+\nextbox=\box28
+\nextdepth=\dimen111
+\everyline=\toks19
+\!!counta=\count102
+\!!countb=\count103
+\recursecounter=\count104
+)
+loading : Context Support Macros / PDF
+\nofMPsegments=\count105
+\nofMParguments=\count106
+\everyMPtoPDFconversion=\toks20
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 41.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 41.
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 76.
+ (/sw/share/texmf/tex/latex/ae/omsaer.fd
+File: omsaer.fd 1999/12/27
+)
+LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 76.
+
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[1
+
+{/sw/share/texmf/dvips/config/pdftex.map}]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 102.
+
+
+(/sw/share/texmf/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 102.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 102.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 102.
+
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[2]
+Overfull \hbox (19.42987pt too wide) in paragraph at lines 147--148
+[]/aer12/Start the Gag-gle Boss (browse to []$/aett12/http : / / gaggle . syste
+msbiology . org / R / vignette /
+ []
+
+<gooseSelectionMenu.png, id=54, 333.245pt x 30.1125pt>
+File: gooseSelectionMenu.png Graphic file (type png)
+
+<use gooseSelectionMenu.png> <listening.png, id=55, 328.22626pt x 59.22125pt>
+File: listening.png Graphic file (type png)
+
+<use listening.png>
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[3 <./gooseSelectionMenu.png>]
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[4 <./listening.png>]
+Overfull \vbox (21.68121pt too high) has occurred while \output is active []
+
+
+[5] (./gaggle.aux) ) 
+Here is how much of TeX's memory you used:
+ 3529 strings out of 95437
+ 46838 string characters out of 1190296
+ 96450 words of memory out of 1000001
+ 6467 multiletter control sequences out of 10000+50000
+ 30176 words of font info for 65 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 35i,6n,36p,358b,224s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 74 PDF objects out of 300000
+ 10 named destinations out of 131072
+ 54 words of extra memory for PDF output out of 65536
+{/sw/share/texmf/dvips/tetex/09fbbfac.enc}</sw/share/texmf/
+fonts/type1/bluesky/cm/cmsltt10.pfb></sw/share/texmf/fonts/type1/bluesky/cm/cmt
+t12.pfb>{/sw/share/texmf/dvips/tetex/74afc74c.enc}</sw/share/texmf/fonts/type1/
+bluesky/cm/cmbxti10.pfb>{/sw/share/texmf/dvips/tetex/bbad153f.enc}</sw/share/te
+xmf/fonts/type1/bluesky/cm/cmsy10.pfb>{/sw/share/texmf/dvips/tetex/f7b6d320.enc
+}</sw/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb></sw/share/texmf/fonts/type
+1/bluesky/cm/cmti12.pfb></sw/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb></sw/
+share/texmf/fonts/type1/bluesky/cm/cmr17.pfb>
+Output written on gaggle.pdf (5 pages, 79377 bytes).

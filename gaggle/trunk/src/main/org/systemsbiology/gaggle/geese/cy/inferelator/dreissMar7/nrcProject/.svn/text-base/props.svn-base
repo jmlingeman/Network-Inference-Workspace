@@ -1,0 +1,7 @@
+plugin.0.load=csplugins.isb.pshannon.gaggle.cy.CyGagglePlugin
+plugin.2.load=csplugins.isb.dtenenbaum.jython.PyConsolePlugin
+
+species=Halobacterium sp.
+visualStyle=halo
+
+

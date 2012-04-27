@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<experiment name="boa4 knockout, light and oxygen" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='delta boa4'/>
+  <predicate category='perturbation' value='genetic:knockout:boa4'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/boa4.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/boa4.lambda </uri>
+  </dataset>
+
+  <condition alias="boa4__HO_D_vs_NRC-1">  
+    <variable name="oxygen" value="High"/>
+    <variable name="illumination" value="Dark"/>
+  </condition>
+
+  <condition alias="boa4__HO_L_vs_NRC-1">  
+    <variable name="oxygen" value="High"/>
+    <variable name="illumination" value="Light"/>
+  </condition>
+
+  <condition alias="boa4__LO_D_vs_NRC-1">  
+    <variable name="oxygen" value="Low"/>
+    <variable name="illumination" value="Dark"/>
+  </condition>
+
+  <condition alias="boa4__LO_L_vs_NRC-1">  
+    <variable name="oxygen" value="Low"/>
+    <variable name="illumination" value="Light"/>
+  </condition>
+
+</experiment>
+

@@ -1,0 +1,10 @@
+Package: gaggleGo
+Version: 0.99-24
+Date: 03-01-2006
+Title:  Gaggle GO
+Author: Paul Shannon <pshannon@systemsbiology.org>
+Maintainer: Paul Shannon <pshannon@systemsbiology.org>
+Depends: R (>= 2.1.0), gaggle
+Description: this package contains functions which combine the Bioconductor GOStats and the Gaggle packages
+License: GPL version 2 or newer
+URL: http://gaggle.systemsbiology.org

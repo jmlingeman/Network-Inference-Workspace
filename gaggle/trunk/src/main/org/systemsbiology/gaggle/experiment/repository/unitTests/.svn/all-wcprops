@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/unitTests
+END
+ExperimentRepositoryTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/unitTests/ExperimentRepositoryTest.java
+END
+gaggle.props
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/unitTests/gaggle.props
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/unitTests/makefile
+END

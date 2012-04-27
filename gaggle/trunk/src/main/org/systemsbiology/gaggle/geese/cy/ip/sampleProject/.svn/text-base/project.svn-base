@@ -1,0 +1,8 @@
+sif=jar://network.sif
+eda=jar://peptides.eda
+eda=jar://probabilities.eda
+species=Halobacterium sp.
+dataServer=http://db.systemsbiology.net/cytoscape/annotation/halo/manifest
+props=jar://proppies
+vprops=jar://vizmap.props
+

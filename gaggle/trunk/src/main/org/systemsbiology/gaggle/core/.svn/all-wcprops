@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gaggle/!svn/ver/4316/gaggle/trunk/src/main/org/systemsbiology/gaggle/core
+END
+GaggleConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/core/GaggleConstants.java
+END
+package-info.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/core/package-info.java
+END
+Boss.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/core/Boss.java
+END
+Goose.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/core/Goose.java
+END

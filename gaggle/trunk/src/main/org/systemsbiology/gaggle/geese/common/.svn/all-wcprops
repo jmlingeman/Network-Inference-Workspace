@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/gaggle/!svn/ver/4359/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common
+END
+GaggleUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gaggle/!svn/ver/3097/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/GaggleUtil.java
+END
+GooseShutdownHook.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/GooseShutdownHook.java
+END
+RmiGaggleConnector.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/gaggle/!svn/ver/4359/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/RmiGaggleConnector.java
+END
+GaggleConnectionListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/GaggleConnectionListener.java
+END

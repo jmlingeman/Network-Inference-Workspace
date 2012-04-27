@@ -1,0 +1,174 @@
+Manifest-Version: 1.0
+Created-By: 1.5.0_05 (Apple Computer, Inc.)
+
+Name: SampleGoose.class
+SHA1-Digest: RxZNA1bWB405w4kpx1pJoiJYzNQ=
+
+Name: org/systemsbiology/gaggle/network/Interaction.class
+SHA1-Digest: jRQ6dxB490Nr3k+9CbyjFIyEI+g=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$1.class
+SHA1-Digest: dt352k1GCVjW6yDqucATBLvE5tA=
+
+Name: org/systemsbiology/gaggle/experiment/metadata/Variable.class
+SHA1-Digest: QqTsj7U2TOGa2/ZbMuCCo9DNcak=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$HideOthersAction.class
+SHA1-Digest: EPqE4wzHO9XPQBuETy7HHi5zOZ8=
+
+Name: org/systemsbiology/gaggle/boss/Boss.class
+SHA1-Digest: QDgrb8wHlV7B2liRmet1pR/3Z08=
+
+Name: org/systemsbiology/gaggle/util/TextHttpReader.class
+SHA1-Digest: LigTy3s5qGMOyEHkxmnX4eTL+ok=
+
+Name: org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class
+SHA1-Digest: Z9vj6QlURkoVKDz938yvgODi2ls=
+
+Name: org/systemsbiology/gaggle/experiment/datamatrix/MatrixCombiner.c
+ lass
+SHA1-Digest: AWnMRMtKBwE8ybahpresVKZ2ww8=
+
+Name: org/systemsbiology/gaggle/geese/DeafGoose.class
+SHA1-Digest: zCb+xFHw1oMwbORK58TBbRfnJLI=
+
+Name: org/systemsbiology/gaggle/util/TextFileReader.class
+SHA1-Digest: eFyZwykdHs68sLzF3Zs3N0pYekU=
+
+Name: org/systemsbiology/gaggle/experiment/datamatrix/MatrixSlicer.cla
+ ss
+SHA1-Digest: RQVPFGHrnuW45YHdpaZEw7c4HY8=
+
+Name: org/systemsbiology/gaggle/experiment/metadata/Condition.class
+SHA1-Digest: TyIkESO5cJOXvVl5AcxhtGf2Q9s=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$2.class
+SHA1-Digest: 2YC5fe/eMmLtBkpth88TNugFJGY=
+
+Name: SampleGoose$4.class
+SHA1-Digest: fOjAit0UdnZuuAr3XPhMYwtUabk=
+
+Name: org/systemsbiology/gaggle/boss/GaggleBossTableModel.class
+SHA1-Digest: bvOFE6W2AHVsSIhE2cJM1dFNUOk=
+
+Name: org/systemsbiology/gaggle/experiment/metadata/DataSetDescription
+ .class
+SHA1-Digest: SneSwRkyCwJEiLlC3TqGnj7U3uc=
+
+Name: SampleGoose$1.class
+SHA1-Digest: UF3Bp2ZI4y+n1k1kPBg1KzgTV7w=
+
+Name: org/systemsbiology/gaggle/util/NewNameHelper.class
+SHA1-Digest: aMNygWg4pYms0X/RfElAjrW2P9U=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$ListenAllAction.class
+SHA1-Digest: eKPC6dcs4WiPNkiQrh9ecLqgJsc=
+
+Name: SampleGoose$10.class
+SHA1-Digest: 6sGOH7ppWE/omKvb5/HMzqavCQg=
+
+Name: SampleGoose$9.class
+SHA1-Digest: H2X8YYQyTv0Dtf9Lc/1sZtoJomo=
+
+Name: SampleGoose$7.class
+SHA1-Digest: HLY6zdFQqoW1ebHgxKhSWcu+uSM=
+
+Name: org/systemsbiology/gaggle/experiment/metadata/MetaData.class
+SHA1-Digest: cxlXyZuAmJsfpRVwcstA/Czam2M=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$TerminateAction.class
+SHA1-Digest: FFFEwCeS+uragQcsXGBZHYWwE2Q=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$TileAction.class
+SHA1-Digest: v+Jfwgf3raWbPZBlK+swYLVpaDA=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$HideAction.class
+SHA1-Digest: i4jggZJ5sPFtlvoauidWRHs3zZw=
+
+Name: org/systemsbiology/gaggle/boss/TileCalculator.class
+SHA1-Digest: fSRyGlOXJFOuJdihXeHZCtht6A4=
+
+Name: org/systemsbiology/gaggle/experiment/datamatrix/LensedDataMatrix
+ .class
+SHA1-Digest: xd1FEygkZmmq2VTEBqevWjhdqDE=
+
+Name: SampleGoose$5.class
+SHA1-Digest: 4wh0VABaICcPSRD9GNfue88PncE=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$ClearSelectionsAction.cla
+ ss
+SHA1-Digest: A1paJpbx+B1LfYX7TmwUclROf58=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$StaggerAction.class
+SHA1-Digest: V0kiFuqsVqy2cwcLpYzF2xm+SyQ=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$ListenNoneAction.class
+SHA1-Digest: QoMF3UysmegLtPC94Q6cZIXqH+Y=
+
+Name: org/systemsbiology/gaggle/util/NameHelperFactory.class
+SHA1-Digest: 6XfxpdH5OUiEp795doHaQFJyd3U=
+
+Name: org/systemsbiology/gaggle/boss/NameUniquifier.class
+SHA1-Digest: sYNfv6MXgO6mfq3GCES/jVO56zQ=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$ButtonCellRenderer.class
+SHA1-Digest: 8hmZrehv/kN6VnOeyLIzOHJNjCc=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss_Stub.class
+SHA1-Digest: umVZJbjqBsn2CL7w3R8nX7b8vMs=
+
+Name: SampleGoose$2.class
+SHA1-Digest: Dqa6RPxGWfw9LAWiXgB0IVPQ63M=
+
+Name: SampleGoose$8.class
+SHA1-Digest: TGqEi/s4EjzmidMICZYev6WtNiY=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$RefreshAction.class
+SHA1-Digest: GlTRkpwSj+mHBYsHKrjnANAPtmo=
+
+Name: org/systemsbiology/gaggle/network/Network.class
+SHA1-Digest: OFVIJvv+7rTzERtrqobTwDjmE00=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$QuitAction.class
+SHA1-Digest: o4w2nbTiJVV7fPtFDLtgld31V3g=
+
+Name: org/systemsbiology/gaggle/geese/Goose.class
+SHA1-Digest: 2Guq09guJFl7C+Xya/gYcVwZ260=
+
+Name: SampleGoose$6.class
+SHA1-Digest: sgl01AORLKQ8eN2e3aYDT6xK7Yk=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$SelectAllAction.class
+SHA1-Digest: yaZOjpKMR3z1dci2hIEHaqWV/GY=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$ShowOthersAction.class
+SHA1-Digest: 0xsgy0Qgs5xg7Y3AGJx3wmSK6wc=
+
+Name: org/systemsbiology/gaggle/util/NameHelper.class
+SHA1-Digest: NJkGIiDeLEM4mU2wpsv7x11PkYQ=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$GaggleMouseListener.class
+SHA1-Digest: yV0c0+7JG6rSUWqtLZJtjO0OmeA=
+
+Name: org/systemsbiology/gaggle/boss/BossConfig.class
+SHA1-Digest: yjhOO7bKtJ60e5Zz71XlAUmAHgY=
+
+Name: org/systemsbiology/gaggle/experiment/metadata/MetaDataNavigator.
+ class
+SHA1-Digest: R1sPhSGfLbaokPaRPkkXJm42UGY=
+
+Name: org/systemsbiology/gaggle/util/MiscUtil.class
+SHA1-Digest: qkr55WkxNAYkB1og50Umk8cqGJA=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss$ShowAction.class
+SHA1-Digest: 671ceafAgBg5QHKHU3iXmA+uNMQ=
+
+Name: org/systemsbiology/gaggle/boss/GuiBoss.class
+SHA1-Digest: i860fXZ+m7sFWuiyK4nJvJ6nP0E=
+
+Name: SampleGoose$3.class
+SHA1-Digest: Po5pOYc4q++q3JLAi58O9l5k/0M=
+
+Name: org/systemsbiology/gaggle/util/TextJarReader.class
+SHA1-Digest: j0YrVkmuUMP2np1OTAh/kYH5azE=
+

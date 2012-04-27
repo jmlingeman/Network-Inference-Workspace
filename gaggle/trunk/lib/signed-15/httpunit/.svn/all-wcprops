@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit
+END
+servlet.jar
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/servlet.jar
+END
+Tidy.jar
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/Tidy.jar
+END
+junit.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/junit.jar
+END
+xmlParserAPIs.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/xmlParserAPIs.jar
+END
+xercesImpl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/xercesImpl.jar
+END
+js.jar
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/js.jar
+END
+httpunit.jar
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/httpunit.jar
+END
+nekohtml.jar
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/lib/signed-15/httpunit/nekohtml.jar
+END

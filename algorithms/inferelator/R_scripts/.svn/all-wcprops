@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/aviv/!svn/ver/39/inferelator/trunk/R_scripts
+END
+sna.R
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/sna.R
+END
+normRedExp.R
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/normRedExp.R
+END
+regulatoryInf.R
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/aviv/!svn/ver/60/inferelator/trunk/R_scripts/regulatoryInf.R
+END
+cv_lars_probs.R
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/aviv/!svn/ver/34/inferelator/trunk/R_scripts/cv_lars_probs.R
+END
+initialize.R
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/aviv/!svn/ver/62/inferelator/trunk/R_scripts/initialize.R
+END
+snow-util.R
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/snow-util.R
+END
+biclustUtil.R
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/biclustUtil.R
+END
+infer.one.cluster.R
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/aviv/!svn/ver/60/inferelator/trunk/R_scripts/infer.one.cluster.R
+END
+cor_prob.R
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/aviv/!svn/ver/34/inferelator/trunk/R_scripts/cor_prob.R
+END
+reduceReg.R
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/reduceReg.R
+END
+lars_probs.R
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/aviv/!svn/ver/47/inferelator/trunk/R_scripts/lars_probs.R
+END
+preClusterRegInfs.R
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/preClusterRegInfs.R
+END
+microArray-util.R
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/microArray-util.R
+END
+main.R
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/aviv/!svn/ver/62/inferelator/trunk/R_scripts/main.R
+END
+readRegDBInteractionsFromSif.R
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/aviv/!svn/ver/59/inferelator/trunk/R_scripts/readRegDBInteractionsFromSif.R
+END
+getRegDBintoClusterStack.R
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/aviv/!svn/ver/59/inferelator/trunk/R_scripts/getRegDBintoClusterStack.R
+END
+util.R
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/util.R
+END
+addLonerTFs.toClusterStack.R
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/aviv/!svn/ver/32/inferelator/trunk/R_scripts/addLonerTFs.toClusterStack.R
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/unitTests
+END
+MathVectorFactoryTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/unitTests/MathVectorFactoryTest.java
+END
+FloatArrayDataProviderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/unitTests/FloatArrayDataProviderTest.java
+END
+MathVectorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/unitTests/MathVectorTest.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/unitTests/makefile
+END
+DoubleArrayDataProviderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/unitTests/DoubleArrayDataProviderTest.java
+END

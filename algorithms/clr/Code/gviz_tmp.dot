@@ -1,0 +1,25 @@
+digraph Network{
+rank=source; overlap=scale; splines=true; pack=true; dpi=600; label="AdiY";
+"cadB" [color=black,width=0.5]
+"cadA" [color=black,width=0.5]
+"adiY" [style=filled,width=0.5,fillcolor=grey90,color=black]
+"adiC" [color=black,width=0.5]
+"hybA" [color=black,width=0.5]
+"ndk" [color=black,width=0.5]
+"yncE" [color=black,width=0.5]
+"ydcI" [style=filled,width=0.5,fillcolor=grey90,color=black]
+"ttcA" [color=black,width=0.5]
+"yceA" [color=black,width=0.5]
+adiY->cadB [color=firebrick3];
+adiY->cadA [color=firebrick3];
+adiY->adiC [color=firebrick3];
+adiY->hybA [color=firebrick3];
+adiY->ndk [color=navyblue];
+adiY->yncE [color=navyblue];
+adiY->ydcI [color=navyblue];
+adiY->ttcA [color=navyblue];
+adiY->yceA [color=navyblue];
+ydcI->adiY [color=navyblue];
+ydcI->ndk [color=firebrick3];
+ydcI->ttcA [color=firebrick3];
+}

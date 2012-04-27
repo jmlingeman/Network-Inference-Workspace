@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="file:///Users/mpshannon/svnWork/gaggle/org/systemsbiology/gaggle/geese/mev"
+  href="tmev-dev.jnlp">
+  <information>
+    <title>TIGR's Mev</title>
+    <vendor> (August 2005)</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/mev-base.jar"/>
+    <jar href="mev.jar"/>
+    <jar href="config.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/images.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/base64.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/dialogHelp.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/HTTPClient.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/images.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/j3daudio.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/j3dcore.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/j3dutils.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/jai_codec.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/jai_core.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/jama.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/jaxp.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/jconn2.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/JSciCore.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/JSciPartial.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/mev-algorithm-impl.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/mev-algorithm-support.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/mev-gui-impl.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/mev-gui-support.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/mev-util.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/normalization.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/parser.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/servlet.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/vecmath.jar"/>
+    <jar href="/Users/mpshannon/src/mev/signed-lib/xerces.jar"/>
+  </resources>
+  <application-desc main-class="org.tigr.microarray.mev.TMEV" />
+</jnlp>
+
+

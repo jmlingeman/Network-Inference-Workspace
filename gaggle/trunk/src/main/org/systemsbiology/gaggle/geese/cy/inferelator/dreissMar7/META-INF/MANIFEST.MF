@@ -1,0 +1,60 @@
+Manifest-Version: 1.0
+Created-By: 1.4.2 (Sun Microsystems Inc.)
+
+Name: types.noa
+SHA1-Digest: QJWmhDud6XFqBuo4qSMtRjOyj24=
+
+Name: kegg_annos.noa
+SHA1-Digest: id3cvO5+T9Ce2nOHHhoGtKN2M38=
+
+Name: vizmap.props
+SHA1-Digest: eTS5PTxbyrtYZxDrMfxi65F9o18=
+
+Name: weights.eda
+SHA1-Digest: 2x2YH1gAe7euqRP0ezZSzIREtNU=
+
+Name: props
+SHA1-Digest: Zda9dtXe8ubOmanpvWRWRlh03b0=
+
+Name: logicGateNodeNames.noa
+SHA1-Digest: xPERHrk0ViEz6ELMEqGMUHJG9to=
+
+Name: kegg_pvals.noa
+SHA1-Digest: abKDH8uGcwVqKgy8OzFBDq/ddNg=
+
+Name: go_annos.noa
+SHA1-Digest: 94g97fSCpDhd5LWjJTKsfAD8LiM=
+
+Name: clusterMotifPValues.noa
+SHA1-Digest: 1Q3qhGExhbAauB+vRH7CI9gqWFo=
+
+Name: clusterGenes.noa
+SHA1-Digest: 4TXjqp0rWbtP9GR5MLN/A+PhWdw=
+
+Name: clusterResiduals.noa
+SHA1-Digest: qbrcVIl6+MOKJ8n7Nr07+MD5mBk=
+
+Name: clusterGeneCount.noa
+SHA1-Digest: 8yCyMnzJkIXIAUFknzDbHr79xgk=
+
+Name: network.sif
+SHA1-Digest: jIwgkY61n408Yw/08Ceyf0oIgSE=
+
+Name: project
+SHA1-Digest: 8fFcIS7UAUx4463WXWyS/rqfCuE=
+
+Name: clusterConditions.noa
+SHA1-Digest: cv2/LzlSBdLssnELkzVNd6ofZVQ=
+
+Name: cog_annos.noa
+SHA1-Digest: tX46HuovIaECKT4v/RE/kaLNLuw=
+
+Name: clusterConditionCount.noa
+SHA1-Digest: XVFlYmnHONqLVXDnryWpl/cl2J0=
+
+Name: go_pvals.noa
+SHA1-Digest: 2SVLGXQFmGDoUIDhVnsZMH779cU=
+
+Name: cog_pvals.noa
+SHA1-Digest: Xyziaz6t7w00+NLIEm13fROeBUc=
+

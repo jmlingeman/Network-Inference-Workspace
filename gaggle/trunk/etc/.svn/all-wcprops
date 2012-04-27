@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/gaggle/!svn/ver/3223/gaggle/trunk/etc
+END
+growth_curve_processor.rb
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/gaggle/!svn/ver/3223/gaggle/trunk/etc/growth_curve_processor.rb
+END
+test_repository.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/gaggle/!svn/ver/2735/gaggle/trunk/etc/test_repository.rb
+END
+pipeline_processor.rb
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/gaggle/!svn/ver/2725/gaggle/trunk/etc/pipeline_processor.rb
+END
+marctrees.rb
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/etc/marctrees.rb
+END
+marcfix.rb
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/etc/marcfix.rb
+END

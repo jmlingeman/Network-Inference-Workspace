@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<experiment name="copper concentrations" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:metals:copper'/>
+  <predicate category='perturbation2' value='environmental:knockout:foo'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/copper.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/copper.lambda </uri>
+  </dataset>
+
+  <condition alias='Cu_1_vs_C.sig'>
+    <variable name='concentration' value='700' units='micromolar'/>
+  </condition>
+
+  <condition alias='Cu_2_vs_C.sig'>
+    <variable name='concentration' value='850' units='micromolar' />
+  </condition>
+
+  <condition alias='Cu_3_vs_C.sig'>
+    <variable name='concentration' value='1000'  units='micromolar'/>
+  </condition>
+
+ </experiment>

@@ -1,0 +1,37 @@
+# makefile for org.systemsbiology.gaggle.experiment
+#-------------------------------------------------------------------------
+# $Revision: 18 $
+# $Date: 2004/12/20 22:10:40 $
+# $Author: pshannon $
+#-------------------------------------------------------------------------
+JC=javac 
+JC=javac -source 1.4
+JI=java
+
+.SUFFIXES: .java .class
+.java.class: 
+	$(JC) $<
+
+default: subdirectories
+
+subdirectories:
+	(cd metadata; make)
+	(cd datamatrix; make)
+	(cd repository; make)
+	(cd readers; make)
+	(cd gui; make)
+
+
+clean:
+	- find . -name "*.class" -exec rm  {} ';'
+
+test:
+	(cd metadata/unitTests; make)
+	(cd datamatrix/unitTests; make)
+	(cd repository/unitTests; make)
+	(cd readers/unitTests; make)
+	(cd gui/unitTests; make)
+
+
+
+

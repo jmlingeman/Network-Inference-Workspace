@@ -1,0 +1,78 @@
+# makefile for csplugins/isb/pshannon/ip
+#-------------------------------------------------------------------------
+# $Revision$
+# $Date: 2005/04/03 02:55:46 $
+# $Author$
+#-------------------------------------------------------------------------
+JC=javac
+JI=java
+
+.SUFFIXES: .java .class
+.java.class: 
+	$(JC) $<
+
+default: objs 
+
+OBJS=   ControlPanel.class \
+        IpControlPanelPlugin.class \
+#        ControlPanel_skel.class \
+
+help:
+	egrep "^#" makefile | sed "s/^#//"
+      
+#--------------------------------------------------------------------------------
+DIRroot=../../../../../..
+DIRme=org/systemsbiology/gaggle/geese/cy/ip
+DIRu=org/systemsbiology/gaggle/util
+DIRg=org/systemsbiology/gaggle/geese
+DIRcu=org/systemsbiology/gaggle/geese/cy/util
+DIRb=org/systemsbiology/gaggle/boss
+DIRdm=org/systemsbiology/gaggle/experiment/datamatrix
+DIRmd=org/systemsbiology/gaggle/experiment/metadata
+DIRn=org/systemsbiology/gaggle/network
+JAR=ip.jar
+#-----------------------------------------------------------------------------
+#ControlPanel_skel.class: ControlPanel.class
+#	rmic -d $(DIRroot) org.systemsbiology.gaggle.geese.cy.ip.ControlPanel
+      
+jar: $(JAR)
+
+$(JAR): objs
+	(cd $(DIRroot);  jar cf  $(DIRme)/$(JAR) `find $(DIRme)             -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRg)  -maxdepth 1 -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRb)  -maxdepth 1 -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRcu) -maxdepth 1 -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRu)  -maxdepth 1 -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRdm) -maxdepth 1 -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRn)  -maxdepth 1 -name "*.class"`)
+	(cd $(DIRroot);  jar uf  $(DIRme)/$(JAR) `find $(DIRmd) -maxdepth 1 -name "*.class"`)
+
+
+
+# --- sign
+# sign ip.jar with the java 1.5 key
+#
+sign:
+	jarsigner -keystore $(HOME)/.jarkey -storepass honker $(JAR) gaggle
+
+# --- deploy
+# copy ip.jar to the deploy directory
+#
+deploy:
+	scp $(JAR) $(DEPLOY)
+
+# --- jws
+# test the cytoscape ip plugin using java web start, running from local files
+#
+jws:  jar sign
+	(cd sampleProject; javaws test.jnlp)
+
+
+objs: $(OBJS)
+
+clean:
+	- find . -name "*.class" -exec rm  {} ';'
+
+demo:  objs
+	(cd tinyProject; make)
+

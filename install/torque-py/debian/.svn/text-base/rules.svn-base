@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+# Copyrignt 2003-04 Yaroslav Halchenko <debian@onerussian.com>
+
+include /usr/share/cdbs/1/rules/buildcore.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/class/makefile.mk
+
+DEB_CONFIGURE_EXTRA_FLAGS := --enable-python
+
+# does on package by package bases so doesn't work :-/
+#DEB_DH_INSTALL_ARGS := --list-missing
+
+#DEB_CONFIGURE_EXTRA_FLAGS := --enable-debug
+
+# tight versioning
+#DEB_DH_MAKESHLIBS_ARGS := -V

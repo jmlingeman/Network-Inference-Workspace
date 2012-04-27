@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath
+END
+MathVectorFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/MathVectorFactory.java
+END
+ReadOnlyVectorDataProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/ReadOnlyVectorDataProvider.java
+END
+VectorDataProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/VectorDataProvider.java
+END
+FloatArrayDataProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/FloatArrayDataProvider.java
+END
+ReadOnlyMathVector.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/ReadOnlyMathVector.java
+END
+ReadOnlyVectorDataAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/ReadOnlyVectorDataAdapter.java
+END
+MathVector.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/MathVector.java
+END
+VectorDataAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/VectorDataAdapter.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/makefile
+END
+DoubleArrayDataProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/DoubleArrayDataProvider.java
+END
+package.html
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/vectormath/package.html
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/gaggle/!svn/ver/3380/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation
+END
+SearchResultsTableModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/SearchResultsTableModel.java
+END
+annotation.jnlp-raw
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/annotation.jnlp-raw
+END
+SelfAdjustingJTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/SelfAdjustingJTable.java
+END
+manifest
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/manifest
+END
+AnnotationGoose.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gaggle/!svn/ver/3380/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/AnnotationGoose.java
+END
+LoadAnnotationDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/LoadAnnotationDialog.java
+END
+Options.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/Options.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/annotation/makefile
+END

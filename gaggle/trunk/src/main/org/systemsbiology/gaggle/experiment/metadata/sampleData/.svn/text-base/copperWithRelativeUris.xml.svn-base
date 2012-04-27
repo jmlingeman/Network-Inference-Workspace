@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!-- $Revision: 1.1 $  $Date: 2004/12/06 20:16:33 $ -->
+
+<experiment name="copper concentrations" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:metals:copper'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> copper.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> copper.lambda </uri>
+  </dataset>
+
+
+  <condition alias='cu__0700um_vs_NRC-1'>
+    <variable name='Cu' value='700' units='micromolar'/>
+    <variable name='oxygen' value='High'/>
+    <variable name='illumination' value='Light'/>
+  </condition>
+
+  <condition alias='cu__0850um_vs_NRC-1'>
+    <variable name='Cu' value='850' units='micromolar' />
+    <variable name='oxygen' value='High'/>
+    <variable name='illumination' value='Light'/>
+  </condition>
+
+  <condition alias='cu__1000um_vs_NRC-1'>
+    <variable name='Cu' value='1000'  units='micromolar'/>
+    <variable name='oxygen' value='High'/>
+    <variable name='illumination' value='Light'/>
+  </condition>
+
+ </experiment>

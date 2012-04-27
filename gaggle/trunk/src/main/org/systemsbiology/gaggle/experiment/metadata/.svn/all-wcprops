@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gaggle/!svn/ver/3545/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata
+END
+MetaData.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/MetaData.java
+END
+MetaDataXmlParser.py
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/MetaDataXmlParser.py
+END
+Variable.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/Variable.java
+END
+Condition.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/3545/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/Condition.java
+END
+DataSetDescription.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/DataSetDescription.java
+END
+MetaDataNavigator.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/MetaDataNavigator.java
+END
+MetaDataList.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/MetaDataList.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/makefile
+END
+MetaDataNavigatorSingleton.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/MetaDataNavigatorSingleton.java
+END

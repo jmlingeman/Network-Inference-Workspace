@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<experiment name="bat vs bat, cmyc1 vs cmyc1 ChIP-chip" date="2004-02-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='Protein-DNA:general TF:cmyc'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> http://db:8060/halo/data/batVbat_cmyc1Vcmyc1.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> http://db:8060/halo/data/batVbat_cmyc1Vcmyc1.lambda </uri>
+  </dataset>
+
+  <condition alias='bat_vs_bat.sig'>
+    <variable name='bait' value='bat' />
+  </condition>
+
+  <condition alias='cmyc1_vs_cmyc1'>
+    <variable name='bait' value='cmyc1' />
+  </condition>
+
+ </experiment>

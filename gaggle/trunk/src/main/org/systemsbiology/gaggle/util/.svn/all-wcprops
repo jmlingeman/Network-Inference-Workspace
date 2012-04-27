@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gaggle/!svn/ver/2971/gaggle/trunk/src/main/org/systemsbiology/gaggle/util
+END
+NameHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/NameHelper.java
+END
+TextJarReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/TextJarReader.java
+END
+Index.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/Index.java
+END
+StringUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/StringUtils.java
+END
+TextFileReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/TextFileReader.java
+END
+TextHttpReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/TextHttpReader.java
+END
+NameHelperFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/NameHelperFactory.java
+END
+MiscUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gaggle/!svn/ver/2971/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/MiscUtil.java
+END
+NewNameHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/NewNameHelper.java
+END
+localizeJnlp.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/localizeJnlp.py
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/makefile
+END

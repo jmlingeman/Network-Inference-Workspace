@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/40/trunk/release
+END
+combine.py
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/33/trunk/release/combine.py
+END
+pyroc.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/33/trunk/release/pyroc.py
+END
+simple.csv
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/36/trunk/release/simple.csv
+END
+data.csv
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/39/trunk/release/data.csv
+END
+dumper.py
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/33/trunk/release/dumper.py
+END
+PyROC.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/40/trunk/release/PyROC.pdf
+END
+base_measures.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/33/trunk/release/base_measures.py
+END
+threshold_measures.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/33/trunk/release/threshold_measures.py
+END
+simple.txt
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/36/trunk/release/simple.txt
+END
+measures.py
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/33/trunk/release/measures.py
+END
+table.py
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/33/trunk/release/table.py
+END

@@ -1,0 +1,2 @@
+plugin.gaggle.load=org.systemsbiology.gaggle.geese.cy.jdrf.JdrfPlugin
+visualStyle=JDRF-MHC

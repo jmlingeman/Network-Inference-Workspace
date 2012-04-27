@@ -1,0 +1,636 @@
+// DataMatrixLensTest.java
+//------------------------------------------------------------------------------------
+// $Revision: 2360 $
+// $Date: 2007-09-04 18:02:00 -0400 (Tue, 04 Sep 2007) $
+// $Author: dtenenba $
+
+// TODO - add testing of getRowIndex() method, esp if it gets less braindead
+
+//------------------------------------------------------------------------------------
+/*
+ * Copyright (C) 2006 by Institute for Systems Biology,
+ * Seattle, Washington, USA.  All rights reserved.
+ *
+ * This source code is distributed under the GNU Lesser
+ * General Public License, the text of which is available at:
+ *   http://www.gnu.org/copyleft/lesser.html
+ */
+
+package org.systemsbiology.gaggle.experiment.datamatrix.unitTests;
+//------------------------------------------------------------------------------------
+import junit.framework.*;
+
+import java.util.*;
+
+import org.systemsbiology.gaggle.experiment.datamatrix.*;
+import org.systemsbiology.gaggle.experiment.readers.*;
+
+//------------------------------------------------------------------------------
+public class LensedDataMatrixTest extends TestCase {
+
+//------------------------------------------------------------------------------
+public LensedDataMatrixTest (String name) 
+{
+  super (name);
+}
+
+// TODO - use the setUp and tearDown methods. Most of the test methods have
+// identical setup and teardown, and this would get rid of redundancy and 
+// maybe catch some problems.
+
+//------------------------------------------------------------------------------
+public void setUp () throws Exception
+{
+  }
+//------------------------------------------------------------------------------
+public void tearDown () throws Exception
+{
+}
+//------------------------------------------------------------------------------
+public void testColumnEnabling () throws Exception
+{
+    System.out.println ("testColumnEnabling");
+  
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  assertTrue (lens.getColumnCount () == 3);
+
+  boolean [] columnState;
+
+  columnState = lens.getColumnState ();
+  assertTrue (columnState.length == 3);
+  assertTrue (columnState [0] == true);
+  assertTrue (columnState [1] == true);
+  assertTrue (columnState [2] == true);
+  assertTrue (lens.getColumnState (0) == true);
+  assertTrue (lens.getColumnState (1) == true);
+  assertTrue (lens.getColumnState (2) == true);
+
+  lens.setColumnState (1, false);
+  assertTrue (lens.getColumnState (1) == false);
+
+  columnState = lens.getColumnState ();
+  assertTrue (columnState [0] == true);
+  assertTrue (columnState [1] == false);
+  assertTrue (columnState [2] == true);
+
+  lens.setColumnState (0, false);
+  lens.setColumnState (2, false);
+  assertTrue (columnState.length == 3);
+  assertTrue (lens.getColumnState (0) == false);
+  assertTrue (lens.getColumnState (1) == false);
+  assertTrue (lens.getColumnState (2) == false);
+
+  lens.clear ();
+  
+  assertTrue (columnState.length == 3);
+  assertTrue (lens.getColumnState (0) == true);
+  assertTrue (lens.getColumnState (1) == true);
+  assertTrue (lens.getColumnState (2) == true);
+
+}  // testColumnEnabling
+//-------------------------------------------------------------------------
+public void testColumnOrdering () throws Exception
+{
+  System.out.println ("testColumnOrdering");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+
+  assertTrue (lens.getColumnCount () == 3);
+
+  for (int c=0; c < lens.getColumnCount (); c++)
+    assertTrue (lens.getColumnOrder (c) == c);
+
+    // go from   0,1,2   to  2,0,1
+  lens.changeColumnPosition(2,0);
+  
+  
+  //lens.swapColumnOrder (0, 2);   // 2,1,0
+  //lens.swapColumnOrder (2, 1);   // 2,0,1
+
+  assertTrue (lens.getColumnOrder (0) == 2);
+  assertTrue (lens.getColumnOrder (1) == 0);
+  assertTrue (lens.getColumnOrder (2) == 1);
+
+}  // testColumnOrdering
+//-------------------------------------------------------------------------
+public void testGetColumn () throws Exception
+{
+  System.out.println ("testGetColumn");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  String actual = matrix.toString ();
+  String expected = "gene	cond0	cond1	cond2\n" + 
+                    "a	12.2	13.8	4.0\n" +
+                    "b	-1.2	-8.0	-32.3333\n" +
+                    "c	0.0	0.0	0.0\n" +
+                    "d	999.0	99.0	9.0\n";
+
+  assertTrue (expected.equals (actual));
+
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+
+  lens.enableAllRows ();
+  assertTrue (lens.getColumnCount () == 3);
+  assertTrue (lens.getRowCount () == 4);
+
+  for (int c=0; c < lens.getColumnCount (); c++)
+    assertTrue (lens.getColumnOrder (c) == c);
+
+    // go from column order  0,1,2   to  2,0,1
+    //------------------------------------------
+  lens.changeColumnPosition(2,0);
+  
+  //lens.swapColumnOrder (0, 2);   // 2,1,0
+  //lens.swapColumnOrder (2, 1);   // 2,0,1
+
+  // lens.printTransformation ();
+
+  double [] columnAfterReordering = lens.getColumn (0);
+  assertTrue (columnAfterReordering.length == 4);
+  assertTrue (columnAfterReordering [0] == 4.0);
+  assertTrue (columnAfterReordering [1] == -32.3333);
+  assertTrue (columnAfterReordering [2] == 0);
+  assertTrue (columnAfterReordering [3] == 9.00);
+
+    // now try getting the same column by name
+  double [] columnByName = lens.getColumn ("cond2");
+  assertTrue (columnByName.length == 4);
+  assertTrue (columnByName [0] == 4.0);
+  assertTrue (columnByName [1] == -32.3333);
+  assertTrue (columnByName [2] == 0);
+  assertTrue (columnByName [3] == 9.00);
+
+}  // testGetColumn
+//-------------------------------------------------------------------------
+/**
+ * for a 4 row, 3 column matrix:
+ *
+ *    - swap colums 0 and 2; check the first row
+ *    - disable column 0; check the remaining two columns in row 0
+ *    - clear the lens; check that the first row equals that of the underlying matrix
+ */
+public void testGetDataWithOrderingAndEnabling_1 () throws Exception
+{
+  System.out.println ("testGetDataWithOrderingAndEnabling_1");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllRows ();
+  String actual = matrix.toString ();
+  String expected = "gene	cond0	cond1	cond2\n" + 
+                    "a	12.2	13.8	4.0\n" +
+                    "b	-1.2	-8.0	-32.3333\n" +
+                    "c	0.0	0.0	0.0\n" +
+                    "d	999.0	99.0	9.0\n";
+
+  assertTrue (expected.equals (actual));
+
+    // go from   0,1,2   to  2,1,0
+  
+  lens.changeColumnPosition(2,0); // now we have 2,0,1
+  lens.changeColumnPosition(2,1);
+  //lens.swapColumnOrder (0, 2); 
+
+  assertTrue (lens.getColumnOrder (0) == 2);
+  assertTrue (lens.getColumnOrder (1) == 1);
+  assertTrue (lens.getColumnOrder (2) == 0);
+
+  double [] result = lens.get (0);
+  assertTrue (result.length == 3);
+  assertTrue (result [0] == 4.0);
+  assertTrue (result [1] == 13.8);
+  assertTrue (result [2] == 12.2);
+
+  assertTrue (result [2] == matrix.get (0, 0));
+  assertTrue (result [1] == matrix.get (0, 1));
+  assertTrue (result [0] == matrix.get (0, 2));
+
+
+  lens.setColumnState (0, false); // this is the current column 0, with value 4.0
+  result = lens.get (0);          // ought to be initial 1, 0
+  assertTrue (result.length == 2);
+
+  assertTrue (result [0] == 13.8);
+  assertTrue (result [1] == 12.2);
+
+  lens.enableAllRows ();
+  double [][] lensedVersion = lens.get ();
+  assertTrue (lens.getRowCount () == 4);
+  assertTrue (lens.getColumnCount () == 2);
+  assertTrue (lensedVersion.length == 4);
+  assertTrue (lensedVersion [0].length == 2);
+
+  lens.clear ();
+  lens.enableAllRows ();
+
+  result = lens.get (0);
+  assertTrue (result.length == 3);
+  assertTrue (result [0] == 12.2);
+  assertTrue (result [1] == 13.8);
+  assertTrue (result [2] == 4.0);
+
+  assertTrue (result [0] == matrix.get (0, 0));
+  assertTrue (result [1] == matrix.get (0, 1));
+  assertTrue (result [2] == matrix.get (0, 2));
+
+}  // testGetDataWithOrderingAndEnabling_1
+//-------------------------------------------------------------------------
+/**
+ *  swap once, disable two columns
+ */
+public void testGetDataWithOrderingAndEnabling_2 () throws Exception
+{
+  System.out.println ("testGetDataWithOrderingAndEnabling_2");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  String actualMatrixAsString = matrix.toString ();
+  String expected = "gene	cond0	cond1	cond2\n" + 
+                    "a	12.2	13.8	4.0\n" +
+                    "b	-1.2	-8.0	-32.3333\n" +
+                    "c	0.0	0.0	0.0\n" +
+                    "d	999.0	99.0	9.0\n";
+
+    // go from   0,1,2   to  2,0,1
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllColumns ();
+  lens.enableAllRows ();
+  
+  // go from 0,1,2 to 2,1,0
+  lens.changeColumnPosition(2,0); // now we have 2,0,1
+  lens.changeColumnPosition(2,1);
+  //lens.swapColumnOrder (0, 2); 
+
+  assertTrue (lens.getColumnOrder (0) == 2);
+  assertTrue (lens.getColumnOrder (1) == 1);
+  assertTrue (lens.getColumnOrder (2) == 0);
+
+  double [] result = lens.get (0);
+
+  assertTrue (result [0] == 4.0);
+  assertTrue (result [1] == 13.8);
+  assertTrue (result [2] == 12.2);
+
+  lens.setColumnState (0, true);  // the current column 0, original column 2: 13.8
+  lens.setColumnState (1, false); // the current column 1, original column 0: 4.0
+  result = lens.get (0);
+  assertTrue (result [0] == 4.0);
+  assertTrue (result [1] == 12.2);
+
+}  // testGetDataWithOrderingAndEnabling_2
+//------------------------------------------------------------------------------
+/**
+ *  swap twice, equivalent to moving the right-most column two places to the left
+ */
+public void testGetDataWithOrderingAndEnabling_3 () throws Exception
+{
+  System.out.println ("testGetDataWithOrderingAndEnabling_3");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://"+ "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  String actualMatrixAsString = matrix.toString ();
+  String expected = "gene	cond0	cond1	cond2\n" + 
+                    "a	12.2	13.8	4.0\n" +
+                    "b	-1.2	-8.0	-32.3333\n" +
+                    "c	0.0	0.0	0.0\n" +
+                    "d	999.0	99.0	9.0\n";
+
+    // reorder from   0,1,2   to  2,0,1
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllRows ();
+
+  double [] row = lens.get (0);
+  assertTrue (row [0] == 12.2);
+  assertTrue (row [1] == 13.8);
+  assertTrue (row [2] == 4.0);
+
+  // go from 0,1,2 to 0,2,1
+  lens.changeColumnPosition(2,1);
+  //lens.swapColumnOrder (1,2); 
+  assertTrue (lens.getColumnOrder (0) == 0);
+  assertTrue (lens.getColumnOrder (1) == 2);
+  assertTrue (lens.getColumnOrder (2) == 1);
+
+  row = lens.get (0);
+  assertTrue (row [0] == 12.2);
+  assertTrue (row [1] == 4.0);
+  assertTrue (row [2] == 13.8);
+
+  
+  //  go from 0,2,1 to 2,0,1
+  lens.changeColumnPosition(0,1);
+  //lens.swapColumnOrder (0,1);
+  assertTrue (lens.getColumnOrder (0) == 2);
+  assertTrue (lens.getColumnOrder (1) == 0);
+  assertTrue (lens.getColumnOrder (2) == 1);
+
+  row = lens.get (0);
+  assertTrue (row [0] == 4.0);
+  assertTrue (row [1] == 12.2);
+  assertTrue (row [2] == 13.8);
+
+
+}  // testGetDataWithOrderingAndEnabling_3
+//------------------------------------------------------------------------------
+/**
+ *  swap twice, disable one column
+ */
+public void testColumnTitleLensing () throws Exception
+{
+  System.out.println ("testColumnTitleLensing");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  String actualMatrixAsString = matrix.toString ();
+  String expected = "gene	cond0	cond1	cond2\n" + 
+                    "a	12.2	13.8	4.0\n" +
+                    "b	-1.2	-8.0	-32.3333\n" +
+                    "c	0.0	0.0	0.0\n" +
+                    "d	999.0	99.0	9.0\n";
+
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllColumns ();
+  lens.enableAllRows ();
+
+  String [] titles0 = lens.getColumnTitles ();
+  assertTrue (titles0.length == 3);
+  assertTrue (titles0 [0].equals ("cond0"));
+  assertTrue (titles0 [1].equals ("cond1"));
+  assertTrue (titles0 [2].equals ("cond2"));
+
+
+  lens.setColumnState (1, false);
+  String [] titles1 = lens.getColumnTitles ();
+
+  assertTrue (titles1.length == 2);
+  assertTrue (titles1 [0].equals ("cond0"));
+  assertTrue (titles1 [1].equals ("cond2"));
+
+  lens.setColumnState (1, true);
+  
+  // go from 0,1,2 to 1,0,2
+  lens.changeColumnPosition(1,0);
+  //lens.swapColumnOrder (0,1);
+
+  String [] titles2 = lens.getColumnTitles ();
+
+
+  assertTrue (titles2.length == 3);
+  assertTrue (titles2 [0].equals ("cond1"));
+  assertTrue (titles2 [1].equals ("cond0"));
+  assertTrue (titles2 [2].equals ("cond2"));
+
+
+  // go from 1,0,2 to 1,2,0
+  lens.changeColumnPosition(2,1);
+  //lens.swapColumnOrder (1,2);
+
+  String [] titles3 = lens.getColumnTitles ();
+
+  assertTrue (titles3.length == 3);
+  assertTrue (titles3 [0].equals ("cond1"));
+  assertTrue (titles3 [1].equals ("cond2"));
+  assertTrue (titles3 [2].equals ("cond0"));
+
+  lens.setColumnState (1, false);  // should disable titles3 [2] "cond2"
+
+  String [] titles4 = lens.getColumnTitles ();
+
+  assertTrue (titles4.length == 2);
+  assertTrue (titles4 [0].equals ("cond1"));
+  assertTrue (titles4 [1].equals ("cond0"));
+
+  String lensedMatrixAsString = lens.toString ();
+  String expectedM = "gene	cond1	cond0\n" +
+                    "a	13.8	12.2\n" +
+                    "b	-8.0	-1.2\n" +
+                    "c	0.0	0.0\n" +
+                    "d	99.0	999.0\n";
+
+  assertTrue (expectedM.equals (lensedMatrixAsString));
+
+
+}  // testGetDataWithOrderingAndEnabling_3
+//------------------------------------------------------------------------------
+public void testRowSelection () throws Exception 
+{
+  System.out.println ("testRowSelection");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.disableAllRows ();
+  assertTrue (lens.getRowCount () == 0);
+  
+  lens.enableRows (new int[]{3,1});
+  assertTrue (lens.adjustRowIndexForRowState (0) == 1);
+  assertTrue (lens.adjustRowIndexForRowState (1) == 3);
+
+  assertTrue (lens.getRowCount () == 2);
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix underlyingMatrix = lens.getUnderlyingMatrix ();
+  assertTrue (underlyingMatrix.getRowCount () == 4);
+
+  assertTrue (lens.get (0,2) == -32.3333);
+  assertTrue (lens.getColumnCount () == 3);
+  assertTrue (lens.getColumnCount () ==  lens.getColumnTitles ().length);
+
+  lens.setColumnState (1, false);
+  assertTrue (lens.getColumnCount () == 2);
+  String [] titles = lens.getColumnTitles ();
+  assertTrue (titles.length == 2);
+  assertTrue (Arrays.equals (titles, new String [] {"cond0", "cond2"}));
+  assertTrue (lens.get (0,1) == -32.3333);
+  String[] selectedRowTitles = lens.getRowTitles ();
+  assertTrue (selectedRowTitles.length == lens.getRowCount ());
+  assertTrue (selectedRowTitles[0].equals ("b"));
+  assertTrue (selectedRowTitles[1].equals ("d"));
+
+  String expectedM = "gene	cond0	cond2\n" +
+                      "b	-1.2	-32.3333\n" +
+                      "d	999.0	9.0\n";
+  
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix visibleMatrix = lens.getVisibleMatrix ();
+  assertTrue (visibleMatrix.toString ().equals (expectedM));
+  String lensAsString = lens.toString ();
+  assertTrue (lensAsString.equals (expectedM));
+  
+} // testRowSelection
+//------------------------------------------------------------------------------
+/**
+ *  test the matrices returned at each of these 3 steps
+ *
+ *    - get an unmodified view
+ *    - select just rows 1 and 2 (implicitly obscuring rows 0 and 3)
+ *    - disable first data column
+ */
+public void testGetVisibleMatrix () throws Exception
+{
+  System.out.println ("testGetVisibleMatrix");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  String actualMatrixAsString = matrix.toString ();
+  String expected = "gene	cond0	cond1	cond2\n" + 
+                    "a	12.2	13.8	4.0\n" +
+                    "b	-1.2	-8.0	-32.3333\n" +
+                    "c	0.0	0.0	0.0\n" +
+                    "d	999.0	99.0	9.0\n";
+
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllRows ();
+  lens.enableAllColumns ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix unchanged = lens.getVisibleMatrix ();
+  assertTrue (matrix.equals (unchanged));
+
+  lens.disableAllRows ();
+  lens.enableRows (new int [] {1,2});
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix m2 = lens.getVisibleMatrix ();
+
+  assertTrue (m2.getRowCount ()== 2);
+  assertTrue (m2.getColumnCount () == 3);
+  assertTrue (Arrays.equals (m2.getRowTitles (), new String [] {"b", "c"}));
+  assertTrue (Arrays.equals (m2.getColumnTitles (), 
+                             new String [] {"cond0", "cond1", "cond2"}));
+  assertTrue (Arrays.equals (m2.get (0), new double [] {-1.2, -8.0, -32.3333}));
+  assertTrue (Arrays.equals (m2.get (1), new double [] {0.0, 0.0, 0.0}));
+
+  lens.setColumnState (0, false);
+
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix m3 = lens.getVisibleMatrix ();
+  assertTrue (m3.getRowCount ()== 2);
+  assertTrue (m3.getColumnCount () == 2);
+
+  assertTrue (Arrays.equals (m3.getColumnTitles (), 
+                             new String [] {"cond1", "cond2"}));
+  assertTrue (Arrays.equals (m3.get (0), new double [] {-8.0, -32.3333}));
+  assertTrue (Arrays.equals (m3.get (1), new double [] {0.0, 0.0}));
+
+}  // testGetVisibleMatrix
+//------------------------------------------------------------------------------
+/**
+ *  test the time it takes to get a visible (sub-) matrix from a 2400 line
+ *  matrix after some rows and columns are hidden
+ */
+public void testSpeedOfGetVisibleMatrix_2400_lines () throws Exception
+{
+  System.out.println ("testSpeedOfGetVisibleMatrix_2400_lines");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "../../sampleData/sample.ratio");
+
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  assertTrue (matrix.getRowCount () == 2400);
+  //assertTrue (matrix.getColumnCount () == 25);
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllRows ();
+  long startTime = System.currentTimeMillis ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix visibleMatrix = lens.getVisibleMatrix ();
+  long duration = System.currentTimeMillis () - startTime;
+  assertTrue (visibleMatrix.getRowCount () == 2400);
+  assertTrue (visibleMatrix.getColumnCount () == 16);
+
+  lens.disableColumn (1);
+  lens.disableRow (1200);
+  startTime = System.currentTimeMillis ();
+  visibleMatrix = lens.getVisibleMatrix ();
+  duration = System.currentTimeMillis () - startTime;
+  assertTrue (visibleMatrix.getRowCount () == 2399);
+  assertTrue (visibleMatrix.getColumnCount () == 15);
+
+}  // testSpeedOfGetVisibleMatrix
+//------------------------------------------------------------------------------
+/**
+ *  test the time it takes to get a visible (sub-) matrix from a large
+ *  matrix after some rows and columns are hidden
+ */
+public void notestSpeedOfGetVisibleMatrix_45101_lines () throws Exception
+{
+  System.out.println ("testSpeedOfGetVisibleMatrix_45101_lines");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "../../sampleData/huge.ratio");
+
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  assertTrue (matrix.getRowCount () == 45101);
+  assertTrue (matrix.getColumnCount () == 25);
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllRows ();
+  System.out.println ("starting get visible, no hiding");
+  long startTime = System.currentTimeMillis ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix visibleMatrix = lens.getVisibleMatrix ();
+  long duration = System.currentTimeMillis () - startTime;
+  System.out.println ("done: " + duration);
+  assertTrue (visibleMatrix.getRowCount () == 45101);
+  assertTrue (visibleMatrix.getColumnCount () == 25);
+
+  lens.disableColumn (1);
+  lens.disableRow (22000);
+  System.out.println ("starting get visible, one column and one row hidden");
+  startTime = System.currentTimeMillis ();
+  visibleMatrix = lens.getVisibleMatrix ();
+  duration = System.currentTimeMillis () - startTime;
+  System.out.println ("done: " + duration);
+  assertTrue (visibleMatrix.getRowCount () == 45100);
+  assertTrue (visibleMatrix.getColumnCount () == 24);
+
+}  // testSpeedOfGetVisibleMatrix
+//------------------------------------------------------------------------------
+public void testAddRow () throws Exception
+{
+  System.out.println ("testAddRow");
+
+  DataMatrixReader reader = new DataMatrixFileReader ("file://" + "simpleMatrix.txt");
+  reader.read ();
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix = reader.get ();
+  LensedDataMatrix lens = new LensedDataMatrix (matrix);
+  lens.enableAllRows ();
+
+  assertTrue (lens.getColumnCount () == 3);
+  assertTrue (lens.getRowCount () == 4);
+  double [] newRow = new double [] {1.0, 2.0, 3.0};
+  String newRowTitle = "new row";
+  lens.addRow (newRowTitle, newRow);
+  assertTrue (lens.getRowCount () == 5);
+  assertTrue (Arrays.equals (lens.get (4), newRow));
+  assertTrue (lens.getRowTitles()[4].equals (newRowTitle));
+  assertTrue (lens.getRowIndex (newRowTitle) == 4);
+
+  lens.disableAllRows ();
+  lens.enableRows (new int [] {4});
+  assertTrue (lens.getRowCount () == 1);
+  double [] testRow = lens.get (0);
+  assertTrue (Arrays.equals (testRow, newRow));
+  assertTrue (lens.getRowTitles()[0].equals (newRowTitle));
+  int rowIndex = lens.getRowIndex (newRowTitle);
+
+  org.systemsbiology.gaggle.core.datatypes.DataMatrix subMatrix = lens.getVisibleMatrix ();
+  assertTrue (subMatrix.getRowCount () == 1);
+  assertTrue (subMatrix.getColumnCount () == 3);
+  assertTrue (subMatrix.getRowTitles()[0].equals (newRowTitle));
+    // this next is constant, regardless of row enabling/disabling
+  assertTrue (lens.getRowIndex (newRowTitle) == 4); 
+  
+} // testAddRow
+//------------------------------------------------------------------------------
+public static void main (String [] args) 
+{
+  junit.textui.TestRunner.run (new TestSuite (LensedDataMatrixTest.class));
+
+}// main
+//------------------------------------------------------------------------------
+} // LensedDataMatrixTest

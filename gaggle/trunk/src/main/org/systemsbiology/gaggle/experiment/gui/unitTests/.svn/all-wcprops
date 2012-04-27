@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/unitTests
+END
+DataMatrixTableModelTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/unitTests/DataMatrixTableModelTest.java
+END
+SpreadsheetLineFinderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/unitTests/SpreadsheetLineFinderTest.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/unitTests/makefile
+END

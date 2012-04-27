@@ -1,0 +1,55 @@
+8
+
+dir
+434
+https://err.bio.nyu.edu/svn/aviv/InferelatorDreamRelease/trunk/mi
+https://err.bio.nyu.edu/svn/aviv
+
+
+
+2010-08-06T15:00:13.463528Z
+428
+alexg
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2885521c-f044-0410-8a9f-f2d24916a048
+
+R
+dir
+
+DESCRIPTION
+file
+
+
+
+
+2010-08-09T17:27:54.000000Z
+d5637bebaed202e5da29b62f073d1a39
+2010-08-06T15:00:13.463528Z
+428
+alexg
+
+demo
+dir
+
+src
+dir
+
+data
+dir
+
+man
+dir
+

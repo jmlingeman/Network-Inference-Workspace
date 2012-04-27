@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/names/data
+END
+halobacterium.stringToOrf.tsv
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/names/data/halobacterium.stringToOrf.tsv
+END
+humanStringToGeneId.tsv
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/names/data/humanStringToGeneId.tsv
+END

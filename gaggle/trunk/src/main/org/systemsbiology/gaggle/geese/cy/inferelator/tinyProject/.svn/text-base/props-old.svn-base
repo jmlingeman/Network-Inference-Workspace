@@ -1,0 +1,7 @@
+visualStyle=inferelator
+plugin.0.load=org.systemsbiology.gaggle.CyGagglePlugin
+plugin.2.load=csplugins.isb.dtenenbaum.jython.PyConsolePlugin
+species=Halobacterium sp.
+
+
+

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<experiment name="iron concentrations" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:metals:iron'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/iron.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> /users/pshannon/tomcat/server1/webapps/halo/data/iron.lambda </uri>
+  </dataset>
+
+  <condition alias='Fe_2_vs_C.sig'>
+    <variable name='concentration' value='2' units='millimolar'/>
+  </condition>
+
+  <condition alias='Fe_4_vs_C.sig'>
+    <variable name='concentration' value='4' units='millimolar'/>
+  </condition>
+
+  <condition alias='Fe_6_vs_C.sig'>
+    <variable name='concentration' value='6' units='millimolar'/>
+  </condition>
+
+  <condition alias='Fe_7_vs_C.sig'>
+    <variable name='concentration' value='7' units='millimolar'/>
+  </condition>
+
+ </experiment>

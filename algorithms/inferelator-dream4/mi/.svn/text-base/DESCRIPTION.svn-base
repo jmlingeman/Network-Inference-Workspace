@@ -1,0 +1,8 @@
+Package: mi
+Version: 0.1-1
+Date: 2008-07-15
+Title: MI calculation
+Author: Aviv Madar <madaraviv@nyu.edu>
+Maintainer: Aviv Madar <madaraviv@nyu.edu>
+Description: Using B splines to calculate mutual information
+License: Unlimited

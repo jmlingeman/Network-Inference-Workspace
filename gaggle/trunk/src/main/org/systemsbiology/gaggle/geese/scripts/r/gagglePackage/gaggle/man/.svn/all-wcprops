@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/4498/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man
+END
+getNameList.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getNameList.Rd
+END
+showGoose.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/showGoose.Rd
+END
+getCluster.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getCluster.Rd
+END
+getTargetGoose.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getTargetGoose.Rd
+END
+disconnectFromGaggle.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/disconnectFromGaggle.Rd
+END
+geese.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/geese.Rd
+END
+getTuple.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/gaggle/!svn/ver/4437/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getTuple.Rd
+END
+getNetwork.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getNetwork.Rd
+END
+getSpecies.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getSpecies.Rd
+END
+setTargetGoose.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/setTargetGoose.Rd
+END
+broadcast.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/broadcast.Rd
+END
+testGagglePackage.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/gaggle/!svn/ver/3140/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/testGagglePackage.Rd
+END
+newTuple.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/gaggle/!svn/ver/4498/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/newTuple.Rd
+END
+connectToGaggle.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/connectToGaggle.Rd
+END
+getMatrix.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getMatrix.Rd
+END
+hideGoose.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/hideGoose.Rd
+END
+setSpecies.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/setSpecies.Rd
+END
+getJavaClassName.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/gaggle/!svn/ver/4498/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/getJavaClassName.Rd
+END
+gaggleInit.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2788/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/man/gaggleInit.Rd
+END

@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+ <!-- $Revision: 1.1 $  $Date: 2005/03/13 21:12:47 $ -->
+
+<experiment name="gamma irradiation" date="2004-02-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:irradiation:garlic'/>
+
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> garlic.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> garlic.lambda </uri>
+  </dataset>
+
+   <condition alias='garlic__0000gy-0000m'>
+     <variable name='concentration' value='0' units='Gy'/>
+     <variable name='time' value='0' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__0000gy-0010m'>
+     <variable name='concentration' value='0' units='Gy'/>
+     <variable name='time' value='10' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__0000gy-0030m'>
+     <variable name='concentration' value='0' units='Gy'/>
+     <variable name='time' value='30' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__0000gy-0060m'>
+     <variable name='concentration' value='0' units='Gy'/>
+     <variable name='time' value='60' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__0000gy-0240m'>
+     <variable name='concentration' value='0' units='Gy'/>
+     <variable name='time' value='240' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__0000gy-0960m'>
+     <variable name='concentration' value='0' units='Gy'/>
+     <variable name='time' value='960' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0000m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='0' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0010m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='10' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0020m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='20' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0030m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='30' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0040m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='40' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0060m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='60' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0120m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='120' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0240m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='240' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0480m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='480' units='minutes'/>
+   </condition>
+
+   <condition alias='garlic__2500gy-0960m'>
+     <variable name='concentration' value='2500' units='Gy'/>
+     <variable name='time' value='960' units='minutes'/>
+   </condition>
+
+</experiment>

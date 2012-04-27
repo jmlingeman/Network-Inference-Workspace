@@ -1,0 +1,12 @@
+#sif=jar://CoreNet.sif
+gml=jar://CoreNet.gml
+props=jar://props
+dataServer=http://db.systemsbiology.net:8080/cytoscape/annotation/mouse/manifest
+species=Mus musculus
+noa=jar://commonNames.noa
+noa=jar://friendlyName.noa
+noa=jar://jax.noa
+noa=jar://locuslink.noa
+noa=jar://moleculeType.noa
+props=jar://props
+vprops=jar://vizmap.props

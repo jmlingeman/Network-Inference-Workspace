@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/versionTester
+END
+tester.jnlp-raw
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/versionTester/tester.jnlp-raw
+END
+manifest
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/versionTester/manifest
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/versionTester/makefile
+END
+JavaVersionTester.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/util/versionTester/JavaVersionTester.java
+END

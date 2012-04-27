@@ -1,0 +1,3 @@
+visualStyle=inferelator
+plugin.1.load=org.systemsbiology.gaggle.geese.cy.inferelator.InferelatorControlPanelPlugin
+species=Halobacterium sp.

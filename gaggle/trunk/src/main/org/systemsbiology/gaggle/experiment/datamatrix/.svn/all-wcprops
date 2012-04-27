@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gaggle/!svn/ver/4006/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix
+END
+MatrixCombiner.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/MatrixCombiner.java
+END
+MatrixPersister.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/MatrixPersister.java
+END
+MatrixSlicer.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/MatrixSlicer.java
+END
+LensedDataMatrix.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/gaggle/!svn/ver/4006/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/LensedDataMatrix.java
+END
+MatrixProject.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/MatrixProject.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/makefile
+END

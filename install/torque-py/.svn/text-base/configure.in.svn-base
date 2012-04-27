@@ -1,0 +1,36 @@
+AC_INIT(src/pbs_2.4.py)
+AC_SUBST(prefix)
+AC_SUBST(exec_prefix)
+AC_SUBST(pyexecdir)
+
+
+pbsdir_default=''
+AC_ARG_WITH([pbsdir],
+ [  --with-pbsdir=PATH	The torque/pbs install directory],
+  pbsdir=$withval, pbsdir=$pbsdir_default)
+AC_SUBST(pbsdir)
+
+# Verify the PBS libs are there, but let Makefile handle including them
+# on the link line.  First check for modern torque pbs-config program using
+# $pbsdir and the rest of PATH, then fall back to looking around for the
+# libraries by hand.
+AC_PATH_PROG(PBSCONFIG, pbs-config, none, $pbsdir:$pbsdir/bin:$pbsdir/../bin:$PATH)
+if test "$PBSCONFIG" != "none"; then
+  pbs_library_compile_line="`$PBSCONFIG --libs`"
+  pbs_library_dir="`$PBSCONFIG --libdir`"
+  pbs_version="`$PBSCONFIG --version`"
+  AC_MSG_RESULT(Found torque version: $pbs_version)
+else
+  AC_MSG_ERROR([Failed to find program pbs-config])
+fi
+AC_SUBST(pbs_library_compile_line)
+AC_SUBST(pbs_library_dir)
+AC_SUBST(pbs_version)
+
+
+AM_PATH_PYTHON
+
+AC_OUTPUT(
+        Makefile
+	setup.py
+	)

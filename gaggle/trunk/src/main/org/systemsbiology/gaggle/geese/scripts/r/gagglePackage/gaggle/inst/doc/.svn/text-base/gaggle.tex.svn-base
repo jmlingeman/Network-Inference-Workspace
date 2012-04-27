@@ -1,0 +1,276 @@
+%\VignetteIndexEntry{Gaggle Overview}
+%\VignetteKeywords{Interface}
+%\VignetteDepends{gaggle}
+%\VignettePackage{gaggle}
+
+\documentclass[12pt]{article}
+
+\usepackage{times}
+\usepackage{hyperref}
+
+\usepackage[authoryear,round]{natbib}
+\usepackage{times}
+\usepackage{comment}
+
+\textwidth=6.2in
+\textheight=8.5in
+%\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+\newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+
+
+\bibliographystyle{plainnat}
+
+
+\title{The Gaggle}
+\author{Paul Shannon}
+
+\usepackage{Sweave}
+\begin{document}
+
+\maketitle
+
+The practice of biology often requires the simultaneous exploration of many kinds of data.
+No single software tool, web site, or combination of Bioconductor packages, can
+do justice to these data.  Furthermore -- and despite significant effort having been devoted
+to integrating many kinds of data within single programs and web sites in recent years-- 
+the challenge presented by heterogeneity of biological data is only likely to increase, as
+are the the number of useful programs and web sites for exploring that data.
+
+The Gaggle (Shannon et al. 2006) tackles this heterogeneity by providing a simple
+mechanism for broadcasting data among properly \emph{gaggled} programs.  And, contrary
+to expectation, careful semantic mapping is \emph{not} required for these broadcasts to be useful.
+
+
+In the Gaggle, the data types are distilled versions of data types
+commonly used in bioinformatics (and, indeed, in many other scientific fields). They are
+essentially free of biological semantics, but they take on rich semantics when they
+are interpreted by the receiving program.  For instance: a simple list of
+(gene) names may be used to select rows of a matrix in R, nodes in a Cytoscape network, metabolic
+pathways in KEGG, and protein-protein associations in EMBL's STRING.  This works equally well for
+the other data types -- matrices, networks, and associative arrays (about which more below).
+
+The Gaggle is open source and written in Java.  We rely upon (and are
+grateful for) the R package \Rpackage{rJava} for Java/R integration.  Further
+information about the Gaggle may be found at \textbf{http://gaggle.systemsbiology.org}
+and in the references.
+
+The current vignette illustrates the Gaggle with a very simple example. We create
+a random edge graph in R, broadcast it to Cytoscape for display, followed by
+broadcasting selected node names back and forth.
+
+The four Gaggle \textbf{data types} are translated into R as follws:
+
+\begin{itemize}
+\item name list          (mapped to an R character list)
+\item matrices           (R matrix)
+\item networks           (GraphNEL object)
+\item associative arrays (R environment)
+\end{itemize}
+
+
+'\textbf{\textit{Geese}}' are programs or web resources adapted to run the Gaggle.  They  are 
+typically written independent of the Gaggle (as with R), and then adapted to the
+Gaggle  with a modest amount of programming.  (See the paper and website for more details.)  
+Some current geese are:
+
+\begin{itemize}
+\item Cytoscape (see http://www.cytoscape.org)
+\item TIGR Mev  (see http://www.tm4.org/mev.html)
+\item STRING goose (see http://string.embl.de)
+\item a variety of name translators
+\end{itemize}
+
+A companion website for this vignette may be found at which we encourage you to visit.
+It presents more background, several demos beyond the one presented here, and
+Java Web Start links from which you can (with one click)  download and run all of the necessary geese,
+including the \textbf{Gaggle Boss} which must always be started first in any Gaggle session
+you run.
+
+\begin{center}
+\url{http://gaggle.systemsbiology.org/R/vignettes/1}
+\end{center}
+
+\section{Technical Background and Notes}
+
+The \textbf{Gaggle} is a simple, open-ended collection of RMI-linked Java
+programs, which broadcast selected data to each other at the user's behest.
+These broadcasts are managed by a simple RMI server, the \textbf{Gaggle
+Boss}. Though it is not stricly necessary, we find it very convenient to launch most
+geese via Java Web Start links in a web page.  For the \textbf{R goose}, simply
+install the gaggle package as you would any other R or Bioconductor package.
+Please see the companion website for a generally useful set of Java Web Start
+links.
+
+You \textbf{must} always start a Gaggle Boss on your computer before you start any geese.  Every
+goose registers with this boss as it starts up; if it isn't running, you get no
+gaggle capabilities.
+
+Upon receiving a broadcast, each goose interprets the 
+data according to its own, local semantics. (This strategy of
+\textbf{semantic flexibility} is discussed at length in the Gaggle paper.)
+ The \textbf{KEGG}
+goose, for example, responds to a list of gene names by displaying
+the metabolic pathways to which they have been annotated; having no
+sensible interpretation of matrices or networks, the KEGG goose simply
+ignores those broadcasts.  The \textbf{STRING} goose will present a web page
+for the discovery of protein associations; the network which results may be
+broadcast back to the Gaggle.
+
+As of this writing (June 2006) web resources -- bioinformatics
+websites like KEGG and EMBL's STRING -- are included in the Gaggle by
+way of naive, home-grown web browsers, written by us in Java, and
+tailored to the details of these sites. These browsers work reliably,
+but they leave a \emph{lot} to be desired.  In recognition of this, we
+have been experimenting with Mozilla (Firefox) extensions, which allow
+us to use a full-fledged, popular browser in the Gaggle.  Expect more
+on this front soon, and please be patient with our initial attempts at
+gaggling websites, until we improve them!
+
+
+\section{Demo: Broadcast a randomEGraph to Cytoscape for viewing; broadcast selected nodes back to R}
+
+In this first demonstration, we 
+
+\begin{itemize}
+\item Start the Gaggle Boss  (browse to \url{http://gaggle.systemsbiology.org/R/vignettes/1}, Part 1, for web start links)
+\item Start Cytoscape
+\item Start R, and load the gaggle package
+\item Create a randomEGraph, broadcast it, and see it  displayed in Cytoscape
+\item Select a few nodes of the graph in Cytoscape, and broadcast them back to R
+\item Broadcast these selected nodes back to R again, but this time, not as a list of node names,
+but as a connected subgraph (that is, with edges included)
+\end{itemize}
+
+
+\begin{Schunk}
+\begin{Sinput}
+> library(gaggle)
+> gaggleInit()
+> set.seed(123)
+> g = randomEGraph(LETTERS[1:8], edges = 10)
+> broadcast(g)
+\end{Sinput}
+\end{Schunk}
+
+You should see an 8-node, 10-edge network appear in cytoscape.  
+
+Switch your focus to Cytoscape, and select a few nodes by drag-selecting with your left mouse button.
+Then look near the top of the Cytoscape window for the broadcast buttons (\textbf{S H B N}):
+
+\includegraphics{gooseSelectionMenu.png}
+
+These stand for \textbf{S}how, \textbf{H}ide, \textbf{B}roadcast names,
+and broadcast \textbf{N}etwork, respectively.  The \emph{target} of these
+actions is picked by manipulating the 'goose selection menu' which shows \textbf{R} in the illustration.
+(See below for how to broadcast and select target geese using R function calls.)
+If the \textbf{Boss} is the
+target, then your broadcasts are sent to \emph{all} of the geese who are registered with
+the Boss  -- though one can manipulate the user interface of the Boss so that 
+it only forwards messages to selected geese). 
+
+
+\includegraphics{listening.png}
+
+
+Click the 'Update' button to ensure that your goose has a fresh list of all
+currently running geese for you to choose from.
+
+Inasmuch as the R goose does not have a full-fledged graphical user interface,
+function calls must be used instead of buttons and menus to 
+interact with the Gaggle.  Here are the relevant commands:
+
+\begin{itemize}
+\item \textbf{geese ()}                 names of the current geese
+\item \textbf{setTargetGoose (someGooseName)}    one of the names returned by 'geese ()'
+\item \textbf {getTargetGoose ()}                find out the current setting
+\item \textbf {broadcast (someVariable)}         this generic function suffices for name 
+                                        lists, graphs, matrices, environments the 
+                                        broadcast goes to the current targetGoose, 
+                                        or to the Boss by default.
+\item \textbf{showGoose ()}                      raise the window of the current target goose
+\item \textbf{hideGoose ()}                      hide the window of the current target goose
+\end{itemize}
+
+
+When using a new goose with which you are unfamiliar, you can often learn your
+way around from the  tooltips associated with buttons in most GUI geese.  These 'flyover'
+explanations of otherwise tersely named buttons should help you to use the various geese.
+
+Returning, now, to the Cytoscape goose, with at least a few selected nodes, broadcast
+this selection back to R.  There are two kinds of broadcasts available to you:  of just the
+names, or of the selected subgraph.  Whichever you choose, your R console will display
+a message indicating the type and size of the broadcast it has just received. (These
+messages, unfortunately, are not displayed by the Windows Rgui application.) You must
+then call one of the following methods in order to assign this data to an R variable:
+
+\begin{Schunk}
+\begin{Sinput}
+> selectedNodes = getNameList()
+> subgraph = getNetwork()
+\end{Sinput}
+\end{Schunk}
+
+You may also select nodes in the Cytoscape goose from R.  (You may wish to
+clear the current selection, if any, in Cytoscape first, using the \textbf{Cl} button
+near the top center of the Cytoscape window).  Then, in R:
+
+\begin{Schunk}
+\begin{Sinput}
+> broadcast(c("B", "E"))
+\end{Sinput}
+\end{Schunk}
+
+
+\section{For More Information}
+
+For more information, and for more extensive demonstrations, please visit
+
+\url{http://gaggle.systemsbiology.org/R/vignettes/1}
+
+and the Gaggle website:
+
+\url{http://gaggle.systemsbiology.org}
+
+
+\section{Issues with the gaggle package on Windows}
+
+The gaggle package depends  has a couple of issues running under Windows. Both can be worked around as follows.
+
+\begin{itemize}
+
+\item Because of an issue with the rJava package, on which the gaggle package depends, your CLASSPATH must be set in a certain way. Make sure your Windows CLASSPATH does 
+\emph{NOT} contain the following entries, or the gaggle package will not work:
+
+\begin{itemize}
+\item . (representing the current entry)
+\item Any entry with a space in it (e.g. C:$\backslash$Program Files$\backslash$Example)
+\item The path to the R bin directory
+
+\end{itemize}
+
+\item It is recommended to use the command-line version of R (R.exe) with the gaggle package. You may use the graphical version (RGui.exe), however if you do so, you will not see any informative messages from the R goose (for example, notifying you that a broadcast has been received). This is due to an issue with the graphical version of R on Windows.
+
+\end{itemize}
+
+\section{References}
+
+
+\begin{itemize}
+
+\item Shannon P, Reiss DJ, Bonneau R, Baliga NS. The Gaggle: A system for integrating 
+bioinformatics and computational biology software and data sources,  
+\emph {BMC Bioinformatics} 2006, 7:176.
+
+\end{itemize}
+
+\end{document}

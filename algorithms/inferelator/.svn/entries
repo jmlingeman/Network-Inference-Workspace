@@ -1,0 +1,124 @@
+8
+
+dir
+39
+https://err.bio.nyu.edu/svn/aviv/inferelator/trunk
+https://err.bio.nyu.edu/svn/aviv
+
+
+
+2008-02-29T13:52:48.490514Z
+39
+aviv
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+2885521c-f044-0410-8a9f-f2d24916a048
+
+fly-scratch.R
+file
+
+
+
+
+2008-02-17T00:39:12.000000Z
+1613734924eee007a2f57ddb857a5c76
+2008-02-16T17:30:09.823165Z
+32
+aviv
+
+output
+dir
+
+Rplots.ps
+file
+60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+lib
+dir
+
+scratch
+dir
+
+scripts
+dir
+
+R_scripts
+dir
+
+data
+dir
+
+bigPap-pannelPlot-pyruvate.R
+file
+
+
+
+
+2008-02-17T00:39:12.000000Z
+9ae891f153aa9e8105121f84dc1ce28e
+2008-02-16T17:30:09.823165Z
+32
+aviv
+
+cytoscape
+dir
+
+CVS
+dir
+
+bigPap-pannelPlot.R
+file
+
+
+
+
+2008-02-17T00:39:12.000000Z
+ccd14560d8e93cf1d5f0369ac76b18ef
+2008-02-16T17:30:09.823165Z
+32
+aviv
+
+0README
+file
+
+
+
+
+2008-02-17T00:39:12.000000Z
+a0bdfe8839532cdd0c35e037acf21ee0
+2008-02-16T17:30:09.823165Z
+32
+aviv
+

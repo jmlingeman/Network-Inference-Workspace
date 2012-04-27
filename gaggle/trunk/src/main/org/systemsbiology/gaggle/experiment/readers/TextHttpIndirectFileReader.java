@@ -1,0 +1,264 @@
+// TextHttpIndirectFileReader.java
+//---------------------------------------------------------------------------
+//	$Revision: 732 $ 
+//	$Date: 2004/11/29 23:47:01 $
+//	$Author: pshannon $
+//---------------------------------------------------------------------------
+/*
+ * Copyright (C) 2006 by Institute for Systems Biology,
+ * Seattle, Washington, USA.  All rights reserved.
+ *
+ * This source code is distributed under the GNU Lesser
+ * General Public License, the text of which is available at:
+ *   http://www.gnu.org/copyleft/lesser.html
+ */
+
+package org.systemsbiology.gaggle.experiment.readers;
+//------------------------------------------------------------------------------
+import java.io.*;
+import java.util.*;
+import java.net.*;
+// import org.systemsbiology.gaggle.experiment.datamatrix.*;
+//---------------------------------------------------------------------------
+public class TextHttpIndirectFileReader {
+
+  InputStreamReader reader;
+  String rawText;
+  String originalUri;
+  String adjustedUri;
+  String user, password;
+  boolean debug = false;
+
+//-----------------------------------------------------------------------------------
+public TextHttpIndirectFileReader (String URI, String _user, String _password) throws Exception
+{
+  this (URI, _user, _password, false);
+}
+//-----------------------------------------------------------------------------------
+public TextHttpIndirectFileReader (String URI, String _user, String _password, boolean debug) 
+									 throws Exception
+{
+  this.debug = debug;
+  if (_user == null) {
+	if (debug)
+	  System.err.println ("\n-------- TextHttpIndirectFileReader, reading user & password\n");
+	readUserAndPassword ();
+	}
+  else {
+	if (debug)
+	  System.err.println ("\n-------- TextHttpIndirectFileReader, user & password supplied: " +
+						 _user + ", " + _password);
+	user = _user;
+	password = _password;
+	}
+
+  init (URI, user, password);
+}
+//-----------------------------------------------------------------------------------
+public TextHttpIndirectFileReader (String URI) throws Exception
+{
+  this (URI, null, null);
+
+} // ctor
+//---------------------------------------------------------------------------
+public TextHttpIndirectFileReader (String URI, boolean debug) throws Exception
+{
+  this (URI, null, null, debug);
+
+} // ctor
+//---------------------------------------------------------------------------
+protected void init (String URI, String user, String password)
+{
+  originalUri = URI;
+  this.user = user;
+  this.password = password;
+  adjustedUri = adjustURI (originalUri);
+  if (debug) {
+	System.err.println ("\n--------------- TextHttpIndirectFileReader.init");
+	System.err.println ("           adjustedUri: " + adjustedUri);
+	System.err.println ("                  user: " + user);
+	System.err.println ("                    pw: " + password);
+	System.err.println ("          original uri: " + originalUri);
+	System.err.println ();
+	}
+
+} // init
+//-----------------------------------------------------------------------------------
+private String adjustURI (String uri)
+{
+  StringBuffer sb = new StringBuffer ();
+
+  if (uri.endsWith (".py")) {
+	// convention: this is a request for all .xml files known to this server
+	String baseUri = uri.substring (uri.indexOf ("://"));
+	sb.append ("http");
+	sb.append (baseUri);
+	sb.append ("?mode=dir");
+	sb.append ("&name=xml");
+	sb.append ("&user=");
+	sb.append (user);
+	sb.append ("&pw=");
+	sb.append (password);
+	}
+
+  else {
+	// convention: this is a request for the contents of a file
+	int positionOfLastSeparator = uri.lastIndexOf ("/");
+	String filename = uri.substring (positionOfLastSeparator + 1);
+	String baseUri = uri.substring (uri.indexOf ("://"), positionOfLastSeparator);
+	sb.append ("http");
+	sb.append (baseUri);
+	sb.append ("?mode=getFile&name=");
+	sb.append (filename);
+	sb.append ("&user=");
+	sb.append (user);
+	sb.append ("&pw=");
+	sb.append (password);
+	}
+
+  return sb.toString ();
+
+} // adjustURI
+//-----------------------------------------------------------------------------------
+private File findFile (String directory, String filename)
+{
+  if (directory != null) {
+	File result = new File (directory, filename);
+	if (result.canRead ())
+	  return result;
+	}
+
+  return null;
+
+} // findFile
+//------------------------------------------------------------------------------------------
+private void readUserAndPassword ()
+{
+  Properties props = new Properties ();
+  String propsFileName = "gaggle.props"; 
+
+  File userGeneralPropsFile = findFile (System.getProperty ("user.home"), propsFileName);
+  File userSpecialPropsFile = findFile (System.getProperty ("user.dir"),  propsFileName);
+  FileInputStream fis = null;
+
+  try {
+	if (userSpecialPropsFile != null) {
+	  fis = new FileInputStream (userSpecialPropsFile);
+	  props.load (fis);
+	  if (debug)
+		System.err.println ("TextHttpIndirectFileReader reading props from " + 
+							userSpecialPropsFile.getPath ());
+	  }
+	else if (userGeneralPropsFile != null) {
+	  fis = new FileInputStream (userGeneralPropsFile);
+	  props.load (fis);
+	  if (debug)
+		System.err.println ("TextHttpIndirectFileReader reading props from " + 
+							userGeneralPropsFile.getPath ());
+	  } // 
+	} // try
+  catch (FileNotFoundException ignore) {;}
+  catch (IOException ignore) {;}
+
+  user = "";
+  password = "";
+
+  if (props.containsKey ("user"))
+	user = (String) props.get ("user");
+
+  if (props.containsKey ("password"))
+	password = (String) props.get ("password");
+
+  if (debug) 
+	System.err.println ("TextHttpIndirectFileReader, user=" + user +  "  pw: " + password);
+
+} // readUserAndPassword
+//-----------------------------------------------------------------------------------
+public String getAdjustedUri ()
+{
+  return adjustedUri;
+}
+//-----------------------------------------------------------------------------------
+public int read () throws Exception
+{
+  // System.out.println ("--------- getting " + adjustedUri + "\n");
+  StringBuffer sb = new StringBuffer ();
+  sb.append (getPage (adjustedUri));
+  //System.out.println (sb.toString ());
+  rawText = sb.toString ();
+  return sb.length ();
+
+} // read
+//---------------------------------------------------------------------------
+public int read (String uri) throws Exception
+{
+  StringBuffer sb = new StringBuffer ();
+  adjustedUri = adjustURI (uri);
+  sb.append (getPage (adjustedUri));
+  rawText = sb.toString ();
+  return sb.length ();
+
+} // read
+//---------------------------------------------------------------------------
+public String getText ()
+{
+  return rawText.trim ();
+
+} // read
+//---------------------------------------------------------------------------
+static public String getPage (String urlString) throws Exception
+{
+  String result;
+  try {
+	result = getPage (new URL (urlString));
+	}
+  catch (Exception e) {
+	result = "";
+	}
+
+  return result;
+
+} // getPage
+//-----------------------------------------------------------------------------------------------
+static public String getPage (URL url) throws Exception
+{
+  int characterCount = 0;
+  StringBuffer result = new StringBuffer ();
+
+  HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection ();
+  int responseCode = urlConnection.getResponseCode ();
+  String contentType = urlConnection.getContentType ();
+
+  int contentLength = urlConnection.getContentLength ();
+
+  String contentEncoding = urlConnection.getContentEncoding ();
+
+  if (responseCode != HttpURLConnection.HTTP_OK)
+	throw new IOException ("\nHTTP response code: " + responseCode);
+
+  BufferedReader theHTML = new BufferedReader 
+				   (new InputStreamReader (urlConnection.getInputStream ()));
+  String thisLine;
+  while ((thisLine = theHTML.readLine ()) != null) {
+	result.append (thisLine);
+	result.append ("\n");
+	}
+
+  return result.toString ();
+
+} // getPage
+//-----------------------------------------------------------------------------------------------
+public File writeToTemporaryFile () throws IOException
+{
+  File tmpFile = File.createTempFile ("httpIndirect", ".txt");
+  FileWriter fileWriter = new FileWriter (tmpFile);
+  fileWriter.write (rawText, 0, rawText.length ());
+  fileWriter.close ();
+
+  return tmpFile;
+
+} // writeToTemporaryFile
+//-----------------------------------------------------------------------------------------------
+} // TextHttpIndirectFileReader
+
+

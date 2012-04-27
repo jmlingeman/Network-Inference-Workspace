@@ -1,0 +1,7 @@
+plugin.0=org.systemsbiology.gaggle.boss.plugins.clipboard.Clipboard
+plugin.1=org.systemsbiology.gaggle.boss.plugins.tigrAnno.SearchPanel
+annotation=http://gaggle.systemsbiology.net/projects/jdrf/anno/mhc.tsv
+
+
+
+

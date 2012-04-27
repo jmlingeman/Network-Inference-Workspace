@@ -1,0 +1,15 @@
+K 10
+svn:ignore
+V 69
+*.gz
+*.aux
+*.log
+*.out
+*.pdf
+*.tex
+
+gaggle.Rcheck
+
+gaggle_1.17.0.zip
+
+END

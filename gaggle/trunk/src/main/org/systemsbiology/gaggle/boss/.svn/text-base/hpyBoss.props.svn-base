@@ -1,0 +1,3 @@
+plugin.1=org.systemsbiology.gaggle.boss.plugins.tigrAnno.SearchPanel
+annotation=http://gaggle.systemsbiology.net/projects/hpy/2005-09/annotation/tigr.anno
+

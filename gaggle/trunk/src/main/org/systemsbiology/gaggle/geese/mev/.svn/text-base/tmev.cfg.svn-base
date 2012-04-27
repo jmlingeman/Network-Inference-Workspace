@@ -1,0 +1,41 @@
+#
+#Copyright @ 1999-2003, The Institute for Genomic Research (TIGR).
+#All rights reserved.
+#
+#
+# $RCSfile$
+# $Revision$
+# $Date$
+# $Author$
+# $State$
+#
+#
+#GUI Factory Class Name
+gui.factory.class = org.tigr.microarray.mev.cluster.gui.impl.GUIFactory
+
+#Algorithm Factory Class Name
+algorithm.factory.class = org.tigr.microarray.mev.cluster.algorithm.impl.AlgorithmFactoryImpl
+
+#List of algorithms for remote execution (use ':' to separate algo names)
+#algorithm.remote = HCL : RELNET
+
+# XML SAX2 reader 
+org.xml.sax.driver = org.apache.xerces.parsers.SAXParser
+
+# Server URL in the case of the sync HTTP-based communication. instead of the name service
+#remote.server http://datanaut2:8080/gateway/test
+remote.server http://192.168.254.100:8080/gateway/test
+
+# HTTP polling interval in seconds
+remote.polling 3
+ 
+# Temporary dir used by XML parser
+remote.parser.tmp-dir.path=F:/
+
+remote.debug.keep-response-files true
+
+#DATA PATH
+current-data-path Users/mpshannon/work/csplugins/isb/pshannon/gaggle/mev/
+
+# Prompt save state
+prompt-for-save true

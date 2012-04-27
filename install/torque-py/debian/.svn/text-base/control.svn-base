@@ -1,0 +1,15 @@
+Source: pbs-python
+Section: misc
+Priority: optional
+Maintainer: Yaroslav Halchenko <debian@onerussian.com>
+Build-Depends: debhelper (>> 4.0.0), cdbs, chrpath, python, torque
+Standards-Version: 3.5.8
+
+Package: pbs-python
+Section: misc
+Architecture: any
+Depends: torque
+Description: python API for the Torque library
+ PBS_PYTHON interface is a wrapper class for the OPENPBS/TORQUE C LIB API.
+ Now you can write utilities/extensions in Python instead of C.
+

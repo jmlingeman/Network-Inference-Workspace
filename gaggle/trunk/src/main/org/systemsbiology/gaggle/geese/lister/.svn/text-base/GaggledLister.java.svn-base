@@ -1,0 +1,253 @@
+// GaggledLister
+// a demo goose -- a gaggle wrapper around a very simple sample swing program
+//-------------------------------------------------------------------------------------
+// $Revision$   
+// $Date$
+//-------------------------------------------------------------------------------------
+/*
+ * Copyright (C) 2006 by Institute for Systems Biology,
+ * Seattle, Washington, USA.  All rights reserved.
+ *
+ * This source code is distributed under the GNU Lesser
+ * General Public License, the text of which is available at:
+ *   http://www.gnu.org/copyleft/lesser.html
+ */
+
+package org.systemsbiology.gaggle.geese.lister;
+//---------------------------------------------------------------------------------
+
+import java.rmi.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.HashMap;
+//import javax.jnlp.*;
+import java.io.*;
+
+import org.systemsbiology.gaggle.core.Boss;
+import org.systemsbiology.gaggle.core.Goose;
+import org.systemsbiology.gaggle.core.datatypes.*;
+import org.systemsbiology.gaggle.util.MiscUtil;
+import org.systemsbiology.gaggle.geese.common.RmiGaggleConnector;
+
+//-------------------------------------------------------------------------------------
+public class GaggledLister implements Goose, java.io.Serializable {
+
+    String myName = "lister";
+    Lister lister;
+    RmiGaggleConnector connector = new RmiGaggleConnector(this);
+    Boss gaggleBoss;
+    String species = "Halobacterium sp.";
+
+    //-------------------------------------------------------------------------------------
+    public GaggledLister() {
+        lister = new Lister();
+
+
+        lister.getToolBar().add(new BroadcastSelectionAction());
+        JButton showBossButton = new JButton("Boss");
+        showBossButton.setToolTipText("Show Gaggle Boss");
+        showBossButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    gaggleBoss.show("boss");
+                }
+                catch (RemoteException rex) {
+                    rex.printStackTrace();
+                }
+            }
+        });
+        lister.getToolBar().add(showBossButton);
+
+        JButton saveStateButton = new JButton("Save State");
+        saveStateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String servletUri = "http://db.systemsbiology.net:8080/halo/gaggleSaver.py";
+                String projectPath = "lister/test1";
+                saveState(servletUri, projectPath);
+            }
+        });
+
+        lister.getToolBar().add(saveStateButton);
+
+        lister.pack();
+
+    } // ctor
+
+    //-------------------------------------------------------------------------------------
+    private Lister getLister() {
+        return lister;
+    }
+
+    //-------------------------------------------------------------------------------------
+    public GaggledLister(JFrame appFrame, String name) {
+    }
+
+    //-------------------------------------------------------------------------------------
+    public synchronized void handleNameList(String source, Namelist nameList) throws RemoteException {
+        lister.addNames(nameList.getNames());
+        for (int i = 0; i < nameList.getNames().length; i++)
+            System.out.println("  " + nameList.getNames()[i]);
+
+
+    } // handleNameList
+
+    //-------------------------------------------------------------------------------------
+    public void handleMatrix(String source, DataMatrix Matrix) {
+    }
+
+    public void handleTuple(String source, GaggleTuple gaggleTuple) {
+    }
+
+    public void handleCluster(String source, Cluster cluster) {
+    }
+
+    public void handleNetwork(String source, Network network) {
+    }
+
+    //---------------------------------------------------------------------------------------
+    public String getName() {
+        return myName;
+    }
+
+    //-------------------------------------------------------------------------------------
+    public int getSelectionCount() {
+        return lister.getCurrentSelection().length;
+    }
+
+    //-------------------------------------------------------------------------------------
+    public void setName(String newValue) {
+        myName = newValue;
+    }
+
+    //-------------------------------------------------------------------------------------
+    public void doHide() {
+        lister.setVisible(false);
+    }
+
+    //-------------------------------------------------------------------------------------
+    public void doShow() {
+        lister.setVisible(true);
+        org.systemsbiology.gaggle.util.MiscUtil.setJFrameAlwaysOnTop(lister, true);
+        lister.toFront();
+        org.systemsbiology.gaggle.util.MiscUtil.setJFrameAlwaysOnTop(lister, false);
+
+    }
+
+    //-------------------------------------------------------------------------------------
+    public void setGeometry(int x, int y, int width, int height) {
+        lister.setSize(width, height);
+        lister.setLocation(x, y);
+    }
+
+    //-------------------------------------------------------------------------------------
+    public void doExit() {
+        connector.disconnectFromGaggle(true);
+        System.exit(0);
+    }
+
+    //-------------------------------------------------------------------------------------
+    public void connectToGaggle() throws Exception {
+        try {
+            connector.connectToGaggle();
+        }
+        catch (Exception ex0) {
+            ex0.printStackTrace();
+            System.err.println("------------ 5:35pm");
+            System.err.println("GaggledLister failed to connect to gaggle");
+            System.err.println("message: " + ex0.getMessage());
+        }
+        gaggleBoss = connector.getBoss();
+    }
+
+    //----------------------------------------------------------------------------------------
+    public void clearSelections() {
+        lister.clearSelection();
+    }
+
+    //----------------------------------------------------------------------------------------
+    protected class BroadcastSelectionAction extends AbstractAction {
+
+        BroadcastSelectionAction() {
+            super("Broadcast");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            doBroadcastList();
+        } // actionPerformed
+
+    } // inner class BroadcastSelectionAction
+
+    //------------------------------------------------------------------------------
+    public HashMap getState() {
+        HashMap state = new HashMap();
+        /**************************
+         try {
+         BasicService bs = (BasicService) ServiceManager.lookup ("javax.jnlp.BasicService");
+         System.out.println ("jnlp BasicService: " + bs);
+         if (bs != null)
+         System.out.println ("code base: " + bs.getCodeBase ());
+         }
+         catch (javax.jnlp.UnavailableServiceException uase) {
+         System.err.println (uase.getMessage ());
+         }
+
+         state.put ("names", lister.getNames ());
+         ***************/
+        return state;
+    }
+
+    //------------------------------------------------------------------------------
+/*
+ * the gaggle boss asks this goose to sent its current state to the named servlet
+ * for that servlet to save at the specified projectPath
+ */
+    public void saveState(String servletUri, String projectPath) {
+        HashMap state = getState();
+
+        try {
+            File tmpFile = File.createTempFile("gaggle-lister-state", ".bin");
+            tmpFile.deleteOnExit();
+            System.out.println("serializing GaggledLister state to " + tmpFile);
+            FileOutputStream fstream = new FileOutputStream(tmpFile);
+            ObjectOutputStream ostream = new ObjectOutputStream(fstream);
+            ostream.writeObject(state);
+            ostream.close();
+            String fullUri = servletUri + "?path=" + projectPath + "&goose=" + myName;
+            System.out.println("fullUri: " + fullUri);
+            MiscUtil.displayWebPage(fullUri);
+        }
+        catch (Exception ex0) {
+            System.out.println(ex0.getMessage());
+            ex0.printStackTrace();
+        }
+
+    } // saveState
+
+    //------------------------------------------------------------------------------
+    public void doBroadcastList() {
+        String[] selection = lister.getCurrentSelection();
+        try {
+            // cbare: null inserted to allow compilation
+            // >>>>>>>>>>>>>>>>>>>>>>>>>>>
+            Namelist nameList = new Namelist();
+            nameList.setNames(selection);
+            nameList.setSpecies(species);
+            gaggleBoss.broadcastNamelist(myName, null, nameList);
+        }
+        catch (RemoteException rex) {
+            System.err.println("error rmi selecting at boss, from GaggleLister " + myName);
+        }
+
+    }
+
+    public void update(String[] gooseNames) {
+    }
+
+    //------------------------------------------------------------------------------
+    public static void main(String[] args) throws Exception {
+        GaggledLister goose = new GaggledLister();
+        goose.connectToGaggle();
+
+    } // main
+//-------------------------------------------------------------------------------------
+} // GaggledLister

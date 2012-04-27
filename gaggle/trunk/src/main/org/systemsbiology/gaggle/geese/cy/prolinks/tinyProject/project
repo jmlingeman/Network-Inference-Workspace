@@ -1,0 +1,8 @@
+sif=jar://net30.sif
+eda=jar://confidence.eda
+eda=jar://pValues.eda
+props=jar://props
+vprops=jar://vizmap.props
+species=H. pylori
+dataServer=http://db.systemsbiology.net/cytoscape/annotation/hpy/manifest
+

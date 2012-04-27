@@ -1,0 +1,453 @@
+library( "grDevices" )
+library( "grid" )
+library( "lattice" )
+
+load("redExp-445.RData")
+load("data/THE_HALO_CLUSTER_STACK_445_CONDS-clean.RData")
+load("ratios.redExp.beforeReColOrder.RData")
+
+tmp <- read.table("process-srvy_2.txt", sep = "\t")
+rep.biclust <- tmp[,1]
+names( rep.biclust ) <- tmp[,2]
+
+## reorder cols:
+O2 <- ratios[1,]
+O2 <- (O2 - mean(O2)) / sd( O2)
+Light <- ratios[2,]
+Light <- ( Light - mean(Light) ) / sd (Light)
+Fe <- ratios[3,]
+Fe <- ( Fe - mean(Fe) ) / sd(Fe)
+metals <- ratios[4,] + ratios[5,] + ratios[6,] + ratios[7,] + ratios[8,]
+metals <- ( metals - mean(metals) ) / sd(metals)
+radiation <- ratios[10,] + ratios[9,]
+radiation <- ( radiation - mean( radiation) ) / sd( radiation )
+
+rad.i <- which( radiation > 0 )
+fe.i <- which( Fe > 0)
+met.i <- which( metals > 0)
+circ.i <- c( 196:231, 309:333)
+o2.i <- c(341:368, 96:110)
+ems.i <- 80:95
+
+all.i <- 1:dim( ratios )[2]
+all.left.i <- all.i[ ! all.i %in% c( rad.i, fe.i, met.i, circ.i, o2.i, ems.i )]
+
+new.col.order <- c( ems.i, rad.i, fe.i, met.i, circ.i, o2.i, all.left.i )
+
+##load("output-daveGood-ts=all_pred=all-negEnhance/nwInf.fin.t-all_pred-all.RData")
+
+rep.redExp <- redExp[ rep.biclust, new.col.order ]
+rownames( rep.redExp ) <- names( rep.biclust )
+##pairs( t(rep.redExp), cex = 0.3)
+heatmap(cor( t(rep.redExp) ), col = brewer.pal(100,"Spectral"), scale = "none")
+
+redExp <- redExp[ , new.col.order]
+ratios <- ratios[ , new.col.order]
+
+
+O2 <- ratios[1,]
+O2 <- (O2 - mean(O2)) / sd( O2)
+Light <- ratios[2,]
+Light <- ( Light - mean(Light) ) / sd (Light)
+Fe <- ratios[3,]
+Fe <- ( Fe - mean(Fe) ) / sd(Fe)
+metals <- ratios[4,] + ratios[5,] + ratios[6,] + ratios[7,] + ratios[8,]
+metals <- ( metals - mean(metals) ) / sd(metals)
+radiation <- ratios[10,] + ratios[9,]
+radiation <- ( radiation - mean( radiation) ) / sd( radiation )
+
+
+##tmp.start <- c(41,45,48,84,99,161,186,189,193,266)
+##tmp.stop  <- c(44,47,83,98,132,185,188,192,219,268)
+##tmp.hue  <- c( 0.6,0.8, 0.2,0.7,1.0,0.4,0.65, 0.75,0.3, 0.67)
+##exp.regions <- cbind( tmp.start, tmp.stop, tmp.hue )
+##for (i in 165 : 268 ) {                                               
+##  if ( i %% 4 == 0 ) {
+##    if ( i %% 8 == 0 ) {
+##      cat( 0.20,",")
+##    } else {
+##      cat( 0.65, ",")
+##    }
+##  }
+##}
+
+plot(hclust(dist(rep.redExp)))
+
+#tmp.start <- c(1,4,8 ,23,26,30,33,69,94 ,122,156, 165 ,169 ,173 ,177 ,181 ,185 ,189 ,193 ,197 ,201 ,205 ,209 ,213 ,217 ,221 ,225 ,229 ,233 ,237 ,241 ,245 ,249 ,253 ,257 ,261 ,265 )
+#tmp.stop <-  c(3,7,22,25,29,32,68,93,121,155,160, 168 ,172 ,176 ,180 ,184 ,188 ,192 ,196 ,200 ,204 ,208 ,212 ,216 ,220 ,224 ,228 ,232 ,236 ,240 ,244 ,248 ,252 ,256 ,260 ,264 ,268)
+#tmp.hue <- c( 0.5, 0.6, 0.54, 0.63, 0.57, 0.67, 0.3, 0.2, 0.4, 0.8, 0.9, 0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65 ,0.2 ,0.65     )
+
+tmp.start <- c( 1, 17, 40, 53, 100, 161, 211, 291 )
+tmp.stop  <- c(16, 39, 52, 99, 160, 203, 266, 314 )
+tmp.hue   <- c( 0.32, 0.4, 0.82, 0.9, 0.2 ,0.65, 0.0, 0.5)
+
+exp.regions <- cbind( tmp.start, tmp.stop, tmp.hue )
+
+##if (FALSE) {
+##  tmp <- c(45:47, 41:44, 84:98, 186:188, 189:192, 266:268,
+##           48:83, 161:185,   193:220, 99:132, 257:261)
+##  new.col.order <- c( tmp, (1:ncol(ratios)) [! 1:ncol(ratios) %in% tmp] )
+  
+##  new.cols <- colnames( ratios )[new.col.order ]
+##  ratios <- ratios[, new.col.order ]
+##  redExp <- redExp[, new.col.order ]
+##}
+
+
+## panel plot
+par(mfrow = c(15,2))
+par( mar = c(0,0.05,0,0.05) )
+
+ii <- 0
+for (k in rep.biclust ) {
+  plotCluster.all.conds.mean( clusterStack[[k]], ratios, redExp, exp.regions = exp.regions, range.r = c(-3,3), genes.col = "gray", line.w = 1 )
+  ii <- ii+1
+  name.bi <- names(rep.biclust)[ii]
+  text(220,-2.5, name.bi )
+}
+
+## see different behavior over conds
+
+par(mfrow = c(2,3))
+
+plot(hclust(dist(rep.redExp)), main = "All", cex = 0.5)
+plot(hclust(dist(rep.redExp[,40:99])), main = "metal (w Fe)", cex = 0.5)
+plot(hclust(dist(rep.redExp[,100:160])), main = "circadian", cex = 0.5)
+plot(hclust(dist(rep.redExp[,161:203])), main = "Oxygen", cex = 0.5)
+plot(hclust(dist(rep.redExp[,17:39])), main = "radiation", cex =0.5)
+plot(hclust(dist(rep.redExp[,211:266])), main = "cell density", cex= 0.5)
+
+## over conds
+conds.dist <- dist( ratios ) 
+
+## pcp distance
+par(mfrow = c(2,2))
+pcp.rep <- prcomp( rep.redExp, scale = T, retx = T)
+plot( pcp.rep )
+range.r1 <- range(  pcp.rep$rotation[,1:2] )
+plot( 1:length(colnames(ratios) ), pcp.rep$rotation[,1] , type = "n", ylim = range.r1)
+
+if (! is.null( exp.regions) ) {
+  for (i in 1:dim(exp.regions)[1]  ){
+    rect(exp.regions[i,1], range.r1[1], exp.regions[i,2], range.r1[2], col = hsv( exp.regions[i,3], 0.15, 1),
+         border = hsv( exp.regions[i,3], 0.15, 1) , lwd = 0.0) 
+  }
+}
+lines( c(1,ncol(ratios)), c(0,0), lwd = 6, type = "l", col = 2) 
+lines( 1:length(colnames(ratios) ), pcp.rep$rotation[,1] , type = "l", lwd = 2, col = "black")
+lines( 1:length(colnames(ratios) ), pcp.rep$rotation[,2] , type = "l", lwd = 2, col = "blue")
+
+plot( pcp.rep$x[,2], pcp.rep$x[,1], col = 2 )
+text( pcp.rep$x[,2], pcp.rep$x[,1], names(pcp.rep$x[,1]) )
+
+names.exp <- c("metal", "circ", "oxygen", "radiation", "genetic")
+range.exp <- list()
+range.exp$metal <- c(1,32)
+range.exp$circ <- c(33,93)
+range.exp$oxygen <- c(94,121)
+range.exp$radiation <- c(122,160)
+range.exp$genetic <- c(161,268)
+for (exp.name in names.exp) {
+  par(mfrow = c(2,2))
+  pcp.rep <- prcomp( rep.redExp[, range.exp[[exp.name]][1]:range.exp[[exp.name]][2]  ], scale = T, retx = T)
+  plot( pcp.rep, main = paste("subset:",exp.name, sep = " ") )
+  range.r1 <- range(  pcp.rep$rotation[,1:2] )
+  plot( range.exp[[exp.name]][1]:range.exp[[exp.name]][2], pcp.rep$rotation[,1] , type = "n", ylim = range.r1)
+  
+  if (! is.null( exp.regions) ) {
+    for (i in 1:dim(exp.regions)[1]  ){
+      if (exp.regions[i,1] >= range.exp[[exp.name]][1] && exp.regions[i,2] <= range.exp[[exp.name]][2]) {
+        rect(exp.regions[i,1], range.r1[1], exp.regions[i,2], range.r1[2], col = hsv( exp.regions[i,3], 0.15, 1),
+             border = hsv( exp.regions[i,3], 0.15, 1) , lwd = 0.0) 
+      }
+    }
+  }
+  lines( range.exp[[exp.name]], c(0,0), lwd = 6, type = "l", col = 2) 
+  lines(range.exp[[exp.name]][1]:range.exp[[exp.name]][2] , pcp.rep$rotation[,1] , type = "l", lwd = 2, col = "black")
+  lines(range.exp[[exp.name]][1]:range.exp[[exp.name]][2] , pcp.rep$rotation[,2] , type = "l", lwd = 2, col = "blue")
+  
+  plot( pcp.rep$x[,2], pcp.rep$x[,1], col = 2 )
+  text( pcp.rep$x[,2], pcp.rep$x[,1], names(pcp.rep$x[,1]) )
+  pause()
+}
+
+
+
+
+### this function does what it should, but xyplot and panel.xyplot do strange things
+### ahgghh!!! i didn't need that hour anyway!
+mat.to.trellis.df <- function (mat ) {
+
+  nrow <- dim(mat)[1]
+  ncol <- dim(mat)[2]
+
+  if ( is.null( rownames(mat) ) ) {
+    rowna <- as.character( 1:nrow )
+  } else {
+    rowna <- rownames( mat )
+  }
+  
+  obj <- character()
+  xx <- numeric()
+  yy <- numeric()
+
+  for (i in 1:nrow) {
+    for (j in 1:ncol) {
+      obj <- c(obj, rowna[i])
+      xx <- c(xx, j)
+      yy <- c(yy, mat[i,j])
+    }
+  }
+
+  obs <- 1:(length(xx))
+  trell.df <- as.data.frame( cbind(obs, obj, xx, yy) )
+
+  invisible(trell.df)
+  
+}
+
+
+plotCluster.all.conds.mean = function( cluster, ratios, redExp, exp.regions = NULL, name = "", range.r = NULL,
+                                  postscript.file=NULL, plot.resids=T,
+                                  cond.labels=F, line.w = 0.75, genes.col = "yellow" ) {
+  if ( ! is.null( postscript.file ) ) postscript(postscript.file, paper="letter")
+  ##cat("cluster: ", k, " resid: ", format(clust[[k]]$resid,  digits=4),"\n")
+  ##cat("Genes: ", clust[[k]]$rows, "\n" )
+  ##cat("Genes: ", gene.names[ clust[[k]]$rows ], "\n" )
+  ##cluster <- clust[[ k ]]
+  k <- cluster$k
+  titl <- paste( k, ":", name )
+  if ( is.null( range.r ) ) {
+    range.r <- range( ratios[cluster$rows, ], na.rm=T )
+  }
+  cols.b <- colnames(redExp)
+  ##cols.b <- colnames(ratios)[ cluster$cols %in% cluster$cols ]
+  ##cols.b <- c( cols.b, colnames(redExp)[ ! colnames(redExp) %in% cluster$cols ] )
+  len.b <- length(cols.b)
+  if ( len.b < 100 ) range.r[ 1 ] <- range.r[ 1 ] * 1.5
+
+  ##old.pars <- par()
+  ##if ( ! cond.labels ) par( mar=rep(2.0,4), mgp=c(3,1,0)*0.5 )
+
+  rats <- ratios[ cluster$rows, cols.b ]
+  
+  plot( 1:len.b, rats[ cluster$rows[1], cols.b], ylim=range.r, type="n", col="gray", main=titl, cex.main=0.5,
+       xlab=NA, ylab=NA, cex.lab=0.01, cex.sub=0.01, cex.axis=0.5, axes = T , bty = "]", xaxt = "n")
+  ##lines(  1:len.b, rats[ cluster$rows[1], cols.b], ylim=range.r, type="n", col="gray", main=titl, cex.main=0.5,
+  ##     xlab=NA, ylab=NA, cex.lab=0.5, cex.sub=0.5, cex.axis=0.5 )
+
+  if (! is.null( exp.regions) ) {
+    for (i in 1:dim(exp.regions)[1]  ){
+      rect(exp.regions[i,1], range.r[1], exp.regions[i,2], range.r[2], col = hsv( exp.regions[i,3], 0.15, 1),
+           border = hsv( exp.regions[i,3], 0.15, 1) , lwd = 0.0) 
+    }
+  }
+  if (FALSE) {
+    if ( plot.resids ) {
+      resids <- residOneClust.by.col( rats )
+      resids <- resids / max( resids ) * max( rats, na.rm=T )
+      poly.x <- c( 1:length( cols.b ), length( cols.b ):1 )
+      poly.y <- c( resids, rev( -resids ) )
+      polygon( poly.x, poly.y, border=NA, col="lightgray" )
+    }
+  }
+
+  ##colmap <- rainbow(cluster$nrows)
+  for (i in 1:cluster$nrows ) {
+    lines(1:len.b, rats[ cluster$rows[i], cols.b], col= genes.col, type="l", lwd= line.w )#, lty=as.integer(i/6) )
+  }
+  lines( c(1,len.b), c(0,0), col = "red", type = "l", lwd = 2)
+  lines(1:len.b, redExp[k,], col = "black", type = "l", lwd = line.w)
+  
+
+}
+
+residOneClust.by.col = function( ratios, varNorm=TRUE ) {
+  ## make sure this index of a submatrix
+  ## that was sliced by row and col NAMES works
+
+  ## set this globally
+  ##if ( ! exists( "maxRowVar" ) ) maxRowVar <<- mean( apply(ratios, 1, var, use = "pair" ), na.rm=T )
+
+  n.rows <- nrow(ratios)
+  n.cols <- ncol(ratios)
+
+  d.rows <- apply( ratios, 1, mean, na.rm = TRUE )
+  d.cols <- apply( ratios, 2, mean, na.rm = TRUE )
+  d.all <- mean( d.rows, na.rm = TRUE )
+
+  rij <- ratios + d.all
+
+  for (i in 1:n.rows) rij[i,] <- rij[i,] - d.cols
+  for (j in 1:n.cols) rij[,j] <- rij[,j] - d.rows
+
+  ## one FLOC pub sugests: mean( abs( rij )) the other mean( rij^2 ) ... i'll
+  ## take the faster one for now
+  average.r <- apply( abs( rij ), 2, mean, na.rm=TRUE )
+  if ( varNorm ) {
+    row.var <- mean( apply( ratios, 1, var, use="pairwise.complete.obs" ), na.rm=T )
+    if ( row.var > maxRowVar ) row.var <- maxRowVar
+    average.r <- average.r / row.var
+  }
+  return( average.r )
+}
+
+
+
+
+
+########### make heatmap ....
+rb.colors <- function (n) 
+ {
+     if ((n <- as.integer(n[1])) > 0) {
+         even.n <- n%%2 == 0
+         k <- n%/%2
+         l1 <- k + 1 - even.n
+         l2 <- n - k + even.n
+         c(if (l1 > 0) hsv(h = 12/12, s = seq(0.9, ifelse(even.n, 
+             0.9/k, 0), length = l1), v = 1), if (l2 > 1) hsv(h = 8/12, 
+             s = seq(0, 0.9, length = l2)[-1], v = 1))
+     }
+     else character(0)
+ }
+ heatmap( rep.redExp, col = rb.colors(3) )
+rep.redExp.bal <- rep.redExp
+rep.redExp.bal[ rep.redExp.bal < -2.0] <- -2.0
+rep.redExp.bal[ rep.redExp.bal > 2.0] <- 2.0
+
+tmp <-  heatmap( rep.redExp.bal, col = brewer.pal(11, "Spectral" )[11:1])
+tmp <-  heatmap( rep.redExp.bal, col = brewer.pal(11, "PuOr" )[11:1])
+
+d <- dist(rep.redExp.bal) #Euclidian Distance Matrix
+h <- hclust(d) #"Complete" Clustering
+dend <- as.dendrogram(h)
+w <- 1:445
+rdend <- reorder(dend, w, agglo.FUN=mean)
+tmp2 <- heatmap(rep.redExp.bal, Colv=NA, scale = "none",Rowv=rdend,cexRow = 0.45, col = brewer.pal(11, "PuOr" )[11:1])
+colrs <- colorRampPalette(c("black", "gray", "blue", "white", "yellow", "orange", "red"))
+colrs <- colrs(200)
+tmp2 <- heatmap(rep.redExp.bal, Colv=NA, scale = "none",Rowv=rdend,cexRow = 0.45, col = colrs)
+
+reg.rep <- read.table("process-srvy_2--wReg-clean.txt", sep = "\t", header = T)
+
+reg.rep2 <- as.matrix(reg.rep[,3:21])
+rownames(reg.rep2) <- as.character(reg.rep[,2])
+ heatmap( reg.rep2[tmp$rowInd,], Rowv = NA ,col = c("green","black", "red") )
+
+##rep.redExp.disc <- rep.redExp
+
+##rep.redExp.disc[ rep.redExp.disc < -0.6 ] <- -1
+##rep.redExp.disc[ rep.redExp.disc > 0.6 ] <- 1
+##rep.redExp.disc[ rep.redExp.disc != 1 & rep.redExp.disc != -1   ] <- 0
+##heatmap( rep.redExp.disc, col = rb.colors(3) )
+## heatmap( rep.redExp.disc, col = rb.colors(5) )
+
+#O2 <- ratios[1,]
+#02 <- (O2 - mean(O2)) / sd( O2)
+#Light <- ratios[2,]
+#Light <- ( Light - mean(Light) ) / sd (Light)
+#Fe <- ratios[3,]
+#Fe <- ( Fe - mean(Fe) ) / sd(Fe)
+#metals <- ratios[4,] + ratios[5,] + ratios[6,] + ratios[7,] + ratios[8,]
+#metals <- ( metals - mean(metals) ) / sd(metals)
+#radiation <- ratios[10,] + ratios[9,]
+#radiation <- ( radiation - mean( radiation) ) / sd( radiation )
+
+par( mar = c(0,0.05,0,0.05) )
+
+par(mfrow = c(5,1))
+plot( O2[tmp$colInd ], type = "l", col = 1 )
+plot( Light[tmp$colInd ], type = "l", col = 2 )
+plot( Fe[tmp$colInd ], type = "l" , col = 3)
+plot( metals[tmp$colInd ] , type = "l", col = 4)
+plot( radiation[tmp$colInd ], type = "l", col = 6 )
+
+par( mar = c(0,0.05,0,0.05) )
+
+par(mfrow = c(5,1))
+plot( O2[tmp2$colInd ], type = "l", col = 1 )
+lines( Light[tmp2$colInd ], type = "l", col = 2 )
+plot( Fe[tmp2$colInd ], type = "l" , col = 3)
+lines( metals[tmp2$colInd ] , type = "l", col = 4)
+lines( radiation[tmp2$colInd ], type = "l", col = 6 )
+
+
+par( mar = c(0,0.05,0,0.05) )
+
+par(mfrow = c(5,1))
+plot( O2, type = "l", col = 1 )
+lines( Light, type = "l", col = 2 )
+plot( Fe, type = "l" , col = 3)
+lines( metals , type = "l", col = 4)
+lines( radiation, type = "l", col = 6 )
+
+
+
+##rep.redExp.env <- rbind ( O2, Light, Fe, metals, radiation )
+##rep.redExp.env[ rep.redExp.env > 2 ] <- 2
+##heatmap( rbind(rep.redExp.env, rep.redExp), col = rb.colors(5) )
+
+plot.many <- function( ratios, names.r ) {
+  
+  tmp.r <- range( ratios[names.r,] )
+  plot( ratios[ names.r[1], ], type = "n", ylim = tmp.r )
+  abline( 0,0, col = "gray", lwd = 2)
+  for (i in 1:length(names.r) ) {
+    lines( ratios[ names.r[i], ], type = "l" , col = i)
+  }
+
+}
+
+
+par( mfrow = c(12,1) )
+rpl <- names(gene.names[grep("rpl", gene.names )][14:27] )
+mean(cor( t(ratios[rpl, ]) ))
+plot.many( ratios, rpl )
+
+rps <- names(gene.names[grep("rps", gene.names )][4:8] )
+mean(cor( t(ratios[rps, ]) ))
+plot.many( ratios, rps )
+
+nad <- names(gene.names[grep("nad", gene.names )][1:3] )
+mean(cor( t(ratios[nad, ]) ))
+plot.many( ratios, nad )
+
+trp <- names(gene.names[grep("trp", gene.names )][2:4] )
+mean(cor( t(ratios[trp, ]) ))
+plot.many( ratios, trp )
+
+trp2 <- names(gene.names[grep("trp", gene.names )][10:13] )
+mean(cor( t(ratios[trp, ]) ))
+plot.many( ratios, trp2 )
+
+atp <- names(gene.names[grep("atp", gene.names )][3:8] )
+mean(cor( t(ratios[atp, ]) ))
+plot.many( ratios, atp )
+
+cbi <- names(gene.names[grep("cbi", gene.names )][3:4] )
+mean(cor( t(ratios[cbi, ]) ))
+plot.many( ratios, cbi )
+
+cbi2 <- names(gene.names[grep("cbi", gene.names )][11:13] )
+mean(cor( t(ratios[cbi2, ]) ))
+plot.many( ratios, cbi2 )
+
+hut <- names(gene.names[grep("hut", gene.names )] )
+mean(cor( t(ratios[hut, ]) ))
+plot.many( ratios, hut )
+
+pst <- names(gene.names[grep("pst", gene.names )][1:3] )
+mean(cor( t(ratios[pst, ]) ))
+plot.many( ratios, pst )
+
+nuo <- names(gene.names[grep("nuo", gene.names )] )
+mean(cor( t(ratios[nuo, ]) ))
+plot.many( ratios, nuo )
+
+rme <- names(gene.names[grep("rme", gene.names )] )
+mean(cor( t(ratios[rme, ]) ))
+plot.many( ratios, rme )
+
+
+
+

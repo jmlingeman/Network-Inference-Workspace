@@ -1,0 +1,7 @@
+sif=jar://network.sif
+props=jar://props
+vprops=jar://vizmap.props
+species=Mus musculus
+noa=jar://pvalues.noa
+noa=jar://commonNames.noa
+

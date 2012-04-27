@@ -1,0 +1,3 @@
+plugin.1.load=org.systemsbiology.gaggle.geese.cy.ip.IpControlPanelPlugin
+species=Halobacterium sp.
+visualStyle=halo IP

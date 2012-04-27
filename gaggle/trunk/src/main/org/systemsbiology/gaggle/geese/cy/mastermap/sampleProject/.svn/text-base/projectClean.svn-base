@@ -1,0 +1,5 @@
+props=jar://props
+vprops=jar://vizmap.props
+species=Mus musculus
+noa=jar://commonNames.noa
+

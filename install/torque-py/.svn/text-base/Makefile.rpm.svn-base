@@ -1,0 +1,46 @@
+PRODUCT=pbs_python
+VERSION=3.2.0
+RELEASE=1
+
+#PYTHON_VERSION=2.3
+PYTHON_VERSION=$(shell python -c "import re;import sys;print re.match('(?P<major>\d\.\d)',sys.version).group('major')")
+#LIBDIR=/usr/lib64
+LIBDIR=$(shell if [ `uname -p` = 'x86_64' ]; then echo /usr/lib64; else echo /usr/lib; fi)
+
+TAR=/bin/tar
+
+SRCS = aclocal.m4 configure configure.in Makefile.in setup.py.in README TODO src examples
+
+_rpmtopdir = $(PWD)/rpm-build
+_rpmsrcdir = $(_rpmtopdir)/SOURCES
+_rpmbuilddir = $(_rpmtopdir)/BUILD
+_prodsrcdir = $(_rpmbuilddir)/$(PRODUCT)-$(VERSION)
+
+all:	rpm
+
+rpm:	$(_rpmsrcdir)/$(PRODUCT).tar.gz
+	@echo Building rpm...
+	@rpmbuild -ba --define '_sourcedir $(_rpmsrcdir)' \
+                      --define '_builddir $(_rpmbuilddir)' \
+                      --define 'prodversion $(VERSION)' \
+                      --define 'prodrelease $(RELEASE)' \
+                      --define 'pythonlib python$(PYTHON_VERSION)' \
+                      --define 'libdir $(LIBDIR)' \
+                         $(PRODUCT).spec
+	@rm -R $(_rpmsrcdir)
+
+$(_rpmsrcdir)/$(PRODUCT).tar.gz: $(SRCS) $(_rpmbuilddir) $(_rpmsrcdir)
+	@echo "Building tar file for sources ($(SRCS))..."
+	@if [ -d  $(_prodsrcdir) ]; then \
+	  rm -Rf $(_prodsrcdir); \
+	fi
+	@mkdir -p $(_prodsrcdir)
+	@cp -R $(SRCS) $(_prodsrcdir)
+	@$(TAR) -cz -C $(_rpmbuilddir) --exclude .svn --exclude CVS -f $@ $(PRODUCT)-$(VERSION)
+
+$(_rpmbuilddir):
+	@mkdir -p $(_rpmbuilddir)
+
+$(_rpmsrcdir):
+	@mkdir -p $(_rpmsrcdir)
+

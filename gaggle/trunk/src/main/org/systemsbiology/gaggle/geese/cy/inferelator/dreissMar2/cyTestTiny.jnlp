@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="http://db.systemsbiology.net/cytoscape/gaggle/halo/cy/inferelator/2005-jan-26"
+  href="cyTestTiny.jnlp">
+  <information>
+    <title>Gaggled Inferelator (TINY) </title>
+    <vendor>Jan. 26 2005 </vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.4+" max-heap-size="1024M"/>
+    <jar href="../../../../testJars/cytoscape.jar"/>
+    <jar href="../../../../testJars/cyGagglePlugin.jar"/>
+    <jar href="../../../../testJars/inferelator.jar"/>
+    <jar href="../../../../testJars/dmv.jar"/>
+    <jar href="../../../../testJars/images.jar"/>
+    <jar href="../../../../testJars/ouai.jar"/>
+    <jar href="../../../../testJars/cytoAux.jar"/>
+    <jar href="../../../../testJars/jython.jar"/>
+    <jar href="../../../../testJars/jython-lib.jar"/>
+    <jar href="../../../../testJars/syspatharchivehack.jar"/>
+    <jar href="data.jar"/>
+  </resources>
+  <application-desc>
+    <argument>-p</argument>
+    <argument>jar://projectTiny</argument>
+  </application-desc>
+</jnlp>
+
+

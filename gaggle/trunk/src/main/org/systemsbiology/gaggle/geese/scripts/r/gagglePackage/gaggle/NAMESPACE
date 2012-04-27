@@ -1,0 +1,26 @@
+import(graph)
+
+export(
+  gaggleInit,
+  getNameList,
+  getCluster,
+  getMatrix,
+  getNetwork,
+  getTuple,
+  broadcast,
+  geese,
+  getTargetGoose,
+  setTargetGoose,
+  setSpecies,
+  getSpecies,
+  showGoose,
+  hideGoose,
+  testGagglePackage,
+  connectToGaggle,
+  disconnectFromGaggle,
+  getJavaClassName,
+  getTupleAsList,
+  tupleToList,
+  newSingle,
+  addSingle,
+  newTuple)

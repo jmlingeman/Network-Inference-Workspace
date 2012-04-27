@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<experiment name="zinc" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='manipulation' value='environmental'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> /users/pshannon/data/halo/microarrayXml/unitTests/zinc.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> /users/pshannon/data/halo/microarrayXml/unitTests/zinc.lambda </uri>
+  </dataset>
+
+  <condition alias='Zn_1_vs_C.sig'>
+    <variable name='concentration' value='5' units='micromolar'/>
+  </condition>
+
+  <condition alias='Zn_2_vs_C.sig'>
+    <variable name='concentration' value='10' units='micromolar' />
+  </condition>
+
+  <condition alias='Zn_3_vs_C.sig'>
+    <variable name='concentration' value='20' units='micromolar'/>
+  </condition>
+
+ </experiment>

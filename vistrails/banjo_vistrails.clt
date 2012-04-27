@@ -1,0 +1,38 @@
+{
+    "args": [
+        [
+            "Input", 
+            "timeseries_file", 
+            "File", 
+            {
+                "desc": "The timeseries data for banjo to infer from", 
+                "required": ""
+            }
+        ], 
+        [
+            "Input", 
+            "name", 
+            "String", 
+            {
+                "desc": "Name of the experiment (optional)"
+            }
+        ], 
+        [
+            "Input", 
+            "delta_t", 
+            "Flag", 
+            {
+                "desc": "Amount of time between time points (optional)"
+            }
+        ], 
+        [
+            "Output", 
+            "Network", 
+            "String", 
+            {
+                "desc": "Output network"
+            }
+        ]
+    ], 
+    "command": "cd $gene_path;python wrappers/banjo.py"
+}

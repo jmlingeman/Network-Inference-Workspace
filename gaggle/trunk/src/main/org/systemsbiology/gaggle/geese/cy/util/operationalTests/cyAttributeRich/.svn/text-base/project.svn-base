@@ -1,0 +1,9 @@
+sif=jar://immuneResponseFirstNeighbors-0.5.sif
+props=jar://props
+dataServer=http://db.systemsbiology.net:8080/cytoscape/annotation/fly/manifest-cg
+species=Drosophila melanogaster
+eda=jar://confidence.eda
+eda=jar://intensity.eda
+noa=jar://heat.noa
+noa=jar://cold.noa
+vprops=jar://vizmap.props

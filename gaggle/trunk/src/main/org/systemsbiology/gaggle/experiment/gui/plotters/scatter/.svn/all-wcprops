@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/scatter
+END
+ScatterPlotter.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/scatter/ScatterPlotter.java
+END
+demoSinglePoint.py
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/scatter/demoSinglePoint.py
+END
+demo.py
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/scatter/demo.py
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/scatter/makefile
+END

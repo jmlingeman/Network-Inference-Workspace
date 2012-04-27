@@ -1,0 +1,13 @@
+sif=jar://tiny.sif
+noa=jar://logicGateNodeNames.noa
+noa=jar://types.noa
+noa=jar://clusterGeneCount.noa
+noa=jar://clusterConditionCount.noa
+noa=jar://clusterGenes.noa
+noa=jar://clusterConditions.noa
+noa=jar://clusterMotifPValues.noa
+noa=jar://clusterResiduals.noa
+eda=jar://weights.eda
+props=jar://props
+vprops=jar://vizmap.props
+dataServer=http://db.systemsbiology.net/cytoscape/annotation/halo/manifest

@@ -1,0 +1,40 @@
+% This file runs NIRest with a file, and saves the output.
+
+% First read in file into an NxM matrix.
+
+rfile = textread('{{input_file}}', '%s', 'delimiter', '\n');
+
+% Split the file on spaces
+rfile = regexp(rfile, ' ', 'split');
+
+% Read in experiment headers
+exp_names = regexp(rfile{1}, '\t', 'split');
+exp_names = exp_names{1};
+
+% Now read in gene names and exp values
+geneNames = cell(length(rfile)-1, 1);
+ratios = zeros(length(geneNames), length(exp_names));
+for i=2:size(rfile)
+    l = regexp(rfile{i}, '\t', 'split');
+    l = l{1};
+    geneNames{i-1} = l{1}; % Read in gene name
+    for j = 2:length(l)
+        ratios(i-1,j-1) = str2num(l{j});
+    end
+end
+
+% Run NIRest on the data
+out = nirest(ratios, {{topd}}, {{restk}});
+
+% Now save the output so we can read it back in, col header is exp and
+% row header is gene names
+outfile = fopen('{{output_file}}', 'w');
+% write exp name header
+for i=1:length(exp_names)
+   outfile.write(exp_names(i));
+   outfile.write('\t');
+end
+outfile.write('\n');
+for i=1:length(geneNames)
+   outfile.write(geneName 
+end

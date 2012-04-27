@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="$CODEBASE$"
+  href="test.jnlp">
+  <information>
+    <title>IHopGoose</title>
+    <vendor> (September 2006)</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="ihopGoose.jar"/>
+  </resources>
+  <application-desc>
+  </application-desc>
+</jnlp>
+

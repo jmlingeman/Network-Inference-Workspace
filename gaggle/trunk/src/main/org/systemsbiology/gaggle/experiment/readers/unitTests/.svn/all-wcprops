@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests
+END
+4.bug
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/4.bug
+END
+DataMatrixFileReaderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/DataMatrixFileReaderTest.java
+END
+matrix.expression
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/matrix.expression
+END
+matrix.icat
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/matrix.icat
+END
+gaggle.props
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/gaggle.props
+END
+TextHttpIndirectFileReaderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/TextHttpIndirectFileReaderTest.java
+END
+simpleMatrix.txt
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/simpleMatrix.txt
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/makefile
+END
+matrix.obj
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/matrix.obj
+END
+3.bug
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/3.bug
+END
+300.bug
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/300.bug
+END
+MetaDataXmlParserTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/unitTests/MetaDataXmlParserTest.java
+END

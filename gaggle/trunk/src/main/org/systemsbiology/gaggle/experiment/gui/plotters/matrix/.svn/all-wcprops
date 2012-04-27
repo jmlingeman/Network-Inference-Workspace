@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/3545/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix
+END
+NamedXYSeries.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/NamedXYSeries.java
+END
+ConditionNameShortener.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/ConditionNameShortener.java
+END
+SelectableMatrixPlotter.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/SelectableMatrixPlotter.java
+END
+simpleDemo.py
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/simpleDemo.py
+END
+mpDemo.py
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/mpDemo.py
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/makefile
+END
+MatrixPlotter.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gaggle/!svn/ver/3545/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/gui/plotters/matrix/MatrixPlotter.java
+END

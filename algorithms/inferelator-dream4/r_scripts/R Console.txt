@@ -1,0 +1,379 @@
+
+R version 2.11.0 (2010-04-22)
+Copyright (C) 2010 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.33 (5582) x86_64-apple-darwin9.8.0]
+
+SystemFlippers: didn't consume all data for long ID 0 (pBase = 0x10bd7f600, p = 0x10bd7f604, pEnd = 0x10bd7f608)
+SystemFlippers: didn't consume all data for long ID 0 (pBase = 0x101c0d5e0, p = 0x101c0d5e4, pEnd = 0x101c0d5e8)
+> ls()
+character(0)
+> rm(list=ls())
+> debug = F
+> 
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> # 1- reads params, design and response matrices, found in PARAMS and INPUT list respectively
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> PARAMS = list()
+> PARAMS[["general"]] = list()
+> PARAMS[["lars"]] = list()
+> PARAMS[["dream3"]] = list()
+> #for(data_set in  c("DREAM3_1_100","DREAM3_2_100","DREAM3_3_100","DREAM3_4_100","DREAM3_5_100")){
+> #	for(response_lars in  c( "old_inf_1","old_inf_1_all_intervals")){
+> #		for(skip_step in  0:4){
+> data_set = "DREAM3_1_100"
+> response_lars = "old_inf_1"
+> use_quantile_normalization <- T
+> #skip_step = c(2,4)
+> steps=c(TRUE,FALSE,TRUE,TRUE)
+> PARAMS[["general"]][["data"]] = data_set
+> PARAMS[["lars"]][["response_matrix"]] = response_lars
+> #steps[skip_step] = FALSE
+> PARAMS[["dream3"]][["add_constraint_1"]] = steps[1]
+> PARAMS[["dream3"]][["add_constraint_2"]] = steps[2]
+> PARAMS[["dream3"]][["filter_low_betas"]] = steps[3]
+> PARAMS[["dream3"]][["filter_based_on_cor"]] = steps[4]
+> source("./r_scripts/dream3Init.R")
+Loading required package: lars
+loading  ratios.RData 
+loading  clusterStack.RData 
+loading  colMap.RData 
+loading  tfNames.RData 
+loading  goldStandard.txt 
+loading  dream3prediction.txt 
+NO BICLUSTERS
+standardized ratios for lars and/or clr
+> b = 1 # this follow current iteration/bootstrap number
+> N_b = PARAMS[["general"]][["numBoots"]] # number of bootstraps
+> btch_size = 100 # calculate this mumber of genes to all predictors MI scores in batches (to avoid running out of memory when calculating MI)
+> percentCoverage <- 100 # percent of matrix that we want to resample
+> #lambda=c(0,0.01,0.1,1,10,100,1000) # set of l2 norm regularization weights to try in elastic net
+> #lambda=c(0,1,100) # set of l2 norm regularization weights to try in elastic net
+> lambda=c(0) # run for L1 norm constrain only
+> # response and design matrices for clr
+> Y_clr = INPUT[["clr"]][["response_matrix"]]
+> Xs_clr = INPUT[["clr"]][["design_matrix"]] # single predictors
+> Y_lars = INPUT[["lars"]][["response_matrix"]]
+> Xs_lars = INPUT[["lars"]][["design_matrix"]] # single predictors
+> 
+> # store results (ODEs,Z scores, and error for each model for each bootstrap run, respectively)
+> betaList = vector("list", N_b)
+> zscoreList = vector("list", N_b)
+> zscoreListFiltered = vector("list", N_b)
+> modelErrorList = vector("list", N_b)
+> #model_error_vector = matrix(0,nrow = N_b, ncol = nrow(Y_lars)) 
+> 
+> 
+> Ms = matrix(0,nrow=nrow(Y_lars),ncol=nrow(Xs_lars)) # each run MI scores will be stored here
+> 
+> 
+> # get interactions design matrix if needed
+> if (PARAMS[["general"]][["allow_couplings"]]) {
++ 	x = get_interaction_design_matrix(Xs_clr)
++ 	Xd_clr = x[[1]]
++ 	Inter_clr = x[[2]]
++ 	x = get_interaction_design_matrix(Xs_lars)
++ 	Xd_lars = x[[1]]
++ 	Inter_lars = x[[2]]	
++ 	rm(x)
++ 
++ 	Md = matrix(0,nrow=nrow(Y_lars),ncol=nrow(Xd_lars))
++ }
+> 
+> 
+> cat("bootsrap #: ",b,"\n")
+bootsrap #:  1 
+> 	if(b == 1){
++ 		#here we want the original permutation, ie. getOrigPerm = TRUE
++ 		Pi_s_clr=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_clr), getOrigPerm = TRUE, percentCoverage = percentCoverage)
++ 		Pi_s_lars=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_lars), getOrigPerm = TRUE, percentCoverage = percentCoverage)
++ 	} else {
++ 		Pi_s_clr=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_clr), getOrigPerm = FALSE, percentCoverage = percentCoverage)
++ 		Pi_s_lars=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_lars), getOrigPerm = FALSE, percentCoverage = percentCoverage)
++ 	}
+> 	
+> 	#create bicluster specific permutation matrix (ie. read from Pi_g, algorithm described in method comments)
+> 	Y_clr_p = permuteCols(Y_clr,Pi_s_clr)
+> 	Xs_clr_p = permuteCols(Xs_clr,Pi_s_clr)
+> dim(Xs_clr_p)
+[1]  100 1122
+> 	if (PARAMS[["general"]][["allow_couplings"]]) {  
++ 		Xd_clr_p = permuteCols(Xd_clr,Pi_s_clr)
++ 	}
+> 	
+> 	##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 	# 3- pass one: fill M - mutual information matrix or correlation matrix
+> 	##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 
+> 	Ms_bg = calc_MI_inBatces(Xs_clr_p,Xs_clr_p,btch_size)
+mi calculation for: 1:100
+> 	diag(Ms_bg) = 0
+> if( is.null(INPUT[["general"]][["redExp"]])){
++ 		Ms = calc_MI_inBatces(Y_clr_p,Xs_clr_p,btch_size)
++ 	} else{
++ 		Ms = calc_MI_one_by_one( Y_clr, Xs_clr, Pi_s_clr)
++ 	}
+mi calculation for: 1:100
+> 	diag(Ms) = 0
+> 
+> 	if (PARAMS[["general"]][["allow_couplings"]]) {  
++ 		if( is.null(INPUT[["general"]][["redExp"]])){
++ 			Md = calc_MI_inBatces(Y_clr_p,Xd_clr_p,btch_size)
++ 		}else{
++ 			Md = calc_MI_one_by_one(Y_clr_p,Xd_clr_p,Pi_s_clr)
++ 		}
++ 	}
+> 	if(use_quantile_normalization == TRUE) {
++ 		tmp = my.quantile.normalization(Ms,Ms_bg)
++ 		Ms = tmp[[1]]
++ 		Ms_bg = tmp[[2]]
++ 		rm(tmp)
++ 	}
+> 
+> str(Ms)
+ num [1:100, 1:100] 0 0.0957 0.0825 0.0482 0.0452 ...
+> AUROCmat = matrix(0,nrow=length(PARAMS[["dream3"]][["cut1"]]),ncol=length(PARAMS[["dream3"]][["cut2"]]))
+> 	AUPRmat = matrix(0,nrow=length(PARAMS[["dream3"]][["cut1"]]),ncol=length(PARAMS[["dream3"]][["cut2"]]))
+> 	rownames(AUROCmat) = rownames(AUPRmat) = as.character(PARAMS[["dream3"]][["cut1"]])
+> 	colnames(AUROCmat) = colnames(AUPRmat) = as.character(PARAMS[["dream3"]][["cut2"]])
+> 
+> 1:length(PARAMS[["dream3"]][["cut1"]]
++ 
+
++ 
+> length(PARAMS[["dream3"]][["cut1"]]
++ )
+[1] 5
+> rm(list=ls())
+> debug = F
+> 
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> # 1- reads params, design and response matrices, found in PARAMS and INPUT list respectively
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 
+> 
+> source("./r_scripts/init.R")
+Run for: 
+
+1: halo_cell_paper
+2: e_coli_build5
+3: DREAM2
+4: DREAM3
+
+Selection: 4
+Run for which DREAM exactly? 
+
+ 1: DREAM3_1_10    2: DREAM3_1_50    3: DREAM3_1_100   4: DREAM3_2_10    5: DREAM3_2_50    6: DREAM3_2_100   7: DREAM3_3_10    8: DREAM3_3_50 
+ 9: DREAM3_3_100  10: DREAM3_4_10   11: DREAM3_4_50   12: DREAM3_4_100  13: DREAM3_5_10   14: DREAM3_5_50   15: DREAM3_5_100  
+
+Selection: 3
+Choose response for CLR: 
+
+1: y_k [trivial]
+2: y_k - y_{k-1} [time difference]
+3: (y_k - y_{k-1})/(t_k-t_{k-1}) [rate]
+4: (y_k - y_{k-1})/(t_k-t_{k-1}) + 1/tau*y_k [old inf 1]
+5: (y_k - y_{k-k'})/(t_k-t_{k-k'}) + 1/tau*y_k' [old inf 1 all ts intervals]
+
+Selection: 4
+Choose response for LARS: 
+
+1: y_k [trivial]
+2: y_k - y_{k-1} [time difference]
+3: (y_k - y_{k-1})/(t_k-t_{k-1}) [rate]
+4: (y_k - y_{k-1})/(t_k-t_{k-1}) + 1/tau*y_k [old inf 1]
+5: (y_k - y_{k-k'})/(t_k-t_{k-k'}) + 1/tau*y_k' [old inf 1 all ts intervals]
+
+Selection: 4
+Choose design matrix for CLR: 
+
+1: X_k [trivial]
+2: X_{k-1} [time delayed]
+3: f( alpha*(X(t) - X'(t)) ) [sigmoidal model]
+
+Selection: 2
+Choose design matrix for LARS: 
+
+1: X_k [trivial]
+2: X_{k-1} [time delayed]
+3: f( alpha*(X(t)-X'(t) ) [sigmoidal model]
+
+Selection: 2
+loading  ratios.RData 
+loading  clusterStack.RData 
+loading  colMap.RData 
+loading  tfNames.RData 
+loading  goldStandard.txt 
+loading  dream3prediction.txt 
+NO BICLUSTERSdid not standardize ratios
+> system(paste("mkdir",PARAMS$general$saveToDir,sep=" ")) 
+> 
+> b = 1 # this follow current iteration/bootstrap number
+> N_b = PARAMS$"general"$"numBoots" # number of bootstraps
+> btch_size = 10 # calculate this mumber of genes to all predictors MI scores in batches (to avoid running out of memory when calculating MI)
+> percentCoverage <- 100 # percent of matrix that we want to resample
+> #lambda=c(0,0.01,0.1,1,10,100,1000) # set of l2 norm regularization weights to try in elastic net
+> lambda=c(0,1,100) # set of l2 norm regularization weights to try in elastic net
+> #lambda=c(0) # set of l2 norm regularization weights to try in elastic net
+> # response and design matrices for clr
+> Y_clr = INPUT[["clr"]][["response_matrix"]]
+> Xs_clr = INPUT[["clr"]][["design_matrix"]] # single predictors
+> 
+> # response and design matrices for lars
+> Y_lars = INPUT[["lars"]][["response_matrix"]]
+> Xs_lars = INPUT[["lars"]][["design_matrix"]] # single predictors
+> 
+> # store results (ODEs,Z scores, and error for each model for each bootstrap run, respectively)
+> betaList = vector("list", N_b)
+> modelErrorList = vector("list", N_b)
+> #model_error_vector = matrix(0,nrow = N_b, ncol = nrow(Y_lars)) 
+> 
+> 
+> Ms = matrix(0,nrow=nrow(Y_lars),ncol=nrow(Xs_lars)) # each run MI scores will be stored here
+> 
+> #if we use the sigmoid model, we need to calculate a matrix correlations, we use the oirginal order of columns as the permutation
+> #we need to calculate these correlations once for the entire inferelator run
+> if( PARAMS$clr$design_matrix == "sigmoidal_model"| PARAMS$lars$design_matrix == "sigmoidal_model"){
++ 	cat("~~using sigmoidal model~~ \n")
++ 	sigma <- calcPredCor(Y_clr, Xs_clr,   #for the permutation matrix use original permutation...cost to compute this is small
++ 		createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_clr), getOrigPerm = TRUE, percentCoverage = 100) )
++ }
+> 
+> # get interactions design matrix if needed
+> if (PARAMS[["general"]][["allow_couplings"]]) {
++ 	x = get_interaction_design_matrix(Xs_clr)
++ 	Xd_clr = x[[1]]
++ 	Inter_clr = x[[2]]
++ 	x = get_interaction_design_matrix(Xs_lars)
++ 	Xd_lars = x[[1]]
++ 	Inter_lars = x[[2]]	
++ 	rm(x)
++ 
++ 	Md = matrix(0,nrow=nrow(Y_lars),ncol=nrow(Xd_lars))
++ }
+> 
+> #startTime <- date()
+> allResults <- list() 
+> cat("bootsrap #: ",b,"\n")
+bootsrap #:  1 
+> 	if(b == 1){
++ 		#here we want the original permutation, ie. getOrigPerm = TRUE
++ 		Pi_s_clr=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_clr), getOrigPerm = TRUE, percentCoverage = percentCoverage)
++ 		Pi_s_lars=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_lars), getOrigPerm = TRUE, percentCoverage = percentCoverage)
++ 	} else {
++ 		Pi_s_clr=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_clr), getOrigPerm = FALSE, percentCoverage = percentCoverage)
++ 		Pi_s_lars=createPermMatrix(cS=INPUT[["general"]][["clusterStack"]], allConds = colnames(Y_lars), getOrigPerm = FALSE, percentCoverage = percentCoverage)
++ 	}
+> 	
+> 	#create bicluster specific permutation matrix (ie. read from Pi_g, algorithm described in method comments)
+> 	#this should be changed to be general for both cases where we have only single genes and cases where we havee biclusters
+> 	Y_clr_p = permuteCols(Y_clr,Pi_s_clr)
+> 	Xs_clr_p = permuteCols(Xs_clr,Pi_s_clr)
+> 	  
+> 	if (PARAMS[["general"]][["allow_couplings"]]) {  
++ 		Xd_clr_p = permuteCols(Xd_clr,Pi_s_clr)
++ 	}
+> 
+> 	if( is.null(INPUT[["general"]][["redExp"]])){
++ 		Ms = calc_MI_inBatces(Y_clr_p,Xs_clr_p,btch_size)
++ 	} else if( !is.null(INPUT[["general"]][["redExp"]]) & PARAMS$clr$design_matrix != "sigmoidal_model" ){
++ 		Ms = calc_MI_one_by_one( Y_clr, Xs_clr, Pi_s_clr)
++ 	} else{
++ 		Ms = calc_MI_sigmoidal( Y_clr, Xs_clr, Pi_s_clr, sigma)
++ 	}
+mi calculation for: 1:10, 11:20, 21:30, 31:40, 41:50, 51:60, 61:70, 71:80, 81:90, 91:100
+> 	diag(Ms) = 0
+> 
+> 	if (PARAMS[["general"]][["allow_couplings"]]) {  
++ 		if( is.null(INPUT[["general"]][["redExp"]])){
++ 			Md = calc_MI_inBatces(Y_clr_p,Xd_clr_p,btch_size)
++ 		}else{
++ 			Md = calc_MI_one_by_one(Y_clr_p,Xd_clr_p,Pi_s_clr)
++ 		}
++ 	}
+> 
+> 	Zs = clr(Ms)
+> 	colnames(Zs) <- rownames(Xs_clr)
+> 	Zs <- Zs[,INPUT[["general"]][["tf_names"]]]
+> 	if (PARAMS[["general"]][["allow_couplings"]]) {
++ 		Zd = clr(Md)
++ 		Zd = zero_self_predictors(Zd,Inter_clr)
++ 	}	
+> 
+> 
+> 	##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 	# 5- pass two: compute LARS-generated ODE models
+> 	##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 
+> 	if(PARAMS[["general"]][["allow_couplings"]]) {
++ 		x = calc_ode_model_weights(Xs = Xs_lars,Y = Y_lars, Xd = Xd_lars, Pi = Pi_s_lars, M1 = Zs, nS = PARAMS$lars$max_single_preds,
++ 													M2 = Zd, nD = PARAMS$lars$max_coupling_preds, Inter_lars = Inter_lars, lambda=lambda,
++ 													plot.it = TRUE,plot.file.name = paste(PARAMS$general$saveToDir,"/boot_",b,"_models.pdf"), verbose = FALSE, sigmoidalModel <- FALSE)
++ 	} else if(PARAMS$lars$design_matrix == "sigmoidal_model"){
++ 		x = calc_ode_model_weights(Xs = Xs_lars,Y = Y_lars, Pi = Pi_s_lars, M1 = Zs, nS = PARAMS$lars$max_single_preds, lambda=lambda, 
++ 				plot.it = TRUE,plot.file.name = paste(PARAMS$general$saveToDir,"/boot_",b,"_models.pdf",sep=""),verbose = FALSE, sigmoidalModel <- FALSE)
++ 	}else{
++ 		x = calc_ode_model_weights(Xs = Xs_lars,Y = Y_lars, Pi = Pi_s_lars, M1 = Zs, nS = PARAMS$lars$max_single_preds, lambda=lambda, 
++ 				plot.it = TRUE,plot.file.name = paste(PARAMS$general$saveToDir,"/boot_",b,"_models.pdf",sep=""),verbose = FALSE, sigmoidalModel <- TRUE, sigma <- sigma)		
++ 	}
+LARS calculation for:
+Error in sort(x, decreasing = TRUE, index.return = TRUE) : 
+  object 'sigma' not found
+> 
+> PARAMS$lars$design_matrix == "sigmoidal_model"
+[1] FALSE
+> x = calc_ode_model_weights(Xs = Xs_lars,Y = Y_lars, Pi = Pi_s_lars, M1 = Zs, nS = PARAMS$lars$max_single_preds, lambda=lambda, 
++ 				plot.it = TRUE,plot.file.name = paste(PARAMS$general$saveToDir,"/boot_",b,"_models.pdf",sep=""),verbose = FALSE, sigmoidalModel <- TRUE, sigma <- sigma)
+LARS calculation for:
+Error in sort(x, decreasing = TRUE, index.return = TRUE) : 
+  object 'sigma' not found
+> sigma
+Error: object 'sigma' not found
+> ##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
+> 
+> rm(list=ls())
+> debug = F
+> 
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> # 1- reads params, design and response matrices, found in PARAMS and INPUT list respectively
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 
+> 
+> source("./r_scripts/init.R")
+Run for: 
+
+1: halo_cell_paper
+2: e_coli_build5
+3: DREAM2
+4: DREAM3
+
+
+Selection: 
+> rm(list=ls())
+> debug = F
+> 
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> # 1- reads params, design and response matrices, found in PARAMS and INPUT list respectively
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> 
+> 
+> source("./r_scripts/dream3Init.R")
+Error in PARAMS[["clr"]] = list() : object 'PARAMS' not found
+> source("./r_scripts/dream3Init.R")
+Error in PARAMS[["clr"]] = list() : object 'PARAMS' not found
+> 

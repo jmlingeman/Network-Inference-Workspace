@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests
+END
+MatrixCombinerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/MatrixCombinerTest.java
+END
+matrix.icat
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/matrix.icat
+END
+MatrixSlicerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/MatrixSlicerTest.java
+END
+LensedDataMatrixTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/LensedDataMatrixTest.java
+END
+LensedDataMatrixDecoratorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/LensedDataMatrixDecoratorTest.java
+END
+simpleMatrix.txt
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/simpleMatrix.txt
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/makefile
+END
+matrix.obj
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/matrix.obj
+END
+DataMatrixTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/datamatrix/unitTests/DataMatrixTest.java
+END

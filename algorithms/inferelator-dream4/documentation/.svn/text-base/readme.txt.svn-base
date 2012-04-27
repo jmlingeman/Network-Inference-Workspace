@@ -1,0 +1,17 @@
+1. sign up for our google inferelator group to post questions in the discussion board and read useful information. 
+2. extract the dream4_pipeline.zip.
+3. install the mi library from source. 
+You need to be in the directory containing the package to be installed (if you're installing
+from a zip-file) or the parent directory of a package (the one above the package itself). From here, run 'R CMD INSTALL pkg'
+where 'pkg' is the name of the package. It is important to note the capitalized INSTALL, as 'install' will not work on 
+Linux machines. 
+For Windows machines, a binary of the package is required to install it (use unix emulator). 
+4. if you want to run the script using multiple processors install package multicore (available from CRAN).
+5. open r_scripts and review main.R (also review init.R).  After you are happy with the parameters set in init.R (e.g. number of prcessors to use)
+run main.R line by line.  running init.R will prompt you to choose a dataset, design and response.  Consult our DREAM3 paper to understand what 
+the response and design matrix mean.  DREAM4 paper will be out soon in plosOne as part of the DREAM4 best performers collection.
+
+dependencies (R packages that must be installed prior to running the dream4-pipeline):
+elasticnet
+MI (see above)
+multicore (if you want to run on multiple processors)

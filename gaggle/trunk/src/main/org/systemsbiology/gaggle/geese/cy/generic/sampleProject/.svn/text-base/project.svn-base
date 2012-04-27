@@ -1,0 +1,7 @@
+#sif=jar://halo46.sif
+sif=jar://halo3.sif
+props=jar://props
+vprops=jar://vizmap.props
+species=Halobacterium sp.
+dataServer=http://db.systemsbiology.net/cytoscape/annotation/halo/manifest
+

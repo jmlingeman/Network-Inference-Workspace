@@ -1,0 +1,37 @@
+Hi Alex,
+
+Here is a list of things we need to get done for the release code:
+
+Test Code:
+DONE- make sure code works for DREAM2,3,4 (i.e. it should not crash b/c
+dream3 and 4 have no double ko challenge)
+This could easily be done by adding if statements wr necessary (I've
+done it for the most part except for your recent changes)
+- make sure code works for elastic net with weights != 0
+This could be done by making sure that the data structures we are
+using have a list for each l2 weight (should work for lnet code as is
+but need testing/debuging)
+
+Add functionality:
+DONE - add a reader for DREAM2/3/4 data
+This should be provided as three scripts: createDREAMNdata.R wr
+N=2,3,4 (2 and 3 should be the same, 4 a bit different)
+the scripts read in the dream data and produce required .RData
+- add a param for producing plots
+when set as true should produce a few plots:
+prec vs. recall (including a text of actuall AUC on plot)
+roc curve (including a text of actuall AUC on plot)
+prediction quality if DREAM4 run (i don't know what plot would be the
+best, maybe a box plot..)
+
+Expand readme file:
+- readme file that get ppl started
+Explain about required packages
+Review data structures (colMap, ratios, clusterStack)
+
+Let me know if you think something is missing in this list.
+Do what you can.
+
+Cheers,
+Aviv
+

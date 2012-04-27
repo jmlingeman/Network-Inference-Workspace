@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<!-- $Revision: 1.1 $  $Date: 2004/11/01 23:47:47 $ -->
+
+<experiment name="tfbABC ChIP-chip, cmyc tag" date="2004-05-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='Protein-DNA:general TF:cmyc'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> http://db:8060/halo/data/tfb-ABC-cmyc.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> http://db:8060/halo/data/tfb-ABC-cmyc.lambda </uri>
+  </dataset>
+
+  <condition alias='tfbA_IP_vs_tfbA_wce'>
+    <variable name='bait' value='tfbA' />
+  </condition>
+
+  <condition alias='tfbB_IP_vs_tfbB_wce'>
+    <variable name='bait' value='tfbB' />
+  </condition>
+
+  <condition alias='tfbC_IP_vs_tfbC_wce'>
+    <variable name='bait' value='tfbC' />
+  </condition>
+
+ </experiment>

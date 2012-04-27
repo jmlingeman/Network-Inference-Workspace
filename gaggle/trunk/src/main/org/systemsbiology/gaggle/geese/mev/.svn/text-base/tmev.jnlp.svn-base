@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="file:///Users/mpshannon/svnWork/gaggle/org/systemsbiology/gaggle/geese/mev"
+  href="tmev.jnlp">
+  <information>
+    <title>TIGR's Mev</title>
+    <vendor> (August 2005)</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="../../lib/signed-15/tmev/mev-base.jar"/>
+    <jar href="mev.jar"/>
+    <jar href="config.jar"/>
+    <jar href="../../lib/signed-15/tmev/images.jar"/>
+    <jar href="../../lib/signed-15/tmev/base64.jar"/>
+    <jar href="../../lib/signed-15/tmev/dialogHelp.jar"/>
+    <jar href="../../lib/signed-15/tmev/HTTPClient.jar"/>
+    <jar href="../../lib/signed-15/tmev/images.jar"/>
+    <jar href="../../lib/signed-15/tmev/j3daudio.jar"/>
+    <jar href="../../lib/signed-15/tmev/j3dcore.jar"/>
+    <jar href="../../lib/signed-15/tmev/j3dutils.jar"/>
+    <jar href="../../lib/signed-15/tmev/jai_codec.jar"/>
+    <jar href="../../lib/signed-15/tmev/jai_core.jar"/>
+    <jar href="../../lib/signed-15/tmev/jama.jar"/>
+    <jar href="../../lib/signed-15/tmev/jaxp.jar"/>
+    <jar href="../../lib/signed-15/tmev/jconn2.jar"/>
+    <jar href="../../lib/signed-15/tmev/JSciCore.jar"/>
+    <jar href="../../lib/signed-15/tmev/JSciPartial.jar"/>
+    <jar href="../../lib/signed-15/tmev/mev-algorithm-impl.jar"/>
+    <jar href="../../lib/signed-15/tmev/mev-algorithm-support.jar"/>
+    <jar href="../../lib/signed-15/tmev/mev-gui-impl.jar"/>
+    <jar href="../../lib/signed-15/tmev/mev-gui-support.jar"/>
+    <jar href="../../lib/signed-15/tmev/mev-util.jar"/>
+    <jar href="../../lib/signed-15/tmev/normalization.jar"/>
+    <jar href="../../lib/signed-15/tmev/parser.jar"/>
+    <jar href="../../lib/signed-15/tmev/servlet.jar"/>
+    <jar href="../../lib/signed-15/tmev/vecmath.jar"/>
+    <jar href="../../lib/signed-15/tmev/xerces.jar"/>
+  </resources>
+  <application-desc main-class="org.tigr.microarray.mev.TMEV" />
+</jnlp>
+
+

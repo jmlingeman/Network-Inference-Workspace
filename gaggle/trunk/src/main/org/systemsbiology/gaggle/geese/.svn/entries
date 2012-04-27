@@ -1,0 +1,144 @@
+10
+
+dir
+4583
+http://gaggle.systemsbiology.net/svn/gaggle/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese
+http://gaggle.systemsbiology.net/svn/gaggle
+
+
+
+2011-02-15T22:44:21.614740Z
+4572
+cbare
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+6fba297d-c9fa-0310-b984-fcab7d7dfae9
+
+regexFilter
+dir
+
+sample
+dir
+
+dmv
+dir
+
+mev
+dir
+
+scripts
+dir
+
+common
+dir
+
+rShell
+dir
+
+pdfViewer
+dir
+
+ihop
+dir
+
+lister
+dir
+
+names
+dir
+
+diag
+dir
+
+sequence
+dir
+
+annotation
+dir
+
+cy
+dir
+
+DeafGoose.java
+file
+
+
+
+
+2011-03-10T20:58:47.000000Z
+d4a29cb28b647f4113f9ec0afda2fa91
+2007-04-23T23:34:48.587821Z
+1476
+dtenenba
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1011
+
+makefile
+file
+
+
+
+
+2011-03-10T20:58:47.000000Z
+98aa56a504c12df20601d97fdb391c67
+2005-09-06T16:02:12.979901Z
+254
+pshannon
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+772
+
+echo
+dir
+

@@ -1,0 +1,6 @@
+To test these utilities set the environment variabele PYTHONPATH:
+for sh-shells:
+	PYTHONPATH=../src; export PYTHONPATH
+
+for csh-shells:
+	setenv PYTHONPATH ../src

@@ -1,0 +1,80 @@
+10
+
+dir
+4583
+http://gaggle.systemsbiology.net/svn/gaggle/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment
+http://gaggle.systemsbiology.net/svn/gaggle
+
+
+
+2009-12-16T21:06:52.870360Z
+4368
+cbare
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+6fba297d-c9fa-0310-b984-fcab7d7dfae9
+
+repository
+dir
+
+metadata
+dir
+
+gui
+dir
+
+readers
+dir
+
+sampleData
+dir
+
+makefile
+file
+
+
+
+
+2011-03-10T20:58:26.000000Z
+5ef5d4980d7f01cfef4bfded03434d60
+2005-07-30T00:23:10.306678Z
+18
+pshannon
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+722
+
+datamatrix
+dir
+

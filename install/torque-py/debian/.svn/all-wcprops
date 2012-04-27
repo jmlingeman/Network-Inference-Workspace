@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/oss/svn/pbs_python/!svn/ver/238/tags/4.1.0/debian
+END
+control
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/oss/svn/pbs_python/!svn/ver/238/tags/4.1.0/debian/control
+END
+compat
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/oss/svn/pbs_python/!svn/ver/238/tags/4.1.0/debian/compat
+END
+changelog
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/oss/svn/pbs_python/!svn/ver/238/tags/4.1.0/debian/changelog
+END
+copyright
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/oss/svn/pbs_python/!svn/ver/238/tags/4.1.0/debian/copyright
+END
+rules
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/oss/svn/pbs_python/!svn/ver/238/tags/4.1.0/debian/rules
+END

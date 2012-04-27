@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<experiment name="pepper" date="2004-03-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:pepper'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> pepper.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> pepper.lambda </uri>
+  </dataset>
+
+  <condition alias='pepper__0700um_vs_NRC-1'>
+    <variable name='concentration' value='700' units='micromolar'/>
+  </condition>
+
+  <condition alias='pepper__0850um_vs_NRC-1'>
+    <variable name='concentration' value='850' units='micromolar' />
+  </condition>
+
+
+  <condition alias='pepper__1000um_vs_NRC-1'>
+    <variable name='concentration' value='1000'  units='micromolar'/>
+  </condition>
+
+ </experiment>

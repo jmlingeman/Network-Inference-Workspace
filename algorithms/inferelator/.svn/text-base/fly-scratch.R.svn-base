@@ -1,0 +1,51 @@
+library( sm )
+## 20, 45
+## 20, 174
+## 20, 163
+## 28, 175
+## 61, 28
+## 61, 174
+## 45, 75
+
+## 1, 100
+## 1, 125
+## 1, 140
+
+repNames <- as.character(tmp$V1)
+## remap o2 time series,  for now ... 161:188 
+for (ii in 1:(length(repNames)-1) ) {
+  for (jj in (ii+1):length(repNames) ) {
+    b.i <- repNames[ii]
+    b.j <- repNames[jj]
+    pdf( paste("bi-", b.i,"_", b.j, "-tsRebound.pdf", sep = "") )
+    ts.s <- c(161, 355, 9, 17, 44)
+    ts.e <- c(188, 363, 16, 25, 52)
+    ts.n <- length( ts.s)
+    ts.name <- c("O2", "gamma4-control", "EMS", "gamma4", "Fe-ts")
+    par(mfrow = c(2,3) )
+
+    for (i in 1:ts.n ) {
+      sm.density( cbind(rep.redExp.bal[b.i,], rep.redExp.bal[b.j,]), display = "slice", ylab = b.j, xlab = b.i )
+      title(ts.name[i] )
+      lines(rep.redExp.bal[b.i,], rep.redExp.bal[b.j,], col = "yellow", lwd = 0.5)
+      lines(rep.redExp.bal[b.i,ts.s[i]:ts.e[i]], rep.redExp.bal[b.j, ts.s[i]:ts.e[i]], col = "darkgreen", lwd = 1)
+      #  plot(rep.redExp.bal[b.i,ts.s[i]:ts.e[i]], rep.redExp.bal[b.j, ts.s[i]:ts.e[i]])
+      points(rep.redExp.bal[b.i,ts.s[i]], rep.redExp.bal[b.j, ts.s[i]], col = "darkblue")
+      points(rep.redExp.bal[b.i,ts.s[i]], rep.redExp.bal[b.j, ts.s[i]], col = "darkblue", cex = 3)
+      points(rep.redExp.bal[b.i,ts.s[i]], rep.redExp.bal[b.j, ts.s[i]], col = "darkblue", cex = 2)
+      points(rep.redExp.bal[b.i,ts.s[i]], rep.redExp.bal[b.j, ts.s[i]], col = "darkblue", cex = 4)
+
+      points(rep.redExp.bal[b.i,ts.e[i]], rep.redExp.bal[b.j, ts.e[i]], col = "darkred", pch = 2)
+      points(rep.redExp.bal[b.i,ts.e[i]], rep.redExp.bal[b.j, ts.e[i]], col = "darkred", cex = 3, pch = 7)
+      points(rep.redExp.bal[b.i,ts.e[i]], rep.redExp.bal[b.j, ts.e[i]], col = "darkred", cex = 2, pch = 7)
+      points(rep.redExp.bal[b.i,ts.e[i]], rep.redExp.bal[b.j, ts.e[i]], col = "darkred", cex = 4, pch = 7)
+    }
+    dev.off()
+  }
+}
+
+
+
+
+
+#sm.density( cbind(rep.redExp.bal["48",], rep.redExp.bal["76",]), image = "con" ) 

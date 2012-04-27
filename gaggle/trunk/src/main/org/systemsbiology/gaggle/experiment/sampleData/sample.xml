@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+ <!-- $Revision: 1.1 $  $Date: 2004/12/06 20:16:33 $ -->
+
+<experiment name="sample data" date="2004-02-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='environmental:irradiation:gamma'/>
+
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> httpIndirect://db.systemsbiology.net:8080/halo/DataFetcher.py/sample.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> httpIndirect://db.systemsbiology.net:8080/halo/DataFetcher.py/sample.lambda </uri>
+  </dataset>
+
+   <!-- $Revision: 1.1 $    $Date: 2004/12/06 20:17:21 $ -->
+
+  <constants>
+    <variable name='Optical density (600nm)' value='0.7'                        />
+    <variable name='oxygen'                  value='50'      units='percent'    />
+    <variable name='illumination'            value='Light'                      />
+    <variable name='Na'                      value='4280000' units='micromolar' />
+    <variable name='Cl'                      value='4307000' units='micromolar' />
+    <variable name='MgSO4.7H2O'              value='80000'   units='micromolar' />
+    <variable name='Na3C6H5O7'               value='10000'   units='micromolar' />
+    <variable name='K'                       value='27000'   units='micromolar' />
+    <variable name='temperature'             value='42'      units='C'          />
+    <variable name='Uracil'                  value='0'       units='ug/ml'      />
+    <variable name='Oxoid peptone'           value='1'       units='percent'    />
+    <variable name='Fe'                      value='0.0'     units='micromolar' />
+    <variable name='Cu'                      value='0.0'     units='micromolar' />
+    <variable name='Ni'                      value='0.0'     units='micromolar' />
+    <variable name='Mn'                      value='0.0'     units='micromolar' />
+    <variable name='Co'                      value='0.0'     units='micromolar' />
+    <variable name='Zn'                      value='0.0'     units='micromolar' />
+    <variable name='DIP'                     value='0.0'     units='micromolar' />
+    <variable name='H2O2'                    value='0.0'     units='micromolar' />
+    <variable name='EMS'                     value='0.0'     units='micromolar' />
+    <variable name='uv'                      value='0.0'     units='Jm^-2'      />
+    <variable name='gamma'                   value='0.0'     units='Gy'         />
+  </constants>
+
+
+   <condition alias='gamma__0000gy-0000m'>
+     <variable name='gamma' value='0000' units='Gy'/>
+     <variable name='time' value='000' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__0000gy-0010m'>
+     <variable name='gamma' value='0000' units='Gy'/>
+     <variable name='time' value='010' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__0000gy-0030m'>
+     <variable name='gamma' value='0000' units='Gy'/>
+     <variable name='time' value='030' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__0000gy-0060m'>
+     <variable name='gamma' value='0000' units='Gy'/>
+     <variable name='time' value='060' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__0000gy-0240m'>
+     <variable name='gamma' value='0000' units='Gy'/>
+     <variable name='time' value='240' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__0000gy-0960m'>
+     <variable name='gamma' value='0000' units='Gy'/>
+     <variable name='time' value='960' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0000m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='000' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0010m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='010' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0020m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='020' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0030m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='030' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0040m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='040' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0060m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='060' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0120m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='120' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0240m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='240' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0480m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='480' units='minutes'/>
+   </condition>
+
+   <condition alias='gamma__2500gy-0960m'>
+     <variable name='gamma' value='2500' units='Gy'/>
+     <variable name='time' value='960' units='minutes'/>
+   </condition>
+
+</experiment>

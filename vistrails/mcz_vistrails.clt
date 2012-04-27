@@ -1,0 +1,60 @@
+{
+    "args": [
+        [
+            "Input", 
+            "Name", 
+            "String", 
+            {
+                "desc": "Name of the experiment (optional)", 
+                "flag": "-n"
+            }
+        ], 
+        [
+            "Input", 
+            "Timeseries", 
+            "String", 
+            {
+                "desc": "Time-series data file (optional)", 
+                "flag": "-t"
+            }
+        ], 
+        [
+            "Input", 
+            "Gold Standard", 
+            "String", 
+            {
+                "desc": "Goldstandard Network File (optional)", 
+                "flag": "-g"
+            }
+        ], 
+        [
+            "Input", 
+            "Knockout", 
+            "String", 
+            {
+                "desc": "Knockout data file (optional)", 
+                "flag": "-k"
+            }
+        ], 
+        [
+            "Input", 
+            "Wildtype", 
+            "String", 
+            {
+                "desc": "Wildtype data file", 
+                "flag": "-w", 
+                "required": ""
+            }
+        ], 
+        [
+            "Input", 
+            "Other Steady State Data", 
+            "List", 
+            {
+                "desc": "Other steady state data files (overexpression, double knockout, etc)", 
+                "type": "String"
+            }
+        ]
+    ], 
+    "command": "/Users/jesse/Workspace/School/MastersThesis/Program/wrappers/mcz.py"
+}

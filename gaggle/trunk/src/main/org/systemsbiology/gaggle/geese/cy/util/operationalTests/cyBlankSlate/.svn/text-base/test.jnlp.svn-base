@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="file:///Users/mpshannon/svnWork/gaggle/org/systemsbiology/gaggle/geese/cy/util/operationalTests/cyBlankSlate"
+  href="test.jnlp">
+  <information>
+    <title> Blank Slate</title>
+    <vendor>for broadcast testing</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="../../../../../lib/signed-15/cytoscape.jar"/>
+    <jar href="../../../../../lib/signed-15/ouai.jar"/>
+    <jar href="../../../../../lib/signed-15/cytoAux.jar"/>
+    <jar href="../../../../../lib/signed-15/jdom.jar"/>
+    <jar href="../../../generic/cyGagglePlugin.jar"/>
+    <jar href="data.jar"/>
+  </resources>
+  <application-desc>
+    <argument>-p</argument>
+    <argument>jar://project</argument>
+    <argument>--gooseName</argument>
+    <argument>blank slate</argument>
+
+  </application-desc>
+</jnlp>
+
+

@@ -1,0 +1,31 @@
+# makefile for 
+#-------------------------------------------------------------------------
+# $Revision$
+# $Date: 2005/04/03 02:50:52 $
+# $Author$
+#-------------------------------------------------------------------------
+D=/home/pshannon/work/csplugins/trial/pshannon/dataCube
+CP=$D/cytoscape.jar:$D/visad.jar:/home/pshannon/work
+JC=javac 
+JI=java
+
+.SUFFIXES: .java .class
+.java.class: 
+	$(JC) $<
+
+default: objs 
+
+OBJS =  ExperimentRepository.class \
+        FileRepository.class \
+        HttpDirectRepository.class \
+        HttpIndirectRepository.class \
+        ExperimentRepositoryFactory.class \
+
+
+
+objs: $(OBJS)
+
+clean:
+	- find . -name "*.class" -exec rm  {} ';'
+
+

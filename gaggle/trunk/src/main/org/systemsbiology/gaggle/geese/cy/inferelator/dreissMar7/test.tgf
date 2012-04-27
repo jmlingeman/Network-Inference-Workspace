@@ -1,0 +1,20 @@
+1 VNG1215G
+2 1
+3 VNG5028G
+4 AND-1
+5 VNG6389G
+6 AND-2
+7 VNG5130H
+8 VNG0890G
+9 AND-4
+10 VNG0320H
+#
+1 2 activates
+3 4 combines
+5 4 combines
+4 2 activates
+1 6 combines
+7 6 combines
+6 2 activates
+8 9 combines
+10 9 combines

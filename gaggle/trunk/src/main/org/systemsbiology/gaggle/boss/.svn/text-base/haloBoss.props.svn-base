@@ -1,0 +1,6 @@
+plugin.0=org.systemsbiology.gaggle.boss.plugins.hypothesis.HypothesisRecorder
+plugin.1=org.systemsbiology.gaggle.boss.plugins.sbeams.SBeamsSearchPanel
+#plugin.2=org.systemsbiology.gaggle.boss.plugins.jython.JyConsole
+
+
+

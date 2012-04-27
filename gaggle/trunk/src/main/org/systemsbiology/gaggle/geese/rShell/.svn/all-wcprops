@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/gaggle/!svn/ver/4316/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/rShell
+END
+init.r
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gaggle/!svn/ver/2699/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/rShell/init.r
+END
+RShellGoose.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/4316/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/rShell/RShellGoose.java
+END
+gaggle.r
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gaggle/!svn/ver/2699/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/rShell/gaggle.r
+END
+StringToObjectConverter.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2699/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/rShell/StringToObjectConverter.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gaggle/!svn/ver/2699/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/rShell/makefile
+END

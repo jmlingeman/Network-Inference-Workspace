@@ -1,0 +1,15 @@
+Author:
+	Bas van der Vlies <basv@sara.nl>
+
+Configure and Debian package support: 
+	Yaroslav Halchenko
+
+PBSQuery module:
+	Bas van der Vlies
+
+Contributors:
+	Walter de Jong
+	Ramon Bastiaans
+	Dennis Stam
+	Sil Westerveld
+	Roy Dragseth (PBSQuery)

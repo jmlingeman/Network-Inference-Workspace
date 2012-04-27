@@ -1,0 +1,520 @@
+# TreeDataBrowser.py:  the 'condition chooser' gui wraps the DataMatrixBrowser
+#---------------------------------------------------------------------------------
+# RCSid = '$Revision$   $Date: 2004/12/04 03:04:53 $'
+#---------------------------------------------------------------------------------
+from javax.swing import *
+from java.awt import *
+from java.awt.event import *
+from java.io import File
+from javax.swing.tree import *
+from javax.swing.event import *
+
+import os, sys
+
+from csplugins.isb.pshannon.experiment.metadata import MetaDataNavigator
+import csplugins.isb.pshannon.experiment.gui as gui
+import csplugins.isb.pshannon.experiment.gui.actions as actions
+import csplugins.isb.pshannon.experiment.datamatrix as datamatrix
+
+
+from cytoscape import *
+from Util import *
+from PlotControllerListBox import *
+#---------------------------------------------------------------------------------
+#from Experiment import *
+#from ExperimentXmlParser import *
+#---------------------------------------------------------------------------------
+class TreeDataBrowser (AbstractPlugin,  TreeSelectionListener, WindowListener):
+
+  def __init__ (self, cytoscapeWindow=None):
+
+    self. dataDirectories = []
+    self.currentTreeSelection = [] 
+    self.dataMatrixBrowser = None
+    self.treeWidget = None
+    self.experimentNavigator = None
+    self.currentlySelectedExperiments = []
+    #repository = '/users/pshannon/data/halo/microarrayXml/sampleData/small'
+    #repository = 'file:///users/pshannon/cy/csplugins/isb/pshannon/experimentNavigator/sampleData/bat'
+    #repository = '/users/pshannon/data/halo/microarrayXml/FeSO4-2004.07.07'
+    #repository = 'file:///home/pshannon/data/halo/microarray/'
+    #repository = 'file://c:\halo\metals'
+    #repository = 'http://www.sewardpark.net/isb'
+    #repository = 'http://db:8060/halo/data/xmlv2'
+    #repository = 'http://db:8060/halo/data/test'
+    #repository = 'http://db.systemsbiology.net/cytoscape/projects/static/mjohnson/2004.oct'
+    #repository = 'file:///users/pshannon/data/halo/microarrayXml/tbpTfbKnockout'
+    #repository = 'http://db.systemsbiology.net:8060/halo/data/'
+    repository = 'httpIndirect://db.systemsbiology.net:8080/halo/DataFetcher.py'
+    
+    self.dataDirectories.append (repository)
+
+    self.cytoscapeWindow = cytoscapeWindow
+    if (self.cytoscapeWindow):
+      menuItem = JMenuItem ('Data Browser & Chooser', actionPerformed=self.createFrame)
+      self.cytoscapeWindow.getOperationsMenu().add (menuItem)
+    else:
+      self.createFrame ()
+
+  #-------------------------------------------------------------------------------
+  def menuItemCreateFrame (self, event):
+
+    self.createFrame ()
+
+  #-------------------------------------------------------------------------------
+  def createFrameTitle (self):
+
+    id = '$Revision$'
+    signature = 'Revision: '
+    start = id.find (signature)
+    start += len (signature)
+    end = id.find (' $', start)
+    versionNumber = id [start:end]
+    return 'Data Matrix Browser %s' % versionNumber
+
+  #-------------------------------------------------------------------------------
+  def createFrame (self, event=None):
+
+    self.jframe = JFrame (title='%s' % self.createFrameTitle (), size = (800, 600))
+    self.jframe.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE)
+    self.jframe.addWindowListener (self)
+
+    self.currentDirectory = File (os.getcwd ())
+    self.experiments = {}
+
+    self.SEPARATOR = ': ' # used in listbox names, e.g., copper: concentration: 10
+
+    self.jframe.getContentPane().add (self.createGui ())
+    self.jframe.show ()
+
+  #------------------------------------------------------------------------------------------
+  def windowClosing (self, event):
+
+    self.dismiss (None)
+
+  #------------------------------------------------------------------------------------------
+  def windowClosed (self, event):
+    pass
+
+  def windowOpened (self, event):
+    pass
+
+  def windowIconified (self, event):
+    pass
+
+  def windowDeiconified (self, event):
+    pass
+
+  def windowActivated (self, event):
+    pass
+
+  def windowDeactivated (self, event):
+    pass
+
+  def windowGainedFocus (self, event):
+    pass
+
+  def windowLostFocus (self, event):
+    pass
+  #------------------------------------------------------------------------------------------
+  def createTreeNodes (self, root, hash):
+
+    kids = [x for x in hash.keySet().toArray ()]
+
+    if (isArrayOfNumbers (kids)):
+      kids.sort (lambda x, y: float(x) > float (y))
+    else:
+      kids.sort ()
+
+    for kid in kids:
+      newNode = DefaultMutableTreeNode (kid)
+      root.add (newNode)
+      self.createTreeNodes (newNode, hash [kid])
+
+  #-----------------------------------------------------------------------------------
+  def __updateCurrentTreeSelection (self, treeSelectionEvent):
+    """
+     update class member variable 'currentTreeSelection' which holds a list
+     of TreePath's (a TreePath is an array of Objects (here, Strings)
+     specifying the tree branch.  paths are either added or removed
+   """
+
+    for p in treeSelectionEvent.getPaths ():
+      added = treeSelectionEvent.isAddedPath (p)
+      if (added):
+        self.currentTreeSelection.append (p)
+      else:
+        if (p in self.currentTreeSelection):
+          self.currentTreeSelection.remove (p)
+
+
+  #-----------------------------------------------------------------------------------
+  def __convertTreePathsToHash (self, treePaths):
+
+    # translate from, eg,
+    #
+    # [[Experiments, environmental, metals, FeSO4, time, -1],
+    #  [Experiments, environmental, metals, FeSO4, time, 20]]
+    #
+    # to
+    #
+    # {'environmental:metals:FeSO4': ['time:-1', 'time:20']}
+    #
+
+    result = {}
+    for path in self.currentTreeSelection:
+      stringList = ['%s' % element for element in path.getPath ()]
+      if (len (stringList) <= 1):
+        return   # the selection is simply the root of the tree, and
+                 # we don't support selection of just the root
+      trimmedList = stringList [1:]
+      experimentKeys = \
+         self.experimentNavigator.findExperimentKeyForPerturbation (trimmedList)
+      for element in experimentKeys:
+        [experimentKey, condition] = element
+        #print 'experimentKey: %s   condition: %s' % (experimentKey, condition)
+        if (not experimentKey in result.keys ()):
+          result [experimentKey] = []
+        list = result [experimentKey]
+        if (not condition in list):
+          list.append (condition)
+        result [experimentKey] = list
+
+    return result
+
+  #-----------------------------------------------------------------------------------
+  def valueChanged (self, treeSelectionEvent):
+
+    # respond to a change in the selection state of the treeWidget.
+    # the goal is to translate the current selection state of the JTree widget
+    # into selected conditions in all of the relevant experiements -- which are
+    # here actually MetaData objects.  these MetaData objects originally supplied
+    # the JTree hierarchy.  they also carry information about every observed condition
+    # in the experiment (typically a dosage level, or a point in a time course);
+    # any of these conditions may be selected, and that's the result we seek here:
+    # that all JTree selections are mirrored by selections in the MetaData objects
+    # these MetaData objects can then be used to create matrices that consist only
+    # of the selected columns (data columns are, in effect, experimental conditions)
+
+    self.__updateCurrentTreeSelection (treeSelectionEvent)
+
+    if (len (self.currentTreeSelection) == 0):
+      self.loadSelectedConditionsButton.setEnabled (0)
+      self.conditionCounterTextField.setText ('%s' % 0)
+      self.currentTreeSelection = []
+      for experiment in self.currentlySelectedExperiments:
+        experiment.clearSelectionCriteria ()
+      return
+
+      # there is at least one selection.  translate the TreePath's
+      # into a hash.  
+
+    self.loadSelectedConditionsButton.setEnabled (1)
+    selectedConditions = self.__convertTreePathsToHash (self.currentTreeSelection)
+    if (selectedConditions == None or len (selectedConditions) == 0):
+      self.loadSelectedConditionsButton.setEnabled (0)
+      self.conditionCounterTextField.setText ('%s' % 0)
+      self.currentTreeSelection = []
+      for experiment in self.currentlySelectedExperiments:
+        experiment.clearSelectionCriteria ()
+      return
+
+    self.currentlySelectedExperiments = []
+    selectedConditionCount = 0
+
+    for experimentKey in selectedConditions.keys ():
+
+       # the experiment key is just a convenenient form of the tree paths selected in
+       # the jtree. it might be an explicit, single experiment
+       #    'environmental:metals:FeSO4'
+       # or implicitly, a whole group of experiments
+       #    'environmental:metals'  
+       # which implies FeSO4, cobalt, copper, iron, manganese, ...
+
+      experimentList = self.experimentNavigator.getExperimentByPerturbationList (experimentKey)
+         # now select conditions in each experiment
+      for experiment in experimentList: 
+        experiment.clearSelectionCriteria ()
+        if (not experiment in self.currentlySelectedExperiments):
+          self.currentlySelectedExperiments.append (experiment)
+        conditions = selectedConditions [experimentKey]
+        experiment = self.__makeSelections (experiment, conditions)
+        selectedConditionCount += len (experiment.getSelectedConditionsAsAliases ())
+
+    self.conditionCounterTextField.setText ('%s' % selectedConditionCount)
+    
+  #---------------------------------------------------------------------------------
+  def __makeSelections (self, experiment, conditions):
+
+    # selected conditions for the current experiment take several forms,
+    # directly reflecting how deeply into the JTree the user clicked
+    #   treePath                             experimentKey                 conditions
+    #  --------------------------          -------------------------       ----------
+    # environmental:metals:FeSO4           environmental:metals:FeSO4         null
+    # environmental:metals:FeSO4:time      environmental:metals:FeSO4         time
+    # environmental:metals:FeSO4:time:-1   environmental:metals:FeSO4         time:-1
+
+    if (conditions == [None]):
+      experiment.selectAllConditions ()
+    else:
+      for conditionPairRaw in conditions:
+        conditionPair = conditionPairRaw.split (':')
+        if (len (conditionPair) == 1):   # select all values for this condition
+          experiment.selectConditionByName (conditionPair [0])
+        elif (len (conditionPair) == 2):
+          name = conditionPair [0]
+          value = conditionPair [1]
+          experiment.addSelectionCriterion (name, value)
+
+    return experiment
+
+  #---------------------------------------------------------------------------------
+  def expandTree (self):
+
+    done = 0
+    while (not done):
+      rowCount = self.treeWidget.getRowCount ()
+      for r in range (rowCount, 0, -1):
+        self.treeWidget.expandRow (r)
+      if (rowCount == self.treeWidget.getRowCount ()):
+        done = 1
+
+
+  #---------------------------------------------------------------------------------
+  def createGui (self):
+
+    panel = JPanel ()
+    panel.setLayout (BorderLayout ())
+
+    chooserPanel = JPanel (); # JScrollPane (conditionsList)
+    chooserPanel.setLayout (BorderLayout ())
+
+    root = DefaultMutableTreeNode ('Experiments')
+    assert (len (self.dataDirectories) >= 1)
+    self.experimentNavigator = MetaDataNavigator (self.dataDirectories [0])
+      
+    experimentsTree = self.experimentNavigator.getTree ()
+    #print 'experimentTree: %s' % experimentsTree
+    self.createTreeNodes (root, experimentsTree)
+    self.treeWidget = JTree (root)
+    #tree.setRootVisible (0)
+    self.treeWidget.getSelectionModel().setSelectionMode (
+         TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION)
+    self.treeWidget.addTreeSelectionListener (self)
+    
+    treePane = JScrollPane (self.treeWidget)
+
+    treePanel = JPanel ()
+    treePanel.setLayout (BorderLayout ())
+    treePanel.add (treePane, BorderLayout.CENTER)
+    
+    self.resultsPanel = JPanel ()
+    self.resultsPanel.setLayout (BorderLayout ())
+
+    self.outerSplitPane = JSplitPane (JSplitPane.HORIZONTAL_SPLIT, 
+                                      treePanel,
+                                      self.resultsPanel)
+
+    self.outerSplitPane.setDividerLocation (200)
+    self.outerSplitPane.setOneTouchExpandable (1)
+    self.dataBrowserHasEntireWindow = 0
+
+
+    panel.add (self.outerSplitPane, BorderLayout.CENTER)
+    
+    dismissButton = JButton (actions.IconFactory.getDismissIcon(), actionPerformed=self.dismiss)
+    dismissButton.setBackground(Color.WHITE)
+    dismissButton.setToolTipText('Close This Window')
+
+    buttonAndReadoutPanel = JPanel ()
+    buttonAndReadoutPanel.setLayout (GridBagLayout ())
+
+    gbc = GridBagConstraints ()
+    gbc.gridx = 0
+    gbc.gridy = 0
+    gbc.weightx = 1.0
+    gbc.anchor = GridBagConstraints.LINE_START
+    gbc.insets = Insets (5,20,5,0)
+    selectionPanel = JPanel ()
+    buttonAndReadoutPanel.add (selectionPanel, gbc)
+    label = JLabel ('Explicit Selection Count: ')
+    selectionPanel.add (label)
+
+    self.conditionCounterTextField = JTextField (5)
+    selectionPanel.add (self.conditionCounterTextField)
+
+    gbc.weightx = 0.5
+    gbc.gridx = 3
+    gbc.anchor = GridBagConstraints.LINE_END
+    gbc.insets = Insets (5,0,5,20)
+    buttonAndReadoutPanel.add (dismissButton, gbc)
+
+    panel.add (buttonAndReadoutPanel, BorderLayout.SOUTH)
+
+    toolbar = JToolBar ()
+    panel.add (toolbar, BorderLayout.NORTH)
+    #toolbar.add (JButton ('Add Data Source', actionPerformed=self.addSource))
+    self.loadSelectedConditionsButton = JButton (actions.IconFactory.getLoadSelectedConditionsIcon(), 
+                                                 actionPerformed=self.loadSelectedConditions)
+    self.loadSelectedConditionsButton.setBackground(Color.WHITE)
+    self.loadSelectedConditionsButton.setToolTipText('Load Selected Conditions')                                             
+    self.loadSelectedConditionsButton.setEnabled (0)
+    toolbar.add (self.loadSelectedConditionsButton)
+
+    expandButton = JButton(actions.IconFactory.getExpandAndContractIcon(),
+        actionPerformed=self.expandContractDataBrowser)
+    expandButton.setToolTipText('Expand/Contract')
+    expandButton.setBackground(Color.WHITE)
+    toolbar.add (expandButton)
+    
+
+    # Volcano plot button
+    volcanoPlotButton = JButton(actions.IconFactory.getVolcanoPlotterIcon(), actionPerformed=self.plot)
+    volcanoPlotButton.setToolTipText("Scatter Plotter")
+    volcanoPlotButton.setBackground(Color.WHITE)
+    toolbar.add (volcanoPlotButton)
+    return panel
+  
+  #---------------------------------------------------------------------------------
+  def combineSelectedConditions (self):
+
+    """
+     create a single matrix from all of the selected columns in
+     all selected experiments
+    """
+    if (len (self.currentlySelectedExperiments) == 0):
+      return
+
+    allSelectedMatrices = {}
+
+    for experiment in self.currentlySelectedExperiments:
+      name = experiment.getTitle ()
+      #print '   checking experiment with name %s' % name
+      columnNames = experiment.getSelectedConditionsAsAliases ()
+      #print '%s: columnNames: %s' % (name, columnNames)
+      if (len (columnNames) > 0):
+        slicer = datamatrix.MatrixSlicer (experiment)
+        slicedMatrices = slicer.slice ()  # there may be one, two, or more...
+        #print 'slicer returned %d matrices: ' % len (slicedMatrices)
+        
+        matrixTypes = [x for x in slicedMatrices.keySet().toArray ()]
+        for type in matrixTypes:
+          m = slicedMatrices [type]
+          #print 'matrix shape: %d x %d' % (m.getColumnCount (), m.getRowCount ())
+          #print 'colum names:  %s' % m.getColumnTitles ()
+          if (not allSelectedMatrices.has_key (type)):
+            allSelectedMatrices [type] = []
+          allSelectedMatrices [type].append (m)
+
+    finalMatrices = []
+    for type in allSelectedMatrices.keys ():
+      combiner = datamatrix.MatrixCombiner (allSelectedMatrices [type])
+      combinedMatrix = combiner.combine ()
+      combinedMatrix.setShortName (type)
+      finalMatrices.append (combinedMatrix)
+
+    return finalMatrices
+
+  #---------------------------------------------------------------------------------
+  def expandContractDataBrowser (self, event):
+
+    if (self.dataBrowserHasEntireWindow):
+      lastLocation = self.outerSplitPane.getLastDividerLocation ()
+      self.outerSplitPane.setDividerLocation (lastLocation)
+      self.dataBrowserHasEntireWindow = 0
+    else:
+      self.outerSplitPane.setDividerLocation (0)
+      self.dataBrowserHasEntireWindow = 1
+
+  #---------------------------------------------------------------------------------
+  def plot (self, event):
+
+    if (self.dataMatrixBrowser == None):
+      return
+
+    matrices = self.dataMatrixBrowser.getMatrices ()
+    if (not len (matrices) == 2):
+      return
+
+    plotController = PlotControllerListBox (matrices)
+
+  #---------------------------------------------------------------------------------
+  def loadSelectedConditions (self, event):
+
+    matrices = self.combineSelectedConditions ()
+
+    if (matrices == None or len (matrices) == 0):
+      return
+
+    if (self.dataMatrixBrowser):
+      for matrix in matrices:
+        #print 'adding matrix to *PRE-EXISTING* dataMatrixBrowser'
+        self.dataMatrixBrowser.addMatrixToGui (matrix)
+    else:
+      #print 'creating *NEW* dataMatrixBrowser'
+      self.dataMatrixBrowser = gui.DataMatrixBrowser (self.cytoscapeWindow, matrices)
+      self.resultsPanel.add (self.dataMatrixBrowser, BorderLayout.CENTER)
+      self.resultsPanel.paintAll (self.resultsPanel.getGraphics ())
+      
+  #---------------------------------------------------------------------------------
+  def dismiss (self, event):
+
+    self.dataMatrixBrowser = None
+    self.jframe.dispose ()
+
+  #---------------------------------------------------------------------------------
+  def addSource (self, event):
+
+    chooser = JFileChooser (self.currentDirectory)
+    chooser.setFileSelectionMode (JFileChooser.DIRECTORIES_ONLY)
+    status = chooser.showOpenDialog (JFrame ())
+    if (status == JFileChooser.APPROVE_OPTION):
+
+      self.sourceDirectory = chooser.getSelectedFile()
+      directory = self.sourceDirectory.getPath ()
+      #self.sourcesList.getModel ().addElement (directory)
+      self.currentDirectory = chooser.getCurrentDirectory()
+      self.loadXmlFiles (directory)
+
+  #---------------------------------------------------------------------------------
+  def loadXmlFiles (self, source):
+
+    if (source.find ('http://') == 0):
+      fetcher = PasswordProtectedMetaDataFetcher (source)
+      fileHash = fetcher.getXmlFilesList ()
+      xmlFiles = fileHash.keys ()
+    else:
+      candidates = os.listdir (source)
+      #print 'candidates: %s' % candidates
+      xmlFiles = [f for f in candidates if f.count ('.xml') > 0]
+      if (len (xmlFiles) == 0):
+        return
+
+    xmlFiles.sort ()
+    for file in xmlFiles:
+      #print 'xmlFile: %s' % file
+      pathAsString = '%s/%s' % (source, file)
+      parser = ExperimentXmlParser (pathAsString)
+      self.experiments [parser.experiment.name] = parser.experiment
+
+    #print 'experiment count: %d' % len (self.experiments)
+    newExperimentNames = self.experiments.keys ()
+    newExperimentNames.sort ()
+
+    #existingExperimentNames = [n for n in self.sourcesList.getSelectedValues ()]
+    #print 'existing: %s' % existingExperimentNames
+
+    for experimentName in newExperimentNames:
+      if (experimentName in existingExperimentNames):
+        continue
+      self.chooserList1.getModel ().addElement (experimentName)
+      #print '----------------- %s' % experimentName
+      experiment = self.experiments [experimentName]
+      #varDefs = experiment.variableDefinitions
+      #for key in varDefs.keys ():
+      #  print '%s: %s' % (key, varDefs [key]['values'])
+
+
+#---------------------------------------------------------------------------------
+if __name__ == '__main__':
+  db = TreeDataBrowser ()  

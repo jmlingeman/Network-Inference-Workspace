@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="$CODEBASE$"
+  href="names-human.jnlp">
+  <information>
+    <title>Names Goose (Human, GeneID) </title>
+    <vendor> November 2005</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="namesGoose.jar"/>
+  </resources>
+  <application-desc>
+    <argument>-d</argument>
+    <argument>$CODEBASE$/data/humanStringToGeneId.tsv</argument>
+  </application-desc>
+</jnlp>
+

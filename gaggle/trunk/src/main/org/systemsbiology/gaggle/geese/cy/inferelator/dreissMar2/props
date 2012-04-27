@@ -1,0 +1,4 @@
+visualStyle=inferelator
+plugin.0.load=csplugins.isb.pshannon.gaggle.cy.CyGagglePlugin
+plugin.1.load=csplugins.isb.pshannon.inferelator.InferelatorControlPanelPlugin
+species=Halobacterium sp.

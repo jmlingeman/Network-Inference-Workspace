@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams
+END
+SBeamsSearchPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/SBeamsSearchPanel.java
+END
+PasswordDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/PasswordDialog.java
+END
+SbeamsResultSetTableModel.py
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/SbeamsResultSetTableModel.py
+END
+test.py
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/test.py
+END
+sbeamsSearch.py
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/sbeamsSearch.py
+END
+SBEAMSClient.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/SBEAMSClient.java
+END
+Annotation.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/Annotation.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/makefile
+END
+SbeamsResultSetTableModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/sbeams/SbeamsResultSetTableModel.java
+END

@@ -1,0 +1,42 @@
+start at: Sun Oct 10 21:02:16 2010 
+Starting reg.Influence: cluster 1 
+ Sun Oct 10 21:02:25 2010 
+Starting reg.Influence: cluster 2 
+ Sun Oct 10 21:02:34 2010 
+Starting reg.Influence: cluster 3 
+ Sun Oct 10 21:02:43 2010 
+Starting reg.Influence: cluster 4 
+ Sun Oct 10 21:02:51 2010 
+Starting reg.Influence: cluster 5 
+ Sun Oct 10 21:02:57 2010 
+Starting reg.Influence: cluster 6 
+ Sun Oct 10 21:03:04 2010 
+Starting reg.Influence: cluster 7 
+ Sun Oct 10 21:03:14 2010 
+Starting reg.Influence: cluster 8 
+ Sun Oct 10 21:03:23 2010 
+Starting reg.Influence: cluster 9 
+ Sun Oct 10 21:03:32 2010 
+Starting reg.Influence: cluster 10 
+ Sun Oct 10 21:03:40 2010 
+Starting reg.Influence: cluster 11 
+ Sun Oct 10 21:03:49 2010 
+Starting reg.Influence: cluster 12 
+ Sun Oct 10 21:03:58 2010 
+Starting reg.Influence: cluster 13 
+ Sun Oct 10 21:04:07 2010 
+Starting reg.Influence: cluster 14 
+ Sun Oct 10 21:04:16 2010 
+Starting reg.Influence: cluster 15 
+ Sun Oct 10 21:04:25 2010 
+Starting reg.Influence: cluster 16 
+ Sun Oct 10 21:04:34 2010 
+Starting reg.Influence: cluster 17 
+ Sun Oct 10 21:04:43 2010 
+Starting reg.Influence: cluster 18 
+ Sun Oct 10 21:04:51 2010 
+Starting reg.Influence: cluster 19 
+ Sun Oct 10 21:05:00 2010 
+Starting reg.Influence: cluster 20 
+ Sun Oct 10 21:05:08 2010 
+end at: Sun Oct 10 21:05:16 2010 

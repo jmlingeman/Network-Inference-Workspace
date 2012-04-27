@@ -1,0 +1,8 @@
+sif=jar://6.sif
+props=jar://props
+dataServer=http://db.systemsbiology.net:8080/cytoscape/annotation/human/manifest-geneID
+noa=jar://t1db.noa
+noa=jar://entrez.noa
+species=Homo sapiens
+eda=jar://correlations.eda
+vprops=jar://vizmap.props

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gaggle/!svn/ver/3090/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/actions
+END
+UpdateGooseChooserAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/actions/UpdateGooseChooserAction.java
+END
+ConnectToBossAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/actions/ConnectToBossAction.java
+END
+DisconnectFromBossAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/actions/DisconnectFromBossAction.java
+END
+HideGooseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/actions/HideGooseAction.java
+END
+ShowGooseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/3090/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/common/actions/ShowGooseAction.java
+END

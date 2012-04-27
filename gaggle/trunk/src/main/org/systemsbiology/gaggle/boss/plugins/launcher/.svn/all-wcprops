@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher
+END
+boss.jnlp-raw
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/boss.jnlp-raw
+END
+.ignore
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/.ignore
+END
+Launcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/Launcher.java
+END
+test.py
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/test.py
+END
+boss.props
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/boss.props
+END
+WebPage.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/WebPage.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/plugins/launcher/makefile
+END

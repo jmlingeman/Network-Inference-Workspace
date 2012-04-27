@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/gaggle/!svn/ver/4359/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss
+END
+boss.jnlp-raw
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/boss.jnlp-raw
+END
+OldNameUniquifier.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/3895/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/OldNameUniquifier.java
+END
+NameUniquifier.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/gaggle/!svn/ver/3902/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/NameUniquifier.java
+END
+GaggleBossTableModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/2550/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/GaggleBossTableModel.java
+END
+manifest
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/manifest
+END
+TileCalculator.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/TileCalculator.java
+END
+hpyBoss.props
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/hpyBoss.props
+END
+GuiBoss.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gaggle/!svn/ver/4359/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/GuiBoss.java
+END
+BossConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/BossConfig.java
+END
+haloBoss.props
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/haloBoss.props
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/makefile
+END
+jdrfBoss.props
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/boss/jdrfBoss.props
+END

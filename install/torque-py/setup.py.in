@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+#
+# $Id: setup.py 434 2005-11-04 15:02:07Z bas $
+#
+# set ts=4
+#
+
+import sys
+import os
+
+from distutils.core import setup, Extension 
+
+# Strip off the -L it is also added by the python setup tools
+#
+PBS_LIB_COMPILE_LINE='@pbs_library_compile_line@'
+PBS_LIB_DIR='@pbs_library_dir@'
+
+if not PBS_LIB_DIR:
+	print 'Please specify where the PBS libraries are!!'
+	print 'edit setup.py and fill in the PBS_LIB_DIR variable'
+	sys.exit(1)
+
+LIBS = ['torque']
+
+### Make symlinks to right torque version
+#
+VERSION = "@pbs_version@"
+tmp = VERSION.split('.')
+
+major_version = int(tmp[0])
+minor_version = int(tmp[1])
+build_version = int(tmp[2])
+
+os.chdir('src')
+
+## Always unlink previous links
+#
+try:
+	os.unlink('pbs.py')
+	os.unlink('pbs_wrap.c')
+except OSError:
+	pass
+
+if major_version  >= 2 and minor_version >= 4 and build_version >= 7:
+	os.symlink('pbs_wrap_2.4.c', 'pbs_wrap.c')
+	os.symlink('pbs_2.4.py', 'pbs.py')
+	TORQUE_VERSION='TORQUE_2_4'
+else:
+	os.symlink('pbs_wrap_2.1.c', 'pbs_wrap.c')
+	os.symlink('pbs_2.1.py', 'pbs.py')
+	TORQUE_VERSION='TORQUE_OLD'
+
+os.chdir('..')
+
+setup ( name = 'pbs_python',
+	version = '4.0.0',
+	description = 'openpbs/torque python interface',
+	author = 'Bas van der Vlies',
+	author_email = 'basv@sara.nl',
+	url = 'http://subtrac.sara.nl/oss/pbs_python',
+
+
+	extra_path = 'pbs',
+		package_dir = { '' : 'src' }, 
+		py_modules = [ 'pbs', 'PBSQuery' ], 
+
+	ext_modules = [ 
+		Extension( '_pbs', ['src/pbs_wrap.c'],
+		library_dirs = [ PBS_LIB_DIR ],
+		define_macros =  [ (TORQUE_VERSION, None) ],
+		libraries = LIBS,
+		) 
+	]
+)

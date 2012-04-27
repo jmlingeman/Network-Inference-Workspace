@@ -1,0 +1,60 @@
+function [t, prec] = findThreshold(Z, percent, Atruth)
+%[t] = findThreshold(Z, percent, [truthMatrix])
+%find the threshold, t, at which Z
+%has a precision of 'percent' +/- .1 percent vs regulon
+
+
+load reg_b3
+load tfs_b3
+
+if 1 ~= exist('Atruth', 'var')
+	Atruth = reg_b3.A;
+end
+
+G = length(Z);
+if G == length(Atruth)
+	z = Z;
+elseif G == 4217
+	z = Z(reg_b3.cds_idx, reg_b3.cds_idx);
+else
+	z = Z(reg_b3.ps_idx, reg_b3.ps_idx);
+end
+zidx = setdiff(1:length(reg_b3.genes), reg_b3.tfidx);
+z(:, zidx) = 0;
+
+%low = min(min(Z));
+%high = max(max(Z));
+
+[values, valIdx] = sort(reshape(z, 1, length(z)^2), 'ascend');
+lowIdx = 1;
+highIdx = length(valIdx);
+
+%binary search for 'percent' quality
+while 1
+	zcur = z;
+	%cur = (high + low)/2;
+	
+	%curIdx = round((highIdx + lowIdx)/2);
+	curIdx = round(lowIdx + (highIdx - lowIdx)/2);
+	cur = values(curIdx);
+	
+	zcur(zcur < cur) = 0;
+	
+	prec = matrixCompare(zcur, Atruth, length(reg_b3.tfidx)) * 100;
+	if abs(prec - percent) < .1
+		t = cur;
+		return
+	elseif prec > percent
+		%high = cur;
+		highIdx = curIdx;
+	else
+		%low = cur;
+		lowIdx = curIdx;
+	end
+	if abs(lowIdx - highIdx) <= 1;
+		fprintf('Boundaries met without convergence; at last threshold %d, precision was %f\n', cur, prec);
+		t = cur;
+		return;
+	end
+end
+	

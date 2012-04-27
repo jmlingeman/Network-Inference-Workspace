@@ -1,0 +1,10 @@
+Package: gaggleUtil
+Version: 1.1.3
+Date: 05-25-2006
+Title: Utility Functions for Gaggle Users
+Author: Paul Shannon <pshannon@systemsbiology.org>
+Maintainer: Paul Shannon <pshannon@systemsbiology.org>
+Depends: R (>= 2.3.0), gaggle (>= 1.1.3)
+Description: this package contains auxilliary functions helpful to Baliga lab gaggle users
+License: GPL version 2 or newer
+URL: http://gaggle.systemsbiology.org

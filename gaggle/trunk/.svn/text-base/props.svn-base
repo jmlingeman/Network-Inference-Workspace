@@ -1,0 +1,6 @@
+# props file for GuiBoss
+#
+##plugin.0=org.systemsbiology.gaggle.boss.plugins.hypothesis.HypothesisRecorder
+plugin.1=org.systemsbiology.gaggle.boss.plugins.sbeams.SBeamsSearchPanel
+plugin.3=org.systemsbiology.gaggle.boss.plugins.clipboard.Clipboard
+#plugin.2=csplugins.isb.pshannon.gaggle.bossPlugins.jython.JyConsole

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<experiment name="gamma" date="2004-02-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='manipulationType' value='environmental'/>
+  <predicate category='manipulatedVariable' value='gamma irradiation'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> /users/pshannon/data/halo/microarrayXml/unitTests/gamma.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> /users/pshannon/data/halo/microarrayXml/unitTests/gamma.lambda </uri>
+  </dataset>
+
+   <condition alias='C0'>
+     <variable name='gamma irradiation' value='false'/>
+     <variable name='time' value='0' units='minutes'/>
+   </condition>
+
+   <condition alias='C10'>
+     <variable name='gamma irradiation' value='false'/>
+     <variable name='time' value='10' units='minutes'/>
+   </condition>
+
+   <condition alias='C30'>
+     <variable name='gamma irradiation' value='false'/>
+     <variable name='time' value='30' units='minutes'/>
+   </condition>
+
+   <condition alias='C60'>
+     <variable name='gamma irradiation' value='false'/>
+     <variable name='time' value='60' units='minutes'/>
+   </condition>
+
+   <condition alias='C240'>
+     <variable name='gamma irradiation' value='false'/>
+     <variable name='time' value='240' units='minutes'/>
+   </condition>
+
+
+   <condition alias='G0'>
+     <variable name='gamma irradiation' value='true'/>
+     <variable name='time' value='0' units='minutes'/>
+   </condition>
+
+   <condition alias='G10'>
+     <variable name='gamma irradiation' value='true'/>
+     <variable name='time' value='10' units='minutes'/>
+   </condition>
+
+   <condition alias='G30'>
+     <variable name='gamma irradiation' value='true'/>
+     <variable name='time' value='30' units='minutes'/>
+   </condition>
+
+   <condition alias='G60'>
+     <variable name='gamma irradiation' value='true'/>
+     <variable name='time' value='60' units='minutes'/>
+   </condition>
+
+   <condition alias='G240'>
+     <variable name='gamma irradiation' value='true'/>
+     <variable name='time' value='240' units='minutes'/>
+   </condition>
+
+
+</experiment>

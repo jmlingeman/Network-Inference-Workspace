@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests
+END
+MetaDataTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/MetaDataTest.java
+END
+batVbat_cmyc1Vcmyc1.xml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/batVbat_cmyc1Vcmyc1.xml
+END
+VariableTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/VariableTest.java
+END
+ConditionTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/ConditionTest.java
+END
+DataSetDescriptionTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/DataSetDescriptionTest.java
+END
+MetaDataNavigatorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/MetaDataNavigatorTest.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/metadata/unitTests/makefile
+END

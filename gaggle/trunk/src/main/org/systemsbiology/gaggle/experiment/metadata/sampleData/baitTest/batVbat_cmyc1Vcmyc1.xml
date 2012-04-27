@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<!-- $Revision: 1.1 $  $Date: 2004/12/07 23:05:50 $ -->
+
+<experiment name="bat vs bat, cmyc1 vs cmyc1 ChIP-chip" date="2004-02-01">
+
+  <predicate category='species' value='Halobacterium NRC-1'/>
+  <predicate category='strain'  value='wild type'/>
+  <predicate category='perturbation' value='Protein-DNA:general TF:cmyc'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> httpIndirect://db.systemsbiology.net:8080/halo/DataFetcher.py/batVbat_cmyc1Vcmyc1.ratio </uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> httpIndirect://db.systemsbiology.net:8080/halo/DataFetcher.py/batVbat_cmyc1Vcmyc1.lambda </uri>
+  </dataset>
+
+   <!-- $Revision: 1.1 $    $Date: 2004/12/07 23:05:50 $ -->
+
+  <constants>
+    <variable name='Optical density (600nm)' value='0.7'                        />
+    <variable name='oxygen'                  value='50'      units='percent'    />
+    <variable name='illumination'            value='Light'                      />
+    <variable name='Na'                      value='4280000' units='micromolar' />
+    <variable name='Cl'                      value='4307000' units='micromolar' />
+    <variable name='MgSO4.7H2O'              value='80000'   units='micromolar' />
+    <variable name='Na3C6H5O7'               value='10000'   units='micromolar' />
+    <variable name='K'                       value='27000'   units='micromolar' />
+    <variable name='temperature'             value='37'      units='C'          />
+    <variable name='Uracil'                  value='0'       units='ug/ml'      />
+    <variable name='Oxoid peptone'           value='1'       units='percent'    />
+    <variable name='Fe'                      value='0.0'     units='micromolar' />
+    <variable name='Cu'                      value='0.0'     units='micromolar' />
+    <variable name='Ni'                      value='0.0'     units='micromolar' />
+    <variable name='Mn'                      value='0.0'     units='micromolar' />
+    <variable name='Co'                      value='0.0'     units='micromolar' />
+    <variable name='Zn'                      value='0.0'     units='micromolar' />
+    <variable name='DIP'                     value='0.0'     units='micromolar' />
+    <variable name='H2O2'                    value='0.0'     units='micromolar' />
+    <variable name='EMS'                     value='0.0'     units='micromolar' />
+    <variable name='uv'                      value='0.0'     units='Jm^-2'      />
+    <variable name='gamma'                   value='0.0'     units='Gy'         />
+  </constants>
+
+
+  <condition alias='bat_vs_bat.sig'>
+    <variable name='bait' value='bat' />
+  </condition>
+
+  <condition alias='cmyc1_vs_cmyc1'>
+    <variable name='bait' value='cmyc1' />
+  </condition>
+
+ </experiment>

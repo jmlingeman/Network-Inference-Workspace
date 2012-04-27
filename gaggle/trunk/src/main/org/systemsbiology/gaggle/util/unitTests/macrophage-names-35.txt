@@ -1,0 +1,36 @@
+NP	GeneSymbol	GeneID	description	Organism
+NP_032715	Nfkb1	18033	nuclear factor of kappa light chain gene enhancer in B-cells 1, p105	Mus musculus
+NP_033071	Rela	19697	v-rel reticuloendotheliosis viral oncogene homolog A (avian)	Mus musculus
+NP_062281	Nfkb2	18034	nuclear factor of kappa light polypeptide gene enhancer in B-cells 2, p49/p100	Mus musculus
+NP_033450	Traf6	22034	Tnf receptor-associated factor 6	Mus musculus
+NP_035659	Tank	21353	TRAF family member-associated Nf-kappa B activator	Mus musculus
+NP_031726	Chuk	12675	conserved helix-loop-helix ubiquitous kinase	Mus musculus
+NP_032722	Map4k4	26921	mitogen-activated protein kinase kinase kinase kinase 4	Mus musculus
+NP_620402	Ripk2	192656	receptor (TNFRSF)-interacting serine-threonine kinase 2	Mus musculus
+NP_033935	Cflar	12633	CASP8 and FADD-like apoptosis regulator	Mus musculus
+NP_033423	Tnfaip3	21929	tumor necrosis factor, alpha-induced protein 3	Mus musculus
+NP_035037	Nfkbia	18035	nuclear factor of kappa light chain gene enhancer in B-cells inhibitor, alpha	Mus musculus
+NP_619608	Map3k7ip2	68652	mitogen-activated protein kinase kinase kinase 7 interacting protein 2	Mus musculus
+NP_766276	Map3k7	26409	mitogen activated protein kinase kinase kinase 7	Mus musculus
+NP_034676	Ikbkb	16150	inhibitor of kappaB kinase beta	Mus musculus
+NP_033070	Rel	19696	reticuloendotheliosis oncogene	Mus musculus
+NP_031772	Map3k8	26410	mitogen activated protein kinase kinase kinase 8	Mus musculus
+NP_033870	Bcl10	12042	B-cell leukemia/lymphoma 10	Mus musculus
+NP_034677	Ikbkg	16151	inhibitor of kappaB kinase gamma	Mus musculus
+NP_035038	Nfkbib	18036	nuclear factor of kappa light chain gene enhancer in B-cells inhibitor, beta	Mus musculus
+NP_034602	Hrb	15463	HIV-1 Rev binding protein	Mus musculus
+NP_035148	Sqstm1	18412	sequestosome 1	Mus musculus
+NP_032389	Irak1	16179	interleukin-1 receptor-associated kinase 1	Mus musculus
+NP_751893	Irak2	108960	interleukin-1 receptor-associated kinase 2	Mus musculus
+NP_034981	Myd88	17874	myeloid differentiation primary response gene 88	Mus musculus
+NP_075813	Peli1	67245	pellino 1	Mus musculus
+NP_036035	Tlr2	24088	toll-like receptor 2	Mus musculus
+NP_067272	Tlr4	21898	toll-like receptor 4	Mus musculus
+NP_084202	Irak4	266632	interleukin-1 receptor-associated kinase 4	Mus musculus
+NP_079885	Map3k7ip1	66513	mitogen-activated protein kinase kinase kinase 7 interacting protein 1	Mus musculus
+NP_032716	Nfkbie	18037	nuclear factor of kappa light polypeptide gene enhancer in B-cells inhibitor, epsilon	Mus musculus
+NP_033072	Relb	19698	avian reticuloendotheliosis viral (v-rel) oncogene related B	Mus musculus
+NP_085115	Nfkbiz	80859	nuclear factor of kappa light polypeptide gene enhancer in B-cells inhibitor, zeta	Mus musculus
+NP_473437	Tirap	117149	toll-interleukin 1 receptor (TIR) domain-containing adaptor protein	Mus musculus
+NP_033183	Map2k4	26398	mitogen activated protein kinase kinase 4	Mus musculus
+NP_062751	Ikbke	56489	inhibitor of kappaB kinase epsilon	Mus musculus

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests
+END
+tester.jnlp-raw
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/tester.jnlp-raw
+END
+haloTiny.fasta
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/haloTiny.fasta
+END
+JarFileBasedSequenceFetcherTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/JarFileBasedSequenceFetcherTest.java
+END
+manifest
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/manifest
+END
+FileBasedSequenceFetcherTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/FileBasedSequenceFetcherTest.java
+END
+haloSmallWithBlankLines.fasta
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/haloSmallWithBlankLines.fasta
+END
+ConfigTest.class
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/ConfigTest.class
+END
+haloSmall.fasta
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/haloSmall.fasta
+END
+CodonTableTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/CodonTableTest.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/unitTests/makefile
+END

@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+DEB_PYTHON_SYSTEM := pysupport
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/class/python-distutils.mk
+
+DEB_PYTHON_SETUP_CMD := setup.py
+DEB_PYTHON_COMPRESS_EXCLUDE := .pyc
+DEB_STRIP_EXCLUDE := .pyc
+
+dh_configure::
+	./configure
+
+binary-post-install/pbs-python::
+	mkdir -p debian/pbs-python/usr/bin
+	install -D examples/new_rack_pbsmon.py debian/pbs-python/usr/bin/pbsmon
+	install -D examples/sara_nodes.py debian/pbs-python/usr/bin/sara_nodes

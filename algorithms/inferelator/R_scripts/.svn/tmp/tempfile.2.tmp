@@ -1,0 +1,1543 @@
+## RB, ISB 2004-03 , major rewrite after switch to cv, glm-lasso, ts+eq
+##
+
+
+regulatoryInfluencesClust.1and2s <- function( ratios, reg.infs, cluster, colMap, assNeibs = NA, cluster.col.map=NA,
+         squash = "none" , plot.it = FALSE, tau = 20.00, pred.subset.mode = "all", time.mode = "all" ) {
+ 
+
+  ##cat("numRows: ", cluster$nrows, " ncols:", cluster$ncols, "\n")
+  ##pause()
+  
+  if ( is.na( cluster.col.map ) ) cluster.col.map <- colMap
+  
+  ## test this  ## posibly alow here for a smaller run by sampling tfs
+  numTFs <- length(reg.infs)
+  ##cat(numTFs, " TFs with siignificant change (or env) \n")
+  
+  ##cat("making emptry influence.nw. row \n")
+  influence.nw.row <- numeric( length = numTFs )
+  names(influence.nw.row) <- reg.infs
+  ##cv.err <- numeric() 
+
+  num.neg.seen <- 0  ## number of negative weigthted coefficients seen
+  num.pos.seen <- 0
+  
+  if (pred.subset.mode == "all" || pred.subset.mode == "tf") {
+    ##cat("make AIC vect \n")
+    AICfromRnd1 <- numeric( length = 6)
+    BestFromRnd1 <- character( length = 6) ## hold indexes of best influence single
+    AICfromRnd1.neg <- numeric( length = 2)
+    BestFromRnd1.neg <- character( length = 2)
+  }
+  if (pred.subset.mode == "all") {
+    ## remeber NOW these are interactions intType = {min=1, max=2}
+    ##cat("make AIC vecs for pairs \n")
+    AICfromRnd2 <- numeric( length = 4 )
+    BestFromRnd2 <- matrix( , nrow = 2, ncol = 4 ) ## hold best pairs indexes
+    AICfromRnd2.neg <- numeric()
+    BestFromRnd2.neg <- numeric( length = 2 )
+    n.interactions <- 0
+    n.neg.interactions <- 0
+  }
+  if (pred.subset.mode == "env") {
+    stop("INCORRECT MODE FOR CALLING THIS FUNCTION\n")
+  }
+  
+  ##CoeffInt <-  matrix( 0, nrow = 2, ncol = 5 )
+  
+  n.conds <- ncol( ratios )
+  
+  ##reg.infs <- tmp.r
+  numTFs <- length(reg.infs)
+  ##cat(numTFs," tfs not in this clust\n")
+  
+  for (ii in 1:numTFs ) {
+    
+    i <- reg.infs[ii] 
+    ##cat("reg inf : ", i, "\n")
+  
+    inOutResp <- makeOutputInput.lars(colMap=NA,
+                                      ratios[i,], cluster$redExp, tau,
+                                      bi.cols = cluster$cols, col.map=cluster.col.map,
+                                      time.mode = time.mode )
+    
+    ##cat("after makeINOut\n")
+    lm1 <- lm(inOutResp$outputs ~ t(inOutResp$inputs) )
+    ##cat("after fitting model single\n")
+    
+    tmpAIC <-  extractAIC(lm1)[2]
+    numDeg <-  extractAIC(lm1)[1]
+    weight.lm1 <- as.numeric(lm1$coefficients)[-1]
+    if ( is.na(weight.lm1) ) {
+      cat("non-changing env made it through var screen, first time point excluded only change?\n")
+      print( lm1$coefficients )
+      ##print( weight.lm1 )
+      ##cat(" in:\n")
+      ##print( t(inOutResp$inputs) )
+      ##cat(" out:\n")
+      ##print( inOutResp$outputs )
+      ##cat("AIC:")
+      ##print( tmpAIC )
+      cat("ii, reg:", ii, i,"\n")
+      ##pause()
+      next
+      
+    }
+      
+    if ( weight.lm1 < 0) {
+      ## i don't worry about overlap between best and best neg... best.unique can deal with that
+      num.neg.seen <- num.neg.seen + 1
+      if ( num.neg.seen <= 2) {
+        AICfromRnd1.neg[num.neg.seen] <- tmpAIC
+        BestFromRnd1.neg[num.neg.seen] <- i 
+      } else if (tmpAIC < max(AICfromRnd1.neg) ) {
+        tmp.i <- which( AICfromRnd1.neg == max(AICfromRnd1.neg) ) 
+        AICfromRnd1.neg[ tmp.i  ]  <- tmpAIC
+        BestFromRnd1.neg[ tmp.i  ]    <- i 
+      }
+    } else {
+      num.pos.seen <- num.pos.seen + 1
+    }
+    if (ii <= 4) {
+      ## fill initial values in best single aic
+      AICfromRnd1[ii] <- tmpAIC
+      BestFromRnd1[ii] <- i 
+    } else if (tmpAIC < max(AICfromRnd1) ) {
+      tmp.i <- which( AICfromRnd1 == max(AICfromRnd1) ) 
+      AICfromRnd1[ tmp.i  ]  <- tmpAIC
+      BestFromRnd1[ tmp.i  ]    <- i 
+    }
+    
+    if (ii == numTFs) next
+    
+    if ( pred.subset.mode == "all" ) {
+      ## try all pairs now
+      for (jj in (ii+1):numTFs ) {
+        ## smaller sample # for ( jj in sample( (ii+1):numTFs, min( 5, length((ii+1):numTFs) )  ) )  {
+        j <- reg.infs[jj]
+        
+        ##cat(ii, jj, "before pair inOut make\n")
+        
+        inOutResp <- makeOutputInput.lars(colMap=NA,
+                                          ratios[c(i,j),], cluster$redExp, tau,
+                                          time.mode = time.mode, bi.cols = cluster$cols, col.map=cluster.col.map )
+        ## RB ##inOutResp <- makeOutputInput.lars.old(colMap, ratios[c(i,j),], cluster$redExp, tau,
+        ## RB ##                               time.mode = time.mode, bi.cols = cluster$cols )
+        
+        ##cat("fitting in pairs\n")
+        in.interactions <- makeDesignMat.pair(inOutResp$inputs, mode = "int")
+        ## environmental factors sometimes are orthogonal and produce 0 sd , o range mins
+        if ( use.maxes && sd( in.interactions[1,] ) > 0 && sd( in.interactions[2,] ) > 0 ) {
+          max.corr <- max( cor(inOutResp$input[1,],in.interactions[1,]), cor(inOutResp$input[1,],in.interactions[2,]),
+                          cor(inOutResp$input[2,],in.interactions[1,]), cor(inOutResp$input[2,],in.interactions[2,]) )
+          ##cat(i, j, "reg infs\n")
+          ##print(max.corr)
+        } else if ( ! use.maxes && sd( in.interactions[1,] ) > 0 ) {
+          max.corr <- max( cor(inOutResp$input[1,],in.interactions[1,]),
+                          cor(inOutResp$input[2,],in.interactions[1,]) )
+        } else {
+          ## set this to skip trying this int!!
+          max.corr <- 1.0
+        }
+        ##cat("max corr ",i , j, max.corr, "\n")
+        ## WE only check to see if min and max are good predictors if they are not correlated to Xj or Xi
+        if (max.corr < 0.75) {
+          n.interactions <- n.interactions + 1
+          ## try min and max seperately
+          lm1 <- lm(inOutResp$outputs ~ t(in.interactions) )
+          tmpAIC <-  extractAIC(lm1)[2]
+          numDeg <-  extractAIC(lm1)[1]
+          weight.lm1 <- as.numeric(lm1$coefficients)[-1]  ## if use max then this is broken
+          ##cat("int weight: ")
+          ##print( weight.lm1 )
+          
+          if ( weight.lm1 < 0) {
+            ## i don't worry about overlap between best and best neg... best.unique can deal with that
+            ## min = AND, max = OR, max - min = XOR, etc...
+            ## should we explicitly check for which logic this int is
+            ## and keep track before we dump into L1-shrinkage?
+
+            ## HERE BEFORE GROUP MEETING
+            n.neg.interactions <- n.neg.interactions + 1
+            if (  n.neg.interactions == 1 ) {
+              AICfromRnd2.neg  <- tmpAIC
+              BestFromRnd2.neg[1]    <- i
+              BestFromRnd2.neg[2]    <- j
+            } else if (tmpAIC < max(AICfromRnd2) ) {
+              tmp.i <- which( AICfromRnd2 == max(AICfromRnd2) )            
+              AICfromRnd2.neg <- tmpAIC
+              BestFromRnd2.neg[1] <- i
+              BestFromRnd2.neg[2] <- j
+            }
+          }
+          if ( n.interactions <= 4 ) {
+      
+            ## fill initial vals in best aic 
+            AICfromRnd2[ n.interactions]  <- tmpAIC
+            BestFromRnd2[1, n.interactions]    <- i
+            BestFromRnd2[2, n.interactions]    <- j
+            ##cat("filling best2 (init): ",i,j,ii,jj,n.interactions, max.corr, tmpAIC, numDeg,"\n")
+            ##menu(c(1,2))
+          } else if (tmpAIC < max(AICfromRnd2) ) {
+            ##cat("filling BestFromRnd2 :",i,j, max(AICfromRnd2), tmpAIC,"w:", which( AICfromRnd2 == max(AICfromRnd2) ), "\n")
+            tmp.i <- which( AICfromRnd2 == max(AICfromRnd2) )            
+            AICfromRnd2[ tmp.i ]  <- tmpAIC
+            BestFromRnd2[1, tmp.i]    <- i
+            BestFromRnd2[2, tmp.i]    <- j
+            ##cat("filling best2 (real): ",i,j,tmp.i,ii,jj,max.corr, tmpAIC, numDeg,"\n")
+            ##menu(c(1,2))
+            if ( plot.it ) {
+              plot(1:length(inOutResp$output), inOutResp$output, type = "b")
+              lines(1:length(inOutResp$output), in.interactions[1,], col =2)
+              lines(1:length(inOutResp$output), in.interactions[2,], col =3)
+              title("max/min")
+              plot(1:length(inOutResp$output), inOutResp$output, type = "b")
+              lines(1:length(inOutResp$output), inOutResp$inputs[1,], col =2)
+              lines(1:length(inOutResp$output), inOutResp$inputs[2,], col =3)
+              title("x1, x2 org")
+            }
+          }
+          ##cat(jj, "af2\n")
+        }
+      }
+    }
+    ##cat("after pairs! \n")   
+  }
+
+  cat("rough search summary: n.int: ", n.interactions, " n.int.neg:", n.neg.interactions,"\n")
+  cat("                    : n.pos: ", num.pos.seen, " n.neg: ", num.neg.seen, "\n")
+  ## pause()
+  
+  ##cat(" adding neg 1s to end:\n")
+  ##print( BestFromRnd1)
+  ##cat(" neg 1s\n")
+  ##print( BestFromRnd1.neg )
+  
+  AICfromRnd1 <- c( AICfromRnd1, AICfromRnd1.neg )
+  BestFromRnd1 <- c( BestFromRnd1, BestFromRnd1.neg )
+  
+  if ( pred.subset.mode == "all" ) {
+    if ( n.neg.interactions >= 2) {
+      ##cat(" adding neg 2s to end:\n")
+      ##print( BestFromRnd2)
+      ##cat(" neg 2s\n")
+      ##print( BestFromRnd2.neg )
+      BestFromRnd2 <- cbind( BestFromRnd2, BestFromRnd2.neg )
+      ##colnames( BestFromRnd2 ) <- NULL
+    }
+    return( list( Best2s = BestFromRnd2, Best1s = BestFromRnd1 ) )
+  } else {
+    return( list( Best1s = BestFromRnd1 ) )
+  }
+}
+
+################################################################################
+
+regulatoryInfluencesClust.modFit.lars <-  function( ratios, reg.infs, cluster, colMap,
+           BestFromRnd1, BestFromRnd2 = "none",
+           assNeibs = NA, squash = "none" , plot.it = FALSE, tau = 15.00, cv.min = FALSE, cluster.col.map=NA,
+           max.tau.iter=1, tolerance.tau=1, tau.range=c(5,60), time.mode = "all", lars.use.prob, prior.prob ) {
+   
+   ## now do lasso-glmBinomial-cv on just the guys with good scores plus the scaffold guys
+   ##tau.range <- c(10,150) ## in hours ...  this seems like a physically relevant range
+                            ## give some msg if we peg this value on either end of range 
+   ##max.tau.iter <- 5  ## your guess is as good as mine, but we don't want to blow too much time on this!
+   ##tolerence.tau <- 1  ## as in permissible difference NOT willingness to recognize and respect the beliefs of others
+
+  cat("BestFromRnd2: \n")
+  print( BestFromRnd2 )
+  if ( is.na( cluster.col.map ) ) cluster.col.map <- colMap
+
+   ##if (plot.it == TRUE) {
+     ## on alice# postscript("/tmp/regInf-CV-curves-raw.ps", paper = "letter")
+     ##psOut <- paste("output/",cluster$k,".regInf-CV-curves-raw.ps", sep = "")
+     ## postscript(psOut, paper = "letter")
+     ## par(mfrow = c(2,2))
+   ##}
+   ## test this  ## posibly alow here for a smaller run by sampling tfs
+   ##numTFs <- length(reg.infs)
+   ##cat(numTFs, " TFs with siignificant change (or env) \n")
+   
+   numTFs <- length( reg.infs )
+   ##cat("making emptry influence.nw. row \n")
+   influence.nw.row <- numeric( length = numTFs )
+   names(influence.nw.row) <- reg.infs
+   cv.err <- numeric()
+   
+   #candidate.influence.set <- c( assNeibs, BestFromRnd2[1,], BestFromRnd2[2,], BestFromRnd1 )
+   candidate.influence.set <- c( BestFromRnd1 )
+   num.single <- length(candidate.influence.set)
+   ## WE NOW ADD INTERACTIONS SEPERATELY
+   
+   #if (length(candidate.influence.set) > 10 ) {
+   #   # this should be switched with a sort
+   #   cadidate.influence.set <- candidate.influence.set[1:10]
+   #}
+
+   ##cat("starting estimation of beta and tau with lars\n")
+   #print(BestFromRnd1);print(BestFromRnd2)
+   #cat("single:\n");print(candidate.influence.set)
+   ## we need to check for multiple guys ... they are garunteed in this 
+   ## function, but if you use cv.gl1ce, don't feed it single row inputs
+   if ( BestFromRnd2 != "none" && (! is.na(BestFromRnd2)) ) {
+     for (iter  in 1:max.tau.iter ) {
+
+       ## if we slide into null model then exit
+       tau.init <- tau   ## tau moves
+       if (iter > 1) {
+         cv.err.init <- cv.err
+         beta.0.init <- beta.0
+         coefficients.init <- coefficients
+         candidate.influence.set.wInt.init <- candidate.influence.set.wInt
+         inputs.init <- inputs
+         outputs.init <- outputs
+         ltest.init <- ltest
+         cv.ltest.init <- cv.ltest
+         best.s.init <- best.s
+       }
+       ##cat("before makeInOut during final model fitting", iter, "\n")
+       
+       inOutResp <- makeOutputInput.lars(colMap=NA,
+                                         ratios[candidate.influence.set,], cluster$redExp, tau, 
+                                         time.mode = time.mode, bi.cols = cluster$cols, col.map=cluster.col.map )
+       ##RB ## inOutResp <- makeOutputInput.lars.old(colMap,
+       ##RB ##                                  ratios[candidate.influence.set,], cluster$redExp, tau, 
+       ##RB ##                                  bi.cols = cluster$cols )
+       
+       ##cat("in1\n")
+       ##makeInBest2 <- function (BestFromRnd2, colMap, ratios, redExp, bi.cols.in = "all", tau, cluster.col.map=NA) {
+       print( BestFromRnd2 )
+       inInter <- makeInBest2(BestFromRnd2, colMap=NA, 
+                              ratios, cluster$redExp, bi.cols.in = cluster$cols , tau,
+                              cluster.col.map=cluster.col.map, time.mode = time.mode )
+       ##RB ## inInter <- makeInBest2.nold(BestFromRnd2, colMap, 
+       ##RB ##                     ratios, cluster$redExp, bi.cols.in = cluster$cols , tau,
+       ##RB ##                             cluster.col.map=cluster.col.map )
+                              
+       ##cat("before rbind\n");print (inOutResp$inputs);print (inInter$intin )
+       ##menu(c(1,2))
+       inputs <- rbind( inOutResp$inputs, inInter$intin )
+       outputs <- inOutResp$outputs
+       inOutResp$inputs <- inputs
+       candidate.influence.set.wInt <- c(candidate.influence.set, inInter$names) ## names should be in form "vng.vng.max"
+       ##cat("w int cand inf:\n");print( candidate.influence.set.wInt )
+       ##cat("Best2\n");print(BestFromRnd2)
+       ##cat("inputs\n");print(inputs)
+       ##cat("resp\n");print(outputs)
+       
+       ## get cv err for several values of shrinkage parameter
+       tmp.na <- which( is.na(outputs) )
+       if ( length( tmp.na ) > 0) {
+         outputs[tmp.na] <- 0
+         cat("NA FOUND IN RESPONCE VECTOR\n AT CLUSTER: ", cluster$k, tmp.na, "\n")
+         cat("new outputs:\n")
+         print(outputs) 
+       } 
+
+       ##modified to include prior probs greeny
+       if( lars.use.prob ){
+         ltest <- lars_probs(t(inputs), outputs, type = "lasso", trace=FALSE, prior.prob = prior.prob)
+       }
+       else{
+         ltest <- lars(t(inputs), outputs, type = "lasso", trace = FALSE)
+       }
+       if ( plot.it ) {
+         plot(ltest)
+         title.tmp <- paste(cluster$k, tau)
+         title(title.tmp)
+       }       ##cat("after lasso in tau \n")
+       k.fold <- min(7, length(outputs) )
+
+       ##modified to include prior probs greeny
+       if( lars.use.prob ){
+         cv.ltest <- cv.lars_probs(t(inputs), outputs, K = k.fold, type = "lasso", prior.prob = prior.prob)
+       }
+       else{
+         cv.ltest <- cv.lars(t(inputs), outputs, K = k.fold, type = "lasso")
+       }
+       
+       min.i <- which(cv.ltest$cv == min(cv.ltest$cv) )
+       min.err <- cv.ltest$cv.error[ min.i ]
+
+       if ( cv.min ) {
+         thresh.cv <- min(cv.ltest$cv)
+       } else {
+         thresh.cv <- min(cv.ltest$cv) + min.err
+       }
+       ##thresh.cv <- min(cv.ltest$cv)
+       
+       best.s <- 0
+       
+       for (i in 1:min.i ) {
+         if  (cv.ltest$cv[i] <= thresh.cv) {
+           best.s <- i
+           break
+         }
+       }
+       if ( plot.it ) lines(c(cv.ltest$fraction[best.s],cv.ltest$fraction[best.s]), range(cv.ltest$cv), col=2, lty=2, lwd=3)
+       
+       cat("cv (1): ", min.i, min.err, best.s, cv.ltest$cv[best.s], "\n")
+       
+       coefficients <- coef.lars(ltest, s = cv.ltest$fraction[best.s], mode = "fraction")
+       ## overfit # coefficients <- coef.lars(ltest, s = cv.ltest$fraction[min.i], mode = "fraction")
+       ##cat("coef ...\n")
+       ##print(coefficients)
+       cv.err <- cv.ltest$cv[best.s]
+       ##cat(" 4\n")
+       ## if the bound-fration is 0 then we fit no param but intercept... no point fitting 
+       ## tau if we can't fit inputs influence ...
+       ## CHANGE THIS TO SOME ALTERNATE GUESS IF WE SELECT NULL 
+       if (best.s == 1 && iter > 1 ) {
+         ## reset tau and old model and exit
+         cv.err <- cv.err.init
+         beta.0 <- beta.0.init
+         tau <- tau.init
+         coefficients <- coefficients.init
+         candidate.influence.set.wInt <- candidate.influence.set.wInt.init
+         inputs <- inputs.init
+         outputs <- outputs.init
+         ltest <- ltest.init
+         cv.ltest <- cv.ltest.init
+         best.s <- best.s.init
+         cat("Breaking at tauIter: ", iter, " to avoid slide into null model\n")
+         break
+       }
+                                        #
+       ##cat("before tau\n")
+       ## find better tau given this glm
+       ##print(inOutResp)
+       ##pause()
+       ## inOutResp not needed below
+       if (max.tau.iter > 1 && iter < max.tau.iter) {
+         tau <- getTau.minRes.lars( ltest, colMap, inOutResp,  cluster$redExp, 
+                                   bi.cols = cluster$cols,
+                                   tau,
+                                   s.fraction = cv.ltest$fraction[best.s])
+         cat("tau (1): ", tau, tau.init, tau.range, "\n")
+         if ( abs( tau - tau.init ) < tolerance.tau ) {
+           cat("tau didn't move enough ...  break from tau optimization\n")
+           break
+         }
+         if ( tau < tau.range[1] ) {
+           cat("tau broke floor\n")
+           tau <- tau.range[1] 
+         } else if (tau > tau.range[2] ) {
+           cat("tau broke ceiling\n")
+           tau <- tau.range[2]
+         }
+       }
+     }
+   } else {
+     cat(" no interactions provided ... using single infs\n")
+     ##stop(" after breaking makeOutputInput() this is due for fixing\n")
+     candidate.influence.set.wInt <- candidate.influence.set  ## redundant for returning this vector
+      for (iter  in 1:max.tau.iter ) {
+       tau.init <- tau   ## tau moves
+       inOutResp <- makeOutputInput.lars(colMap=NA,
+                                         ratios[candidate.influence.set,], cluster$redExp, tau, 
+                                         time.mode = time.mode, bi.cols = cluster$cols, col.map=cluster.col.map )
+      
+       inputs <- inOutResp$inputs
+       outputs <- inOutResp$outputs
+       ## inOutResp$inputs <- inputs
+       ## candidate.influence.set.wInt <- c(candidate.influence.set, inInter$names) ## names should be in form "vng.vng.max"
+       ## get cv err for several values of shrinkage parameter
+       tmp.na <- which( is.na(outputs) )
+       if ( length( tmp.na ) > 0) {
+         outputs[tmp.na] <- 0
+         cat("NA FOUND IN RESPONCE VECTOR\n AT CLUSTER: ", cluster$k, tmp.na, "\n")
+         cat("new outputs:\n")
+         print(outputs) 
+       } 
+
+       ##modfied to include prior probs  greeny
+       if( lars.use.prob ){
+         ltest <- lars_probs(t(inputs), outputs, type = "lasso", trace=FALSE, prior.prob = prior.prob)
+       }
+       else{
+         ltest <- lars(t(inputs), outputs, type = "lasso", trace = FALSE)
+       }
+
+       if ( plot.it ) {
+         plot(ltest)
+         title.tmp <- paste(cluster$k, tau)
+         title(title.tmp)
+       }
+       ##cat("after lasso in tau \n")
+       k.fold <- min(7, length(outputs) )
+
+       ##modified to include prior probs greeny
+       if( lars.use.prob ){
+         cv.ltest <- cv.lars_probs(t(inputs), outputs, K = k.fold, type = "lasso", prior.prob = prior.prob)
+       }
+       else{
+         cv.ltest <- cv.lars(t(inputs), outputs, K = k.fold, type = "lasso")
+       }
+       
+       min.i <- which(cv.ltest$cv == min(cv.ltest$cv) )
+       min.err <- cv.ltest$cv.error[ min.i ]
+       ##thresh.cv <- min(cv.ltest$cv) + min.err
+       thresh.cv <- min(cv.ltest$cv)
+       best.s <- 0
+       for (i in 1:min.i ) {
+         if  (cv.ltest$cv[i] <= thresh.cv) {
+           best.s <- i
+           break
+         }
+       }
+       if ( plot.it ) lines(c(cv.ltest$fraction[best.s],cv.ltest$fraction[best.s]), range(cv.ltest$cv), col = 2, lty = 2)
+       cat("cv (2): ", min.i, min.err, best.s, cv.ltest$cv[best.s], "\n")
+       coefficients <- coef.lars(ltest, s = cv.ltest$fraction[best.s], mode = "fraction")
+                                      
+       cv.err <- cv.ltest$cv[best.s]
+       ## CHANGE THIS TO SOME ALTERNATE GUESS IF WE SELECT NULL 
+       if (best.s == 1 && iter < max.tau.iter ) {
+         ## add null model revert to last model!
+         best.s == min.i  ## ??? arrrr!
+       } 
+        
+       ##cat("before tau\n")
+       ## find better tau given this glm
+       if (max.tau.iter > 1 && iter < max.tau.iter) {
+         tau <- getTau.minRes.lars( ltest, colMap, inOutResp,  cluster$redExp, 
+                                   bi.cols = cluster$cols,
+                                   tau,
+                                   s.fraction = cv.ltest$fraction[best.s])
+         cat("tau (2) ", tau, tau.init, tau.range, "\n")
+         if ( abs( tau - tau.init ) < tolerance.tau ) {
+           cat("tau didn't move enough ...  break from tau optimization\n")
+           break
+         }
+         if ( tau < tau.range[1] ) {
+           cat("tau broke floor\n")
+           tau <- tau.range[1] 
+         } else if (tau > tau.range[2] ) {
+           cat("tau broke ceiling\n")
+           tau <- tau.range[2]
+         }
+       }
+     }
+   }
+  ##cat("finishing up\n")
+  ## ##################
+  
+   ##if (plot.it) dev.off()
+   ## return info to main with invisible() ?
+   if (best.s == 1 ) { 
+      ## null model, shiznit!
+      beta.0 <- mean( outputs )  ## lasso sweeps out intercpt, so not in coeff vector
+      cat("null model selected for : ", cluster$k , "\n")
+      object <- list(influence = influence.nw.row, cv.err = cv.err,
+                      intercept = beta.0, tau = tau , is.null = TRUE,
+                      coeff.lars =  coefficients,
+                      cand.influence = candidate.influence.set.wInt,
+                      inputs = inputs, outputs = outputs,
+                      fraction = 0, lars.obj = ltest, cv.obj = cv.ltest, best.s = 1 )
+      invisible (object)
+   } else {
+      parents <- candidate.influence.set[1:num.single]
+      beta.0 <- mean( outputs )  ## 
+      influence.nw.row[parents] <- coefficients[1:num.single]
+      nonZeroParents <- candidate.influence.set.wInt[ abs(coefficients) > 0]
+      nonZeroWeights <- coefficients[ abs(coefficients) > 0]
+      names( coefficients ) <- candidate.influence.set.wInt
+      cat( "found nonZero weights for : ", nonZeroParents, "\n")
+      cat( "with weights              : ", nonZeroWeights, "\n")
+      object <- list(influence = influence.nw.row, cv.err = cv.err, 
+                      intercept = beta.0, tau = tau, is.null = FALSE,
+                      coeff.lars =  coefficients,
+                      cand.influence = candidate.influence.set.wInt,
+                      inputs = inputs, outputs = outputs,
+                      fraction = cv.ltest$fraction[best.s],
+                      lars.obj = ltest, cv.obj = cv.ltest, best.s = best.s )
+      invisible (object)
+   }
+}   ## end of model fit lars
+
+get.coeffs.for.thresh <- function (x, xvar = c("norm", "df", "arc.length"), breaks = TRUE, 
+    plottype = c("coefficients", "Cp"), omit.zeros = TRUE, eps = 1e-10, 
+    ...) {
+    object <- x
+    plottype <- match.arg(plottype)
+    xvar <- match.arg(xvar)
+    coef1 <- object$beta
+    coef1 <- scale(coef1, FALSE, 1/object$normx)
+    if (omit.zeros) {
+        c1 <- drop(rep(1, nrow(coef1)) %*% abs(coef1))
+        nonzeros <- c1 > eps
+        cnums <- seq(nonzeros)[nonzeros]
+        coef1 <- coef1[, nonzeros]
+    }
+    else cnums <- seq(ncol(coef1))
+    s1 <- switch(xvar, norm = {
+        s1 <- apply(abs(coef1), 1, sum)
+        s1/max(s1)
+    }, df = seq(length(object$arc.length) + 1), arc.length = cumsum(c(0, 
+        object$arc.length)))
+    return( s1 )
+}
+
+
+################################################################################
+
+regulatoryInfluencesClust.modFit.lm.step   <-  function( ratios, reg.infs, cluster, colMap,
+           BestFromRnd1, BestFromRnd2 = "none",
+           assNeibs = NA, squash = "none" , plot.it = FALSE, tau = 15.00, cluster.col.map=NA ) {
+
+   stop( "revise after fixing makeOutputInput ? \n")
+   ## now do lasso-glmBinomial-cv on just the guys with good scores plus the scaffold guys
+   tau.range <- c(10,150) ## in hours ...  this seems like a physically relevant range
+                            ## give some msg if we peg this value on either end of range 
+   max.tau.iter <- 10  ## your guess is as good as mine, but we don't want to blow too much time on this!
+   tolerance.tau <- 0.50  ## as in permissible difference NOT willingness to recognize and respect the beliefs of others
+
+  if ( is.na( cluster.col.map ) ) cluster.col.map <- colMap
+
+   ##if (plot.it == TRUE) {
+   ##  ## on alice# postscript("/tmp/regInf-CV-curves-raw.ps", paper = "letter")
+   ##  psOut <- paste(clust.curr,"regInf-CV-curves-raw.ps", sep = ".")
+   ##  postscript(psOut, paper = "letter")
+   ##}
+   ## par(mfrow = c(2,2))
+
+   ##tmp.r <- reg.infs[! reg.infs %in% cluster$rows ]
+   ##reg.infs <- tmp.r
+   ##numTFs <- length(reg.infs)
+   ##cat(numTFs," tfs not in this clust\n")
+   cv.err <- numeric()
+   #candidate.influence.set <- c( assNeibs, BestFromRnd2[1,], BestFromRnd2[2,], BestFromRnd1 )
+   candidate.influence.set <- c( BestFromRnd1 )
+   num.single <- length(candidate.influence.set)
+   ##cat("starting estimation of beta and tau with lm-step (AIC)\n")
+   #print(BestFromRnd1);print(BestFromRnd2)
+   #cat("single:\n");print(candidate.influence.set)
+   ## we need to check for multiple guys ... they are garunteed in this 
+   ## function, but if you use cv.gl1ce, don't feed it single row inputs
+   if (  BestFromRnd2 != "none" ) {
+     for (iter  in 1:max.tau.iter ) {
+       tau.init <- tau   ## tau moves
+       ##cat("before makeInOut during final model fitting", iter, "\n")
+       inOutResp <- makeOutputInput.lars(colMap=NA,
+                                         ratios[candidate.influence.set,], cluster$redExp, tau, 
+                                         time.mode = time.mode, bi.cols = cluster$cols, col.map=cluster.col.map )
+       
+       inInter <- makeInBest2(BestFromRnd2, colMap=NA,
+                              ratios, cluster$redExp, bi.cols.in = cluster$cols , tau,
+                              cluster.col.map=cluster.col.map, time.mode = time.mode )
+                                      
+       inputs <- rbind( inOutResp$inputs, inInter$intin )
+       outputs <- inOutResp$outputs
+       inOutResp$inputs <- inputs
+       candidate.influence.set.wInt <- c(candidate.influence.set, inInter$names) ## names should be in form "vng.vng.max"
+                                    
+       ## get cv err for several values of shrinkage parameter
+       tmp.na <- which( is.na(outputs) )
+       if ( length( tmp.na ) > 0) {
+         outputs[tmp.na] <- 0
+         cat("NA FOUND IN RESPONCE VECTOR\n AT CLUSTER: ", cluster$k, tmp.na, "\n")
+         cat("new outputs\n")
+         print(outputs) 
+       } 
+       ltest <- lm( outputs ~ t(inputs) )
+       names(ltest$coefficients) <- c("(Intercept)",candidate.influence.set.wInt)
+       ltest.st <- stepAIC( ltest, direction = "both")
+
+       intercept <- ltest.st$coefficients[1]
+       parents <- names(ltest.st$coefficients)[-1]
+       weights <- as.numeric(ltest.st$coefficients)[-1]
+       
+       ##cat("before tau\n")
+       ## find better tau given this glm
+                                        #print(inOutResp)
+                                        #pause()
+       ## inOutResp not needed below
+       tau <- getTau.minRes.lm( ltest.st, colMap, inOutResp,  cluster$redExp, 
+                                  bi.cols = cluster$cols,
+                                  tau )
+       cat("tau; ", tau, tau.init, tau.range, "\n")
+       if ( abs( tau - tau.init ) < tolerance.tau ) {
+         cat("tau didn't move enough ...  break from tau optimization\n")
+         break
+       }
+       if ( tau < tau.range[1] ) {
+         cat("tau broke floor\n")
+         tau <- tau.range[1] 
+       } else if (tau > tau.range[2] ) {
+         cat("tau broke ceiling\n")
+         tau <- tau.range[2]
+       }
+     }
+   } else {
+     cat(" no interactions provided ... using single infs\n")
+     candidate.influence.set.wInt <- candidate.influence.set
+     for (iter  in 1:max.tau.iter ) {
+       tau.init <- tau   ## tau moves
+       inOutResp <- makeOutputInput.lars(colMap=NA,
+                                         ratios[candidate.influence.set,], cluster$redExp, tau, 
+                                         time.mode = time.mode, bi.cols = cluster$cols, col.map=cluster.col.map )
+       inputs <- inOutResp$inputs
+       outputs <- inOutResp$outputs
+       tmp.na <- which( is.na(outputs) )
+       if ( length( tmp.na ) > 0) {
+         outputs[tmp.na] <- 0
+         cat("NA FOUND IN RESPONCE VECTOR\n AT CLUSTER: ", cluster$k, tmp.na, "\n")
+         cat("new outputs:\n")
+         print(outputs) 
+       } 
+      
+       ltest <- lm( outputs ~ t(inputs) )
+       names(ltest$coefficients) <- c("(Intercept)",candidate.influence.set.wInt)
+       ltest.st <- stepAIC( ltest, direction = "both")
+
+       intercept <- ltest.st$coefficients[1]
+       parents <- names(ltest.st$coefficients)[-1]
+       weights <- as.numeric(ltest.st$coefficients)[-1]
+       
+       ##cat("before tau\n")
+       ## find better tau given this glm
+                                        #print(inOutResp)
+                                        #pause()
+       ## inOutResp not needed below
+       tau <- getTau.minRes.lm( ltest.st, colMap, inOutResp,  cluster$redExp, 
+                                  bi.cols = cluster$cols,
+                                  tau )
+       cat("tau; ", tau, tau.init, tau.range, "\n")
+       if ( abs( tau - tau.init ) < tolerance.tau ) {
+         cat("tau didn't move enough ...  break from tau optimization\n")
+         break
+       }
+       if ( tau < tau.range[1] ) {
+         cat("tau broke floor\n")
+         tau <- tau.range[1] 
+       } else if (tau > tau.range[2] ) {
+         cat("tau broke ceiling\n")
+         tau <- tau.range[2]
+       }
+     }
+   }
+   ##cat("finishing up\n")
+   ####################
+
+   ## return info to main with invisible() ?
+   object <- list( parents = parents, 
+                  tau = tau,
+                  coeff.lm =  coefficients,
+                  cand.influence = candidate.influence.set.wInt,
+                  ##inputs = inputs, outputs = outputs,
+                  lm.obj = ltest.st )
+   ##if (plot.it) dev.off()
+   invisible (object)
+   
+}   ## end of model fit lm-step
+
+
+##########################################################################################
+
+makeOutputInput.lars <- function (colMap, ratios.i, ratios.o, tau, bi.cols = "all", squash.mode = "none",
+                                  col.map=NA, time.mode = "all" ) {
+  ## make response and input vectors similar to wahde + hertz
+  ## this sub/func deals with the problem of
+  ## how to fit the regulatory function when some of the columns in our
+  ## data are from time series and some are from equilibrium experiemnts.
+  ## time series are dealt with like discreete samples from a decay/accretion process
+  ##
+  
+  ##  with the constant tau controling decay, while equilibrium data
+  ## is dealt with as we've always dealt with it (set d/dt(ratios) = 0 and fit)
+  
+  ## * note, some of the mess in this function is due to the fact that
+  ##   when you pass R funcs a single row from a matrix the type is converted to 
+  ##   vector and when you then say "as.matrix(rowThatShouldBeMatrix)" you 
+  ##   get a column ... SO  all these ifs are 'cause of that!
+  
+  ##cat("starting to fill inOut\n")
+  ##inOut <- list()
+  ## colMap$numTS is number of distinct time series in this set of experiments
+  ## BUT if we do this over just the conditions in the bicluster 
+  ## SO we must declare the matricies bigger (nCol cols) and then subtract the number of "f"s.
+  ##cat("rat\n", ratios.i,"\n")
+
+  if ( time.mode == "eq.override") {  
+    col.names <- names(ratios.o)
+    names.shift <- character()
+    
+    if (bi.cols[1] == "all" ) {
+      bi.cols <- col.names
+      bi.cols.i <- 1:length(col.names) 
+    } else {
+      ##cat ("using biclust defined columns\n")
+      ##print ( bi.cols ) 
+      bi.cols.i <- which( col.names %in% bi.cols ) 
+    }    
+    
+    ## we check , mabey we've been fed only one row ... R data types --- love/hate !?
+    ##if (length(ratios.i) == length(ratios.o) ) {
+    if ( ! is.matrix( ratios.i ) ) {
+      ratios.i <- t( as.matrix( ratios.i ) ) ## Convert to 1-row matrix
+    } ##else {
+    nCol <- length(bi.cols)  ## number of conditions before taking out 1st/Last occurences (-1 per ts)
+    nRow <- nrow(ratios.i) ## number of predictors
+    ##}
+    
+    if ( is.na( col.map ) ) {
+      col.map <- get.col.map.one.cluster( col.names, colMap, cluster=NULL, bi.cols=bi.cols )
+    }
+    
+    ## numFirsts <- sum( col.map$is1stLast == "f" & col.map$isTs == TRUE, na.rm=T )
+    
+    ## if (numFirsts > col.map$numTS) {
+    ##   stop("numFirsts is greater than the number of ts is whole set\n" )
+    ## }   
+    out.tmp <- ratios.o[ bi.cols.i ]
+    in.tmp <- ratios.i[ ,bi.cols.i ]
+    if ( ! is.matrix( in.tmp ) ) in.tmp <- t( in.tmp )
+    ##colnames( in.tmp ) <- names( prevs[ good.i ] )
+    ##names.shift <- names( prevs[ good.i ] ) ##col.names[ bi.cols.i ][ good.inds ]
+    
+  } else if (time.mode == "all" ) {
+    ##stop("eq override mode not tested\n")
+    col.names <- names(ratios.o)
+    names.shift <- character()
+    
+    if (bi.cols[1] == "all" ) {
+      bi.cols <- col.names
+      bi.cols.i <- 1:length(col.names) 
+    } else {
+      ##cat ("using biclust defined columns\n")
+      ##print ( bi.cols ) 
+      bi.cols.i <- which( col.names %in% bi.cols ) 
+    }    
+    
+    ## we check , mabey we've been fed only one row ... R data types --- love/hate !?
+    ##if (length(ratios.i) == length(ratios.o) ) {
+    if ( ! is.matrix( ratios.i ) ) {
+      ratios.i <- t( as.matrix( ratios.i ) ) ## Convert to 1-row matrix
+    } ##else {
+    nCol <- length(bi.cols)  ## number of conditions before taking out 1st/Last occurences (-1 per ts)
+    nRow <- nrow(ratios.i) ## number of predictors
+    ##}
+    
+    if ( is.na( col.map ) ) {
+      col.map <- get.col.map.one.cluster( col.names, colMap, cluster=NULL, bi.cols=bi.cols )
+    }
+    
+    numFirsts <- sum( col.map$is1stLast == "f" & col.map$isTs == TRUE, na.rm=T )
+    
+    if (numFirsts > col.map$numTS) {
+      stop("numFirsts is greater than the number of ts is whole set\n" )
+    }
+    
+    good.i <- ( ( col.map$isTs == TRUE ) & ( col.map$is1stLast == "m" | col.map$is1stLast == "l" ) ) |
+    ( col.map$isTs == FALSE & col.map$is1stLast == "e" )
+    prevs <- col.map$prevCol
+    del.ts <- col.map$delta.t  
+    out.tmp <- ( (tau / del.ts) * (ratios.o[ bi.cols.i ] - ratios.o[ prevs ]) ) + ratios.o[ prevs ]
+    out.tmp[ out.tmp > 3.0 ] <- 3.0
+    out.tmp[ out.tmp < -3.0 ] <- -3.0
+    ##out.tmp[ good.es ] <- ratios.o[ bi.cols.i ][ good.es ]
+    out.tmp <- out.tmp[ good.i ]
+    in.tmp <- ratios.i[ ,prevs[ good.i ] ]
+    if ( ! is.matrix( in.tmp ) ) in.tmp <- t( in.tmp )
+    ##colnames( in.tmp ) <- names( prevs[ good.i ] )
+    ##names.shift <- names( prevs[ good.i ] ) ##col.names[ bi.cols.i ][ good.inds ]
+    
+  } else if (time.mode == "eq.restrict" ) {
+    good.cols = TRUE  ## this is to make sure
+    stop("eq.restrict mode not tested\n")
+    col.names <- names(ratios.o)
+    names.shift <- character()
+    
+    if (bi.cols[1] == "all" ) {
+      bi.cols <- col.names
+      bi.cols.i <- 1:length(col.names) 
+    } else {
+      ##cat ("using biclust defined columns\n")
+      ##print ( bi.cols ) 
+      bi.cols.i <- which( col.names %in% bi.cols ) 
+    }    
+    
+    ## we check , mabey we've been fed only one row ... R data types --- love/hate !?
+    ##if (length(ratios.i) == length(ratios.o) ) {
+    if ( ! is.matrix( ratios.i ) ) {
+      ratios.i <- t( as.matrix( ratios.i ) ) ## Convert to 1-row matrix
+    } ##else {
+    ##nCol <- length(bi.cols)  ## number of conditions before taking out 1st/Last occurences (-1 per ts)
+    ##nRow <- nrow(ratios.i) ## number of predictors
+    ##}
+    
+    if ( is.na( col.map ) ) {
+      col.map <- get.col.map.one.cluster( col.names, colMap, cluster=NULL, bi.cols=bi.cols )
+    }
+    
+    ##numFirsts <- sum( col.map$is1stLast == "f" & col.map$isTs == TRUE, na.rm=T )
+    ##if (numFirsts > col.map$numTS) {
+    ##  stop("numFirsts is greater than the number of ts is whole set\n" )
+    ##}
+    
+    good.i <- ( col.map$isTs == FALSE & col.map$is1stLast == "e" )
+    if ( length(good.i) < 5 ) good.cols <- FALSE 
+    out.tmp <- ratios.o[ bi.cols.i[ good.i ] ]
+    in.tmp <- ratios.i[ ,bi.cols.i[ good.i ] ]
+    if ( ! is.matrix( in.tmp ) ) in.tmp <- t( in.tmp )
+    ##colnames( in.tmp ) <- names( prevs[ good.i ] )
+    ##names.shift <- names( prevs[ good.i ] ) ##col.names[ bi.cols.i ][ good.inds ]
+    
+  } else if ( time.mode == "ts.restrict" ){
+    stop("ts.restrict not supported\n")
+  }
+  
+  if ( time.mode != "eq.restrict" && time.mode != "ts.restrict" ) {
+    return( list( names=names.shift, inputs=in.tmp, outputs=out.tmp ) )
+  } else {
+    return( list(  names=names.shift, inputs=in.tmp, outputs=out.tmp, good.cols = good.cols ) )
+  }
+}
+############################################################################################################
+
+################################################################################
+
+### old versions of the code to test R-i-fied versions 
+### RB testing new code by DJR 
+
+
+#########################################################################################
+
+makeDesignMat.pair <- function (X.mat, mode = "comp" ) {
+
+    ## changed to use only mins() not maxes by DJR
+    ##   this makes for much less overfit models.
+  
+    ## posibly put names on these guys
+       
+    ## we check , mabey we've been fed only one row ... R data types --- love/hate !?
+    if ( is.null(dim(X.mat))  ) {
+       stop(" single row OR incorrect dimmentsions read in TO PAIR INT FUNC... STOPPING\n") 
+    } else if (dim(X.mat)[1] >= 2) {
+       nCol <- dim(X.mat)[2] ## number of conditions before taking out 1st/Last occurences (-1 per ts)
+       nRow <- dim(X.mat)[1] ## number of predictors
+    } else {
+      stop(" problem with dimensions in makeDesignMat.pair\n")
+    }
+
+    #cat("making names vec\n")
+    if (is.null(rownames(X.mat)) ) {
+      r.names <- as.character(1:nRow)
+    } else {
+      r.names <- rownames(X.mat)
+    }
+    
+    if (mode == "comp") {
+       #include diagonal i.e. the predictors and thier interactions
+      cat( "comp mode not supported!!!\n" )
+#        nNewDim <- nRow ^ 2
+#        if ( ! use.maxes ) nNewDim <- nNewDim / 2
+#        Z.mat <- matrix(0.0, ncol = nCol, nrow = nNewDim)
+#        rownames(Z.mat) <- as.character(1:nNewDim)
+#        rownames(Z.mat)[1:nRow] <- r.names
+#        Z.mat[1:nRow,] <- X.mat
+    
+#        shift.row <- 1 + nRow
+#        for (i in 1:(nRow-1)) {
+#          for (j in (i+1):nRow ) {
+#            ##max
+#            ##cat("before rbind:", i , j, "\n")
+#            ##print(X.mat)
+#            if ( use.maxes ) {  
+#              Z.mat[shift.row,] <- apply(rbind(X.mat[i,], X.mat[j,]), 2, max)
+#              rownames(Z.mat)[shift.row] <- paste(r.names[i], r.names[j], "max", sep = ".")
+#              shift.row <- shift.row + 1
+#            }
+#            ## min
+#            Z.mat[shift.row,] <- apply(rbind(X.mat[i,], X.mat[j,]), 2, min)
+#            rownames(Z.mat)[shift.row] <- paste(r.names[i], r.names[j], "min", sep = ".")
+#            shift.row <- shift.row + 1
+#          }
+#        }
+       
+    } else if (mode == "int") {
+      # include just the interactions
+      nNewDim <- nRow^2 - nRow
+      if ( ! use.maxes ) nNewDim <- nNewDim / 2
+      Z.mat <- matrix(0.0, ncol = nCol, nrow = nNewDim)
+      rownames(Z.mat) <- as.character(1:nNewDim)
+      
+       shift.row <- 1
+       for (i in 1:(nRow-1)) {
+         for (j in (i+1):nRow ) {
+           ##max
+           ##cat("before rbind:", i , j, "\n")
+           ##print(X.mat)
+           if ( use.maxes ) {
+             Z.mat[shift.row,] <- apply(rbind(X.mat[i,], X.mat[j,]), 2, max)
+             rownames(Z.mat)[shift.row] <- paste(r.names[i], r.names[j], "max", sep = ".")
+             shift.row <- shift.row + 1
+           }
+           ## min
+           Z.mat[shift.row,] <- apply(rbind(X.mat[i,], X.mat[j,]), 2, min)
+           rownames(Z.mat)[shift.row] <- paste(r.names[i], r.names[j], "min", sep = ".")
+           shift.row <- shift.row + 1
+         }
+       }
+    }
+    
+    return (Z.mat )
+}
+
+#########################################################################################
+
+makeInBest2 <- function (BestFromRnd2, colMap, ratios, redExp, bi.cols.in = "all", tau, cluster.col.map=NA, time.mode = "all") {
+ 
+  ## this fnx takes a list of screened pairs of genes (genes that had good signal with
+  ## max or min, and adds thier min and max to a matrix compatible in dim with the
+  ## results of makeOutputInput.lars()
+  ##cat("BestFromRnd2 inside\n")
+  ##print( BestFromRnd2 )
+  ## cat("1. ")
+
+  if ( is.na( cluster.col.map ) ) cluster.col.map <- colMap
+  
+  candidate.influence.set <- c( BestFromRnd2[1,1], BestFromRnd2[2,1] ) 
+  ##cat("2. ")
+  inOutResp <- makeOutputInput.lars(colMap=NA,
+                                     ratios[candidate.influence.set,],
+                                     redExp, tau, bi.cols = bi.cols.in, col.map=cluster.col.map )
+  ##cat("3. ")
+  rownames(inOutResp$inputs) <- candidate.influence.set
+  ##cat("4. ")
+  in.interactions <- makeDesignMat.pair(inOutResp$inputs, mode = "int")
+  int.names <-  rownames(in.interactions)
+
+  ncol.int <- ncol(in.interactions) 
+  nrow.int <- ncol(BestFromRnd2) * 2
+  if ( ! use.maxes ) nrow.int <- ncol(BestFromRnd2)
+  int.intin <- matrix(, nrow = nrow.int, ncol = ncol.int)
+  int.intin[1,] <- in.interactions[1,]
+  if ( use.maxes ) int.intin[2,] <- in.interactions[2,]
+  ##cat("5. ")
+  ##cat(" ncol(Best2 ) : ", ncol( BestFromRnd2 ), "\n")
+  if ( ncol(BestFromRnd2) > 1 ) {
+    for (i in 2:ncol(BestFromRnd2) ) {
+      ##cat("\n 6 ", i, "\n")
+      ##if ( use.maxes )
+      candidate.influence.set <- c( BestFromRnd2[1,i], BestFromRnd2[2,i] )
+      ##else candidate.influence.set <- BestFromRnd2[1,i]
+      inOutResp <- makeOutputInput.lars(colMap=NA,
+                                      ratios[candidate.influence.set,],
+                                      redExp, tau, bi.cols = bi.cols.in, col.map=cluster.col.map, time.mode = time.mode)
+      rownames(inOutResp$inputs) <- candidate.influence.set
+      in.interactions <- makeDesignMat.pair(inOutResp$inputs, mode = "int")
+      ##cat("...")
+      int.names <- c(int.names, rownames(in.interactions) )
+      if ( use.maxes ) {
+        int.intin[(2*i - 1),] <- in.interactions[1,]
+        int.intin[(2*i),] <- in.interactions[2,]
+      } else {
+        int.intin[i,] <- in.interactions[1,]
+      }
+     }
+   }
+
+   ##cat("\n")
+   object <- list( names = int.names, intin = int.intin )
+   return( object )
+}
+
+
+#########################################################################################
+
+
+######################################################################################################
+## new version to account for biclust
+
+getTau.minRes.lars <- function (lars.intl, colMap, inOut, ratios.o, bi.cols = "all", tau.intl , s.fraction = 0.5,
+                                t.dt.range = c( 0.1, 3.0 ) ) {    
+    ## changed on 7/7/2004 to account for the different delta.t values for different time series.    
+    ## changed again on 8/24 to account for biclusters
+    ## RB 7/7/2004    
+
+    ##cat("bi.cols:\n")
+    ##print( bi.cols )
+    ##cat("names ratios.o :\n")
+    ##print( names( ratios.o ) )
+    
+    ##cat("checking input params and setting up\n")
+    if (length(t.dt.range) != 2) {
+    	stop( "incorrect tau/ delta.t range specified with t.dt.range\n")
+    }
+    
+    tau.new <- numeric()    
+    
+    ## X wil be tau.new/delta.t    
+  
+    X <- numeric()
+    i.ts <- 0
+    i.bx <- 0
+    BX <- numeric()   #C### predicted outputs
+    St1 <- numeric()   #A### true response t
+    St0 <- numeric()   #B### true response t - 1
+    delta.t <- numeric() # delta.t for different time series
+
+
+    ## check this to get correct lars predict ...
+    ## BX.raw is Y^, BX is Y^ for just time series
+    ##cat("getting BX.raw \n")
+    BX.raw <- predict.lars( lars.intl , t(inOut$inputs), s = s.fraction, mode = "fraction", type = "fit" )
+    #cat("BX.raw\n")
+
+    #print(BX.raw)
+
+    ##cat("bi.cols prior setup\n")
+    if (bi.cols == "all") {
+      bi.cols <-  names(ratios.o)
+    }
+    
+    col.names <- names(ratios.o)    
+
+    ## only optimize Tau over guys that are part of time series #
+    ## further: don't use first point in time series (no prior point!). #
+    ##cat("doing meat of tau opt\n")
+    for( col.name in  bi.cols ) {
+       #cat("col.name: " , col.name, "\n")
+       #cat("col.names:\n")
+       #print( col.names )
+       i <- which( col.names %in% col.name )
+       #cat("b0 ", i, "\n")
+       if (colMap[[i]]$is1stLast != "f") {
+         #cat("c0 ")
+         i.bx <- i.bx + 1
+         #cat("d0 ")
+         #cat(" ",i, col.name, colMap[[i]]$isTs, "\n")
+         if (colMap[[i]]$isTs == TRUE ) {
+             
+             #check tau/delta.t to see if it is in a good range and only then fit tau #
+             if ( (tau.intl / colMap[[i]]$del.t) > t.dt.range[1] || 
+                  (tau.intl / colMap[[i]]$del.t) < t.dt.range[2]    ) { 
+                i.ts <- i.ts + 1
+             
+                #cat("a ")
+                BX[i.ts] <- BX.raw$fit[i.bx]
+                #cat("b ")
+                St1[i.ts] <- ratios.o[i] 
+                #cat("c ")
+                St0[i.ts] <- ratios.o[colMap[[i]]$prevCol] 
+                #cat("d \n")
+                delta.t[i.ts] <- colMap[[i]]$del.t
+             } else {## tau/delta.t check #
+                cat("range : ", t.dt.range[1], t.dt.range[2], "\n")
+                cat("tau / delta t exceeded:", i, col.name, tau.intl, tau.intl / colMap[[i]]$del.t, " \n")
+             }
+         }
+       }
+    }
+    #cat("i.ts: ", i.ts, " i.bx: ", i.bx, "\n")
+    #menu(c(1,2))
+    if (i.ts > 7) {
+      ## cat("getting new tau w:", i.ts, " points in ts data\n")
+      #cat("st0\n")
+      #print(St0)
+      #cat("st1:\n")
+      #print(St1)
+      #cat("BX\n")
+      #print(BX)
+    
+      #cat("1\n")
+      b.prime <- 2 * delta.t * ( (St0 * St1) - (St0 ^ 2) + (St0 * BX) - (St1 * BX) ) ## 2C2
+      #cat("2\n")
+      a.prime <- (St1 ^ 2) + (St0 ^ 2) - (2 * St1 * St0)                     ## C1
+      #cat("3\n")
+      #print (b.prime)
+      #print (a.prime)
+
+      X <- - sum( b.prime ) / ( 2.0 * sum( a.prime ) )
+      #cat("4\n")
+      tau.new <- X
+      if (is.na(tau.new) ) {
+         ## this should never occur
+         tau.new <- tau.intl
+         cat("tau == NaN, RESETTING tau to initl val: ", tau.intl, "\n")
+         #menu(c(1,2))
+      }
+    } else {
+      tau.new <- tau.intl
+      cat("TOO FEW TS POINTS TO GET TAU\n")
+    }
+    return (tau.new)
+}
+
+################################################################################
+
+getTau.minRes.lm <- function (lm.intl, colMap, inOut, ratios.o, bi.cols = "all", tau.intl,
+                                t.dt.range = c( 0.1, 3.0 ) ) {    
+    ## changed on 7/7/2004 to account for the different delta.t values for different time series.    
+    ## changed again on 8/24 to account for biclusters
+    ## RB 7/7/2004    
+    
+    ##cat("checking input params and setting up\n")
+    if (length(t.dt.range) != 2) {
+    	stop( "incorrect tau/ delta.t range specified with t.dt.range\n")
+    }
+    tau.new <- numeric()    
+    ## X wil be tau.new/delta.t    
+    X <- numeric()
+    i.ts <- 0
+    i.bx <- 0
+    BX <- numeric()   #C### predicted outputs
+    St1 <- numeric()   #A### true response t
+    St0 <- numeric()   #B### true response t - 1
+    delta.t <- numeric() # delta.t for different time series
+
+    ## check this to get correct lars predict ...
+    ## BX.raw is Y^, BX is Y^ for just time series
+    ##cat("getting BX.raw \n")
+    #BX.raw <- predict( lm.intl , t(inOut$inputs) )
+    BX.raw <- predict( lm.intl )
+    ##cat("bi.cols prior setup\n")
+    if (bi.cols == "all") {
+      bi.cols <-  names(ratios.o)
+    } 
+    col.names <- names(ratios.o)      
+    ## only optimize Tau over guys that are part of time series #
+    ## further: don't use first point in time series (no prior point!). #
+    ##cat("doing meat of tau opt\n")
+    for( col.name in  bi.cols ) {     
+       i <- which( col.names %in% col.name )
+       #cat("b0 ", i, "\n")
+       if (colMap[[i]]$is1stLast != "f") {
+         #cat("c0 ")
+         i.bx <- i.bx + 1
+         if (colMap[[i]]$isTs == TRUE ) {
+             #check tau/delta.t to see if it is in a good range and only then fit tau #
+             if ( (tau.intl / colMap[[i]]$del.t) > t.dt.range[1] || 
+                  (tau.intl / colMap[[i]]$del.t) < t.dt.range[2]    ) { 
+                i.ts <- i.ts + 1
+                BX[i.ts] <- BX.raw$fit[i.bx]
+                St1[i.ts] <- ratios.o[i] 
+                St0[i.ts] <- ratios.o[colMap[[i]]$prevCol] 
+                delta.t[i.ts] <- colMap[[i]]$del.t
+             } else {           ## tau/delta.t check #
+                cat("range : ", t.dt.range[1], t.dt.range[2], "\n")
+                cat("tau / delta t exceeded:", i, col.name, tau.intl, tau.intl / colMap[[i]]$del.t, " \n")
+             }
+         }
+       }
+    }
+    #cat("i.ts: ", i.ts, " i.bx: ", i.bx, "\n");menu(c(1,2))
+    if (i.ts > 7) {
+      b.prime <- 2 * delta.t * ( (St0 * St1) - (St0 ^ 2) + (St0 * BX) - (St1 * BX) ) ## 2C2
+      a.prime <- (St1 ^ 2) + (St0 ^ 2) - (2 * St1 * St0)                     ## C1
+      X <- - sum( b.prime ) / ( 2.0 * sum( a.prime ) )
+      tau.new <- X
+      if (is.na(tau.new) ) {
+         ## this should never occur
+         tau.new <- tau.intl
+         cat("tau == NaN, RESETTING tau to initl val: ", tau.intl, "\n")
+         #menu(c(1,2))
+      }
+    } else {
+      tau.new <- tau.intl
+      cat("TOO FEW TS POINTS TO GET TAU\n")
+    }
+    return (tau.new)
+}
+
+#################################################################################################
+
+
+#################################################################################################
+## pre-bi-clust
+getTau.minRes.lars.defunct <- function (lars.intl, colMap, inOut, tau.intl , s.fraction = 0.5) {
+    ## changed on 7/7/2004 to account for the different delta.t values for different time series.
+    ## RB 7/7/2004
+    tau.new <- numeric()
+    ## X wil be tau.new/delta.t
+    nCol <- length(inOut$outputs)
+    X <- numeric()
+    i.ts <- 0
+    BX <- numeric()   #C### predicted outputs 
+    St1 <- numeric()   #A### true response t
+    St0 <- numeric()   #B### true response t - 1
+    delta.t <- numeric() # delta.t for different time series
+   
+    ## check this to get correct lars predict ...
+    ## BX.raw is Y^, BX is Y^ for just time series 
+    BX.raw <- predict.lars( lars.intl , t(inOut$inputs), s = s.fraction, mode = "fraction", type = "fit" )
+    #cat("BX.raw\n")
+    #print(BX.raw)
+    
+    ## only optimize Tau over guys that are part of time series
+    ## further: don't use first point in time series (no prior point!).
+    for(i in 1:nCol ) {
+         if (colMap[[i]]$isTs == TRUE && colMap[[i]]$is1stLast != "f" ) {
+             i.ts <- i.ts + 1
+             BX[i.ts] <- BX.raw$fit[i]
+             St1[i.ts] <- inOut$outputs[i]
+             St0[i.ts] <- inOut$outputs[colMap[[i]]$prevCol] 
+             delta.t[i.ts] <- colMap[[i]]$del.t
+         }
+    } 
+    ##
+    #cat("getting new tau w:", i.ts, " points in ts data\n")
+    #print(St0)
+    #print(St1)
+    #print(BX)
+    
+    #cat("1\n")
+    b.prime <- 2 * delta.t * ( (St0 * St1) - (St0 ^ 2) + (St0 * BX) - (St1 * BX) ) ## 2C2 
+    #cat("2\n")
+    a.prime <- (St1 ^ 2) + (St0 ^ 2) - (2 * St1 * St0)                     ## C1  
+    #cat("3\n")
+    #print (b.prime)
+    #print (a.prime)
+
+    X <- - sum( b.prime ) / ( 2.0 * sum( a.prime ) )
+    #cat("4\n")
+    tau.new <- X 
+    if (is.na(tau.new) ) {
+       tau.new <- tau.intl
+       cat("tau == NaN, RESETTING tau to initl val: ", tau.intl, "\n") 
+       ##menu(c(1,2))
+    }
+
+    return (tau.new)
+}
+
+getAssNeibs <- function (interactionMat, row.num, cut = 0.005, maxNum = 5 ) {
+   ## Ass stands for association network, neibs for 1st neighborhs in ass
+   assNeibs <- numeric()
+   assRow <- interactionMat[row.num, ]
+   assNeibs <- which ( assRow > cut ) 
+   if (length(assNeibs) > maxNum ) {
+      assNeibs <- assNeibs[1:maxNum]
+   }
+   return ( assNeibs ) 
+}
+
+
+
+###  just a placeholder for now
+### for  a version that looks one gene at a time (no clustering as a previous step)
+#regulatoryInfluencesSingle =
+#function( ratios, redFuncReg, tfs , gene.id , plot.it = TRUE ) {
+#   ## ratios are raw ratio matrix before any cluster reduction
+#
+#   
+#}
+
+histDegree.defunct <- function( inf.nw , hdim = 2 ) {
+
+    if (hdim == 2) { ## slice cols give deg  dist
+       len <- ncol(inf.nw) 
+       deg.hist <- numeric( length = len)
+       names(deg.hist) <- colnames(inf.nw)
+       for (i in 1:len) {
+          deg.hist[i] <- length( which(influence.nw[,i] != 0) )
+       }
+    } else if (hdim == 1) {
+       len <- nrow(inf.nw)     
+       deg.hist <- numeric( length = len)
+       names(deg.hist) <- rownames(inf.nw)
+       for (i in 1:len) {
+          deg.hist[i] <- length( which(influence.nw[i,] != 0) )
+       }
+    } else {
+       stop ("incorrect dim spec\n")
+    }
+    return (deg.hist )
+
+}
+
+
+
+
+
+
+################################################################################
+
+
+
+
+
+makeOutputInput.lars.old <- function (colMap, ratios.i, ratios.o, tau, bi.cols = "all", squash.mode = "none" ) {
+    ## make response and input vectors similar to wahde + hertz
+    ## this sub/func deals with the problem of
+    ## how to fit the regulatory function when some of the columns in our
+    ## data are from time series and some are from equilibrium experiemnts.
+    ## time series are dealt with like discreete samples from a decay/accretion process
+    ## with the constant tau controling decay, while equilibrium data
+    ## is dealt with as we've always dealt with it (set d/dt(ratios) = 0 and fit)
+
+    # * note, some of the mess in this function is due to the fact that
+    #   when you pass R funcs a single row from a matrix the type is converted to 
+    #   vector and when you then say "as.matrix(rowThatShouldBeMatrix)" you 
+    #   get a column ... SO  all these ifs are 'cause of that!
+
+    #
+    ##cat("starting to fill inOut\n")
+    inOut <- list()
+    ## colMap$numTS is number of distinct time series in this set of experiments
+    ## BUT if we do this over just the conditions in the bicluster 
+    ## SO we must declare the matricies bigger (nCol cols) and then subtract the number of "f"s.
+    #cat("rat\n", ratios.i,"\n")
+    
+    col.names <- names(ratios.o)
+    
+    names.shift <- character()
+ 
+    if (bi.cols[1] == "all" ) {
+       bi.cols <- col.names
+       bi.cols.i <- 1:length(col.names) 
+    } else {
+       #cat ("using biclust defined columns\n")
+       #print ( bi.cols ) 
+       bi.cols.i <- which( col.names %in% bi.cols ) 
+    }
+    
+    
+    ## we check , mabey we've been fed only one row ... R data types --- love/hate !?
+    if (length(ratios.i) == length(ratios.o) ) {
+       #cat(" single row read in \n") 
+       nCol <- length(bi.cols)
+       nRow <- 1
+       ## check that names match ?
+    } else {
+       nCol <- length(bi.cols)  ## number of conditions before taking out 1st/Last occurences (-1 per ts)
+       nRow <- dim(ratios.i)[1] ## number of predictors
+       
+    }
+
+    #print(bi.cols)
+    #print(bi.cols.i)
+    #menu(c(1,2))
+    numFirsts <- 0
+    for(ii in bi.cols.i  ) {
+       if (colMap[[ii]]$isTs == TRUE && colMap[[ii]]$is1stLast == "f") {
+          numFirsts <- numFirsts + 1
+       }
+    }
+    if (numFirsts > colMap$numTS) {
+        stop("numFirsts is greater than the number of ts is whole set\n" )
+    }
+    #cat("nCol ", nCol, colMap$numTS,"num1st: ",numFirsts, "\n")
+    out.tmp <- vector( mode = "numeric" , length = (nCol - numFirsts) )
+    in.tmp <- matrix(0, ncol = (nCol - numFirsts), nrow = nRow)
+    #succ.tmp <- vector( mode = "numeric" , length = (nCol - colMap$numTS) )
+    #fail.tmp <- vector( mode = "numeric" , length = (nCol - colMap$numTS) )
+
+    eq.cols <- numeric()
+    eq.cols.thisFrame <- numeric()
+    #cat("checking columns for ts\n")
+    ## these counters for the number of columns that are first in their time series and columns
+    ## and the current index to fill in the in/out matricies to return.
+    #col.shift <- 0
+    fill.i <- 0
+    for(ii in bi.cols.i ) {
+       #cat(ii,fill.i, "\n")
+       if (colMap[[ii]]$isTs == TRUE) {
+           if (colMap[[ii]]$is1stLast == "m" || colMap[[ii]]$is1stLast == "l" ) {
+
+               fill.i <- fill.i + 1
+               #cat("filling m/l point for ", ii,colMap[[ii]]$is1stLast, "\n")
+               #ii.prev <-  which( col.names %in% colMap[[ii]]$prevCol )
+               ii.prev <- colMap[[ii]]$prevCol
+               if (nRow > 1) {
+                  in.tmp[,fill.i] <- ratios.i[,ii.prev]
+               } else {
+                  in.tmp[,fill.i] <- ratios.i[ii.prev]
+               }
+               names.shift[fill.i] <- col.names[ii]
+               delta.t <- colMap[[ii]]$del.t
+               out.tmp[fill.i] <- ( (tau / delta.t) * (ratios.o[ii] - ratios.o[ii.prev]) ) + ratios.o[ii.prev]
+               if (out.tmp[fill.i] > 3.0) {
+                 #cat("CAPPING !!!! over", ii, fill.i,  out.tmp[fill.i], "\n")
+                 out.tmp[fill.i ] <- 3.0
+               } else if (out.tmp[fill.i] < -3.0) {
+                 out.tmp[fill.i ] <- -3.0
+               }
+           } else if (colMap[[ii]]$is1stLast == "f") {
+               #cat("not filling first time point in ts for ", ii, "\n")
+               #cat(" col shift is now ", col.shift, "\n")
+           } else {
+              ## say what ... you got to tell me where f=t1,m=t2...,l=tN
+              stop("incorrect specification of position in time series for col: ", ii, "\n")
+           }
+       } else {
+           fill.i <- fill.i + 1
+           eq.cols <- c(eq.cols, ii)
+           eq.cols.thisFrame <- c( eq.cols.thisFrame, fill.i)
+           if (nRow > 1) { 
+              #print(ratios.i[,ii])
+              in.tmp[,fill.i ] <- ratios.i[,ii]
+           } else {
+              #print(ratios.i[ii])
+              in.tmp[,fill.i ] <- ratios.i[ii] 
+           }
+           out.tmp[fill.i ] <- ratios.o[ii]
+           names.shift[fill.i] <- col.names[ii]
+       }
+    }   
+    inOut$eq.list <- eq.cols
+    inOut$eq.list.thisFrame <- eq.cols.thisFrame
+    inOut$names <- names.shift
+    colnames( in.tmp ) <- names.shift
+    inOut$inputs <- in.tmp
+    names( out.tmp ) <- names.shift
+    inOut$outputs <- out.tmp
+
+    return (inOut ) 
+}
+
+#########################################################################################
+
+
+makeInBest2.nold <- function (BestFromRnd2, colMap, ratios, redExp, bi.cols.in = "all", tau, cluster.col.map=NA) {
+ 
+  ## this fnx takes a list of screened pairs of genes (genes that had good signal with
+  ## max or min, and adds thier min and max to a matrix compatible in dim with the
+  ## results of makeOutputInput.lars()
+  ##cat("1. ")
+
+  if ( is.na( cluster.col.map ) ) cluster.col.map <- colMap
+  
+  candidate.influence.set <- c( BestFromRnd2[1,1], BestFromRnd2[2,1] ) 
+  ##cat("2. ")
+  inOutResp <- makeOutputInput.lars.old(colMap,
+                                     ratios[candidate.influence.set,],
+                                     redExp, tau, bi.cols = bi.cols.in)
+  ##cat("3. ")
+  rownames(inOutResp$inputs) <- candidate.influence.set
+  ##cat("4. ")
+  in.interactions <- makeDesignMat.pair(inOutResp$inputs, mode = "int")
+  int.names <-  rownames(in.interactions)
+
+  ncol.int <- ncol(in.interactions) 
+  nrow.int <- ncol(BestFromRnd2) * 2
+  if ( ! use.maxes ) nrow.int <- ncol(BestFromRnd2)
+  int.intin <- matrix(, nrow = nrow.int, ncol = ncol.int)
+  int.intin[1,] <- in.interactions[1,]
+  if ( use.maxes ) int.intin[2,] <- in.interactions[2,]
+  ##cat("5. ")
+  for (i in 2:ncol(BestFromRnd2) ) {
+    ##cat("6 ", i, "\n")
+    ##if ( use.maxes )
+    candidate.influence.set <- c( BestFromRnd2[1,i], BestFromRnd2[2,i] )
+    ##else candidate.influence.set <- BestFromRnd2[1,i]
+    inOutResp <- makeOutputInput.lars.old(colMap,
+                                      ratios[candidate.influence.set,],
+                                      redExp, tau, bi.cols = bi.cols.in)
+    rownames(inOutResp$inputs) <- candidate.influence.set
+    in.interactions <- makeDesignMat.pair(inOutResp$inputs, mode = "int")
+    ##cat("...")
+    int.names <- c(int.names, rownames(in.interactions) )
+    if ( use.maxes ) {
+      int.intin[(2*i - 1),] <- in.interactions[1,]
+      int.intin[(2*i),] <- in.interactions[2,]
+    } else {
+      int.intin[i,] <- in.interactions[1,]
+    }
+   }
+
+   ##cat("\n")
+   object <- list( names = int.names, intin = int.intin )
+   return( object )
+}

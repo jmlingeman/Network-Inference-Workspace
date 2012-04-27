@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/gaggle/!svn/ver/3545/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers
+END
+DataMatrixFileReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/DataMatrixFileReader.java
+END
+DataMatrixReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/DataMatrixReader.java
+END
+DataMatrixReaderFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/DataMatrixReaderFactory.java
+END
+TextHttpIndirectFileReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/TextHttpIndirectFileReader.java
+END
+TextHttpDatabaseReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/TextHttpDatabaseReader.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/makefile
+END
+MetaDataXmlParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/3545/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/readers/MetaDataXmlParser.java
+END

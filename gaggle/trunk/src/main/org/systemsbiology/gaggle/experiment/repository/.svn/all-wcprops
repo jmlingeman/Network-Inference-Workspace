@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository
+END
+FileRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/FileRepository.java
+END
+ExperimentRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/ExperimentRepository.java
+END
+HttpIndirectRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/HttpIndirectRepository.java
+END
+DatabaseRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/DatabaseRepository.java
+END
+ExperimentRepositoryFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/ExperimentRepositoryFactory.java
+END
+HttpDirectRepository.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/HttpDirectRepository.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/experiment/repository/makefile
+END

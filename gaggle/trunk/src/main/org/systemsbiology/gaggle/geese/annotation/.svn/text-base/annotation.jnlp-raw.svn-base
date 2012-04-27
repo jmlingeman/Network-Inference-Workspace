@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="$CODEBASE$"
+  href="annotation.jnlp">
+  <information>
+    <title>Annotation Goose</title>
+    <vendor> (November 2005)</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="annotation.jar"/>
+  </resources>
+  <application-desc>
+    <argument>-d</argument>
+    <argument>http://gaggle.systemsbiology.net/projects/hpy/2005-09/annotation/tigr.anno</argument>
+    <argument>-s</argument>
+    <argument>Helicobacter pylori</argument>
+  <application-desc>
+</jnlp>
+

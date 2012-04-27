@@ -1,0 +1,238 @@
+// ThresholdSelectorDialog.java
+//------------------------------------------------------------------------------
+// $Revision: 2360 $
+// $Date: 2005/03/04 19:54:42 $
+// $Author: dtenenba $
+//------------------------------------------------------------------------------
+/*
+ * Copyright (C) 2006 by Institute for Systems Biology,
+ * Seattle, Washington, USA.  All rights reserved.
+ *
+ * This source code is distributed under the GNU Lesser
+ * General Public License, the text of which is available at:
+ *   http://www.gnu.org/copyleft/lesser.html
+ */
+
+package org.systemsbiology.gaggle.experiment.gui.actions;
+//------------------------------------------------------------------------------
+import java.util.*;
+import java.text.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
+import org.systemsbiology.gaggle.experiment.datamatrix.*;
+import org.systemsbiology.gaggle.experiment.gui.*;
+
+//------------------------------------------------------------------------------
+/**
+ * This class selects rows in the currently visible matrix which match or exceed
+ * the threshold value set on the slider
+ *
+ * @author Paul Shannon
+ * @date 07/15/02
+ */
+//-------------------------------------------------------------------------------------------------
+public class ThresholdSelectorDialog extends JDialog { // implements ActionListener {
+
+  protected MatrixSpreadsheet parentSpreadsheet;
+
+  private org.systemsbiology.gaggle.core.datatypes.DataMatrix matrix;
+  private LensedDataMatrix lens;
+  private double [][] sortedRows; // row order is unchanged; each row is internally sorted
+  private double matrixMin, matrixMax;
+
+  private double currentThreshold = 1.0;
+  private ArrayList namesOfRowsAboveThreshold;
+  DecimalFormat decimalFormatter;
+
+  JTextField selectionCountTextField;
+  JTextField thresholdTextField;
+
+//-------------------------------------------------------------------------------------------------
+public ThresholdSelectorDialog (MatrixSpreadsheet parent)
+{ 
+  super ();
+  setTitle ("Threshold Selector");
+  this.parentSpreadsheet = parent;
+  this.lens = parentSpreadsheet.getLens ();
+  this.matrix = lens.getUnderlyingMatrix ();
+  decimalFormatter = new DecimalFormat ("0.000");
+  namesOfRowsAboveThreshold = new ArrayList ();
+  sortWithinRowsLeavingRowOrderUnchanged ();
+  createGui ();
+}
+//-------------------------------------------------------------------------------------------------
+/**
+ * sorting (a copy of) each row is an easy way to find the matrix min & max; it
+ * also makes it very easy to see if any row exceeds the slider's threshold
+ * later on: just ask if the row [lastElement] is > currentThreshold.
+ * so this method makes a copy of the spreadsheet's underlying matrix, sorts
+ * each row (affecting column order), preserves row order, and discovers the
+ * matrix min & max values.
+ */
+private void sortWithinRowsLeavingRowOrderUnchanged ()
+{
+  matrixMin = Double.MAX_VALUE;
+  matrixMax = Double.MIN_VALUE;
+
+  int rowCount = matrix.getRowCount ();
+  int columnCount = matrix.getColumnCount ();
+  sortedRows = new double [rowCount][columnCount];
+
+  for (int i=0; i < rowCount; i++) {
+    System.arraycopy (matrix.get (i), 0, sortedRows [i], 0, columnCount);
+    Arrays.sort (sortedRows [i]);
+    double biggest = sortedRows [i][columnCount - 1];
+    double smallest = sortedRows [i][0];
+    if (smallest < matrixMin)
+      matrixMin = smallest;
+    if (biggest > matrixMax)
+      matrixMax = biggest;
+   } // for i
+
+} // sortWithinRowsLeavingRowOrderUnchanged
+//-------------------------------------------------------------------------------------------------
+public void createGui ()
+{
+  double midValue = matrixMin + ((matrixMax - matrixMin)/2.0);
+  int sliderMin = (int) (1000 * matrixMin);
+  int sliderMax = (int) (1000 * matrixMax);
+  JSlider slider = new JSlider (sliderMin, sliderMax, sliderMax);
+  slider.setBorder (BorderFactory.createEmptyBorder(0,0,10,0));
+  slider.addChangeListener (new ChangeListener () {
+    public void stateChanged (ChangeEvent e) {
+      JSlider slider = (JSlider) e.getSource ();
+        currentThreshold = (double) (slider.getValue () / 1000.0);
+        StringBuffer sb = decimalFormatter.format (currentThreshold, new StringBuffer (), 
+                                                   new FieldPosition (4));
+        thresholdTextField.setText (sb.toString ());
+        if (!slider.getValueIsAdjusting ()) 
+          refreshSelection (currentThreshold);
+      }});
+
+  JButton browserSelectButton = new JButton ("Select in Matrix");
+  browserSelectButton.addActionListener (new ActionListener () {
+    public void actionPerformed (ActionEvent e) {
+     if (parentSpreadsheet != null) {
+        parentSpreadsheet.clearSelection ();
+        String [] names = (String []) namesOfRowsAboveThreshold.toArray (new String [0]);
+        parentSpreadsheet.select (names);
+        }}});
+  
+  Container contentPane = getContentPane ();
+  contentPane.setLayout (new BorderLayout ());
+  String lineSep = System.getProperty ("line.separator");
+
+  JPanel topPanel = new JPanel ();
+
+  topPanel.setBorder (BorderFactory.createCompoundBorder (
+                        BorderFactory.createEmptyBorder (10,10,2,10),
+                        BorderFactory.createCompoundBorder (
+                          BorderFactory.createEtchedBorder (),
+                          BorderFactory.createEmptyBorder (10,10,10,10))));
+
+  JPanel middlePanel = new JPanel ();
+  JPanel readoutPanel = new JPanel ();
+  middlePanel.add (readoutPanel);
+  topPanel.add (middlePanel, BorderLayout.CENTER);
+  readoutPanel.setLayout (new GridLayout (2, 2));
+  
+  selectionCountTextField = new JTextField ("0", 6);
+
+  StringBuffer sb = decimalFormatter.format (matrixMax, new StringBuffer (), new FieldPosition (4));
+  String initialValue = sb.toString ();
+  thresholdTextField = new JTextField (initialValue, 6);
+
+  readoutPanel.add (new JLabel ("Rows meeting threshold "));
+  readoutPanel.add (selectionCountTextField);
+  readoutPanel.add (new JLabel ("Threshold "));
+  readoutPanel.add (thresholdTextField);
+
+  JPanel radioButtonPanel = new JPanel ();
+  radioButtonPanel.setLayout (new GridLayout (1,3));
+
+  JPanel sliderPanel = new JPanel ();
+  sliderPanel.setLayout (new BorderLayout ());
+  sliderPanel.setBorder (BorderFactory.createEmptyBorder (20,20,20,20));
+  sliderPanel.add (slider, BorderLayout.CENTER);
+
+  JPanel textAndSliderPanel = new JPanel ();
+  textAndSliderPanel.setLayout (new BorderLayout ());
+  contentPane.add (textAndSliderPanel,  BorderLayout.CENTER);
+  textAndSliderPanel.add (topPanel, BorderLayout.CENTER);
+  textAndSliderPanel.add (sliderPanel, BorderLayout.SOUTH);
+
+  JPanel buttonPanel = new JPanel ();
+  JButton dismissButton = new JButton ("Dismiss");
+  dismissButton.addActionListener (new ActionListener () {
+    public void actionPerformed (ActionEvent e) {
+      ThresholdSelectorDialog.this.dispose ();}});
+
+  contentPane.add (buttonPanel, BorderLayout.SOUTH);
+  buttonPanel.add (browserSelectButton);
+  buttonPanel.add (dismissButton);
+
+  pack ();
+  placeInCenter ();
+  setVisible (true);
+
+} // createGui
+//-------------------------------------------------------------------------------------------------
+protected void refreshSelection (double threshold)
+// called by the SliderListener, and the radio button action listener, so that
+// any change (to either slider position, or mode -- positive correlations, negative, or both)
+// causes a fresh calculation and display of nodes correlated to the initial selected node
+// or nodes
+{
+  int count = findRowsAboveThreshold (threshold);
+  String countAsString = (new Integer (count)).toString ();
+  selectionCountTextField.setText (countAsString);
+}
+//-------------------------------------------------------------------------------------------------
+private int findRowsAboveThreshold (double threshold)
+{
+  //double [][] data = matrix.get ();
+  int rowCount = matrix.getRowCount ();
+  int columnCount = matrix.getColumnCount ();
+  String [] rowTitles = matrix.getRowTitles ();
+
+  namesOfRowsAboveThreshold = new ArrayList ();
+  for (int i=0; i < rowCount; i++) {
+    //Arrays.sort (data [i]);
+    //System.out.println (" row " + i + ":  " + rowTitles [i] + " checking " +
+    //                    sortedRows [i][columnCount -1] + " against " + threshold);
+    if (sortedRows [i][columnCount-1] > threshold)
+      namesOfRowsAboveThreshold.add (rowTitles [i]);
+    } // for i
+
+  //System.out.println ("found " + namesOfRowsAboveThreshold.size ());
+  return (namesOfRowsAboveThreshold.size ());
+
+} // findRowsAboveThreshold
+//-------------------------------------------------------------------------------------------------
+public class DismissAction extends AbstractAction {
+
+  DismissAction () {;}
+
+  public void actionPerformed (ActionEvent e) {
+    ThresholdSelectorDialog.this.dispose ();
+    }
+
+} // DismissAction
+//-----------------------------------------------------------------------------------
+protected void placeInCenter ()
+{
+  GraphicsConfiguration gc = getGraphicsConfiguration ();
+  int screenHeight = (int) gc.getBounds().getHeight ();
+  int screenWidth = (int) gc.getBounds().getWidth ();
+  int windowWidth = getWidth ();
+  int windowHeight = getHeight ();
+  setLocation ((screenWidth-windowWidth)/2, (screenHeight-windowHeight)/2);
+
+} // placeInCenter
+//------------------------------------------------------------------------------
+}  // class ThresholdSelectorDialog
+

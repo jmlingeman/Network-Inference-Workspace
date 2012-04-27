@@ -1,0 +1,9 @@
+sif=network.sif
+#sif=simple.sif
+dataServer=http://db.systemsbiology.net/cytoscape/annotation/halo/manifest
+species=Halobacterium sp.
+noa=synonyms.noa
+noa=moleculeType.noa
+noa=sbeams.noa
+props=props
+vprops=vizmap.props

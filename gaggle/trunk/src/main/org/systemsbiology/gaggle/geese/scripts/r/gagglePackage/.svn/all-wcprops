@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/4572/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage
+END
+copyToHazel.py
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/copyToHazel.py
+END
+push.sh
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gaggle/!svn/ver/4268/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/push.sh
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/4572/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/readme.txt
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gaggle/!svn/ver/3506/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/makefile
+END
+build_install.sh
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/gaggle/!svn/ver/4498/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/build_install.sh
+END

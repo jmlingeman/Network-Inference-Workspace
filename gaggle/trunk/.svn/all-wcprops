@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/gaggle/!svn/ver/4572/gaggle/trunk
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/gaggle/!svn/ver/2868/gaggle/trunk/.classpath
+END
+pushToMaven.sh
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/pushToMaven.sh
+END
+foo
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/gaggle/!svn/ver/2681/gaggle/trunk/foo
+END
+props
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/props
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/.project
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/gaggle/!svn/ver/4359/gaggle/trunk/build.xml
+END

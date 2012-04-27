@@ -1,0 +1,11 @@
+sif=network.sif
+noa=logicGateNodeNames.noa
+noa=types.noa
+noa=clusterGeneCount.noa
+noa=clusterConditionCount.noa
+noa=clusterGenes.noa
+noa=clusterConditions.noa
+eda=weights.eda
+props=props
+vprops=vizmap.props
+dataServer=http://db.systemsbiology.net/cytoscape/annotation/halo/manifest

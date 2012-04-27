@@ -1,0 +1,639 @@
+<?xml version="1.0" ?>
+<!--
+		Ant Build file
+-->
+<project name="gaggle" default="all" basedir=".">
+
+	<!-- set global properties for this build -->
+	<property name="src.dir"       location="${basedir}/src/main"/>
+	<property name="test.dir"      location="${basedir}/test/main"/>
+	<property name="lib.dir"       location="${basedir}/lib"/>
+	<property name="build.dir"     location="${basedir}/classes"/>
+	<property name="dist.dir"      location="${basedir}/dist"/>
+	<property name="misc.dir"      location="${basedir}/misc"/>
+	<property name="temp.dir"      location="${basedir}/temp"/>
+
+	<property name="app.name"      value="gaggle"/>
+	<property name="jar.name"      value="${app.name}.jar"/>
+
+
+	<!-- Classpath -->
+	<path id="app.classpath">
+        <pathelement location="${build.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="clean" description="Remove previous artifacts">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.dir}"/>
+	</target>
+
+	<target name="clean-dist" description="Remove previous jarfile artifacts">
+		<delete dir="${dist.dir}" />
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<target name="init" description="Get setup">
+		<!-- Create the time stamp -->
+		<tstamp>
+			<format property="timestamp" pattern="yyyy-MM-dd HH:mm:ss"/>
+		</tstamp>
+	</target>
+
+
+	<target name="compile" depends="init" description="compile the code">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="true" target="1.5">
+			<classpath refid="app.classpath" />
+		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}">
+				<filename name="org/systemsbiology/gaggle/experiment/**/*.jpg"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	
+	<target name="rmi" depends="compile" description="compile RMI stub of Boss">
+		<rmic base="${build.dir}" includes="**/GuiBoss.class"/>
+	</target>
+
+
+	<target name="jar" depends="compile,rmi" description="builds huge jar containing everything">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/${jar.name}" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.boss.GuiBoss" />
+			</manifest>
+			<fileset dir="${build.dir}" />
+		</jar>
+		<signjar jar="${dist.dir}/${app.name}.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+
+	<target name="goose-jar-unsigned" depends="compile,rmi" description="builds goose.jar (identical to gaggle.jar) without signing it">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/goose.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+			</manifest>
+			<fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+
+
+    <target name="goose-jar" depends="goose-jar-unsigned" description="builds goose.jar (identical to gaggle.jar">
+        <signjar jar="${dist.dir}/goose.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+    <target name="gaggle-jar" depends="compile,rmi" description="builds gaggle.jar">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/gaggle.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class"/>
+                <include name="org/systemsbiology/gaggle/network/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/gaggle.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+
+
+    <target name="firegoose-deps-jar" depends="compile,rmi" description="builds firegoose gaggle dependencies">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/firegoose-deps.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/firegoose-deps.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+
+    <target name="core-jar" depends="compile,rmi" description="builds core gaggle interfaces and datatypes">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/gaggle-core.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/gaggle-core.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+
+
+    <target name="pushCoreToMavenRepository" depends="core-jar">
+        <exec executable="/usr/local/maven/bin/mvn">
+            <arg line="deploy:deploy-file -DgroupId=org.systemsbiology.gaggle -DartifactId=gaggle-core -Dversion=1.0 -Dpackaging=jar -Dfile=${dist.dir}/gaggle-core.jar -DrepositoryId=organizational -Durl=scp://atlas//local/wwwspecial/gaggle/maven_repository"/>
+        </exec>
+        <!--
+        sudo -s
+        su dtenenba
+        mvn deploy:deploy-file -DgroupId=org.systemsbiology.gaggle -DartifactId=gaggle-core -Dversion=1.0 -Dpackaging=jar -Dfile=dist/gaggle-core.jar -DrepositoryId=organizational -Durl=scp://atlas//local/wwwspecial/gaggle/maven_repository
+        -->
+    </target>
+
+
+
+    <target name="anno-jar" depends="compile,rmi" description="builds annotation goose">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/annotation.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.annotation.AnnotationGoose" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/annotation/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/annotation.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+	<target name="sample-jar" depends="compile,rmi" description="builds sample goose">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/sample.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.sample.SampleGoose" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/sample/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/sample.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+	<target name="persist-jar" depends="compile,rmi" description="builds persistence goose (outdated)">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/persist.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.persist.PersistenceGoose" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/persist/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/persist.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+	<target name="boss-jar" depends="compile,rmi" description="builds boss">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/boss.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.boss.GuiBoss" />
+			</manifest>
+			<fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/plugins/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/plugins/sbeams/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/plugins/hypothesis/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/plugins/clipboard/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/plugins/tigrAnno/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/boss.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+    <target name="data-jar" depends="compile,rmi">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/data.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${basedir}">
+                <include name="props"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/data.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+
+
+    <target name="dmv-jar" depends="compile,rmi" description="builds data matrix viewer">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/dmv.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.dmv.GaggledTreeDataViewer" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/dmv/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/**/*.jpg"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/core/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/dmv.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+
+    <target name="mev-jar" depends="compile,rmi" description="builds gaggled MeV 3.0">
+            <mkdir dir="${dist.dir}"/>
+            <jar jarfile="${dist.dir}/mev.jar" index="true">
+                <manifest>
+                    <attribute name="Built-By" value="${user.name}"/>
+                    <attribute name="Built-On" value="${timestamp}" />
+                    <attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.mev.GaggledMev" />
+                </manifest>
+                <fileset dir="${build.dir}">
+                    <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                    <include name="org/systemsbiology/gaggle/util/*.class"/>
+                    <include name="org/systemsbiology/gaggle/geese/mev/GaggledMev*.class"/>
+                    <include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+                    <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+                    <include name="org/systemsbiology/gaggle/experiment/datamatrix/DataMatrix.class"/>
+                    <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+                    <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+                </fileset>
+                <fileset dir="${src.dir}/org/systemsbiology/gaggle/geese/mev">
+                    <include name="tmev.cfg"/>
+                </fileset>
+            </jar>
+            <signjar jar="${dist.dir}/mev.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+        </target>
+
+
+    <target name="namesGoose-jar" depends="compile,rmi" description="builds namesGoose (obsolete?)">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/namesGoose.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.names.NameGoose" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/names/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/namesGoose.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+    <target name="clipboard-jar" depends="compile,rmi" description="builds boss clipboard plugin">
+        <mkdir dir="${dist.dir}"/>
+        <copy file="${basedir}/props" todir="${build.dir}"/>
+        <jar jarfile="${dist.dir}/clipboardPlugin.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="props"/>
+                <include name="org/systemsbiology/gaggle/boss/plugins/clipboard/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/clipboardPlugin.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+    <target name="r-jar" depends="compile,rmi" description="builds java portion of R goose, copies to gaggle pkg dir">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/gaggleRShell.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+                <attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.rShell.RShellGoose" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/geese/rShell/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/gaggleRShell.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+        <copy file="${dist.dir}/gaggleRShell.jar"
+            todir="${src.dir}/org/systemsbiology/gaggle/geese/scripts/r/gagglePackage/gaggle/inst/jars/"/>
+
+    </target>
+
+    <target name="cytoscape-plugin-jar" depends="compile,rmi" description="for cytoscape 1.x">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/cyGagglePlugin.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/geese/cy/generic/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/cy/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+                <include name="org/systemsbiology/gaggle/network/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/cyGagglePlugin.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+    <target name="prolinks-jar" depends="compile,rmi" description="builds prolinks plugin for cy 1.x">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/prolinks.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/geese/cy/prolinks/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/cy/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+                <include name="org/systemsbiology/gaggle/network/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/prolinks.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+    <target name="inferelator-jar" depends="compile,rmi" description="builds inferelator plugin for cy 1.x">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/inferelator.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/geese/cy/inferelator/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/cy/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+                <include name="org/systemsbiology/gaggle/network/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/inferelator.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+
+    <target name="enrichment-jar" depends="compile,rmi" description="builds enrichment graph plugin for cy 1.x">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/enrichmentGraph.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/geese/cy/enrichment/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/cy/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/*.class"/>
+                <include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+                <include name="org/systemsbiology/gaggle/network/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/enrichmentGraph.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+    </target>
+
+
+
+    <target name="sequenceGoose-jar" depends="compile,rmi" description="builds sequence goose">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/sequence.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.sequence.SequenceGoose" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/sequence/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+				<include name="org/systemsbiology/gaggle/network/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/sequence.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+    <target name="tileViewer-jar" depends="compile,rmi" description="builds tile viewer">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/tileViewer.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<!--<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.cy." />-->
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/cy/tileViewer/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/cy/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/tileViewer.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+    <target name="ip-jar" depends="compile,rmi" description="builds ip plugin">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/ip.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<!--<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.cy." />-->
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/cy/ip/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/cy/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/ip.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+    <target name="echo-jar" depends="compile, rmi" description="builds echo goose (for testing) - required for R unit tests">
+        <mkdir dir="${dist.dir}"/>
+        <jar jarfile="${dist.dir}/echo.jar" index="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${timestamp}" />
+                <attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.echo.EchoGoose" />
+            </manifest>
+            <fileset dir="${build.dir}">
+                <include name="org/systemsbiology/gaggle/geese/echo/*.class"/>
+            </fileset>
+        </jar>
+        <signjar jar="${dist.dir}/echo.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+
+    </target>
+
+    <target name="pdfViewer-jar" depends="compile,rmi" description="builds PDF viewer goose">
+		<mkdir dir="${dist.dir}"/>
+		<jar jarfile="${dist.dir}/pdfViewer.jar" index="true">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Built-On" value="${timestamp}" />
+				<attribute name="Main-Class" value="org.systemsbiology.gaggle.geese.pdfViewer.ClusterViewer" />
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="org/systemsbiology/gaggle/geese/pdfViewer/*.class"/>
+                <include name="org/systemsbiology/gaggle/core/**/*.class"/>
+                <include name="org/systemsbiology/gaggle/geese/common/*.class"/>
+				<include name="org/systemsbiology/gaggle/geese/DeafGoose.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss.class"/>
+				<include name="org/systemsbiology/gaggle/boss/GuiBoss_Stub.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/datamatrix/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/gui/**/*.class"/>
+				<include name="org/systemsbiology/gaggle/experiment/metadata/*.class"/>
+                <include name="org/systemsbiology/gaggle/experiment/repository/*.class"/>
+				<include name="org/systemsbiology/gaggle/util/*.class"/>
+			</fileset>
+		</jar>
+		<signjar jar="${dist.dir}/pdfViewer.jar"  keystore=".jarkey" alias="gaggle" storepass="honker"/>
+	</target>
+
+
+    <target name ="run" depends="compile,rmi" description="runs boss">
+		<java classname="org.systemsbiology.gaggle.boss.GuiBoss" fork="true">
+			<classpath refid="app.classpath"/>
+            <arg line="-p props"/>
+        </java>
+	</target>
+
+
+    <target name ="run-sample" depends="compile,rmi" description="runs sample goose">
+		<java classname="org.systemsbiology.gaggle.geese.sample.SampleGoose" fork="true">
+			<classpath refid="app.classpath"/>
+		</java>
+	</target>
+
+
+	<target name="all-jars" description="remake all jars"
+       depends="clean,clean-dist,init,compile,rmi,boss-jar,sample-jar,
+       persist-jar,anno-jar,dmv-jar,goose-jar,jar,namesGoose-jar,clipboard-jar,
+       core-jar,firegoose-deps-jar,mev-jar,cytoscape-plugin-jar,prolinks-jar,
+       inferelator-jar,r-jar,sequenceGoose-jar, tileViewer-jar, ip-jar,
+       pdfViewer-jar, echo-jar, gaggle-jar, enrichment-jar">
+	</target>
+
+	<target name="all" depends="clean,init,compile,rmi">
+	</target>
+
+</project>
+

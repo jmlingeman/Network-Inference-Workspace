@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="http://db.systemsbiology.net/cytoscape/halo/gaggle/cy/inferelator/2004-dec-27"
+  href="cy.jnlp">
+  <information>
+    <title>Gaggled Inferelator</title>
+    <vendor>Dec 27 2004 </vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.4+" max-heap-size="1024M"/>
+    <jar href="../../cytoscape.jar"/>
+    <jar href="data.jar"/>
+    <jar href="../../cyGagglePlugin.jar"/>
+    <jar href="../../../dmb/dmb.jar"/>
+    <jar href="../../images.jar"/>
+    <jar href="../../../../../jars/jython.jar"/>
+    <jar href="../../../../../jars/jython-lib.jar"/>
+    <jar href="../../ouai.jar"/>
+    <jar href="../../cytoAux.jar"/>
+    <jar href="../../../../../jars/syspatharchivehack.jar"/>
+  </resources>
+  <application-desc>
+    <argument>-p</argument>
+    <argument>jar://project</argument>
+  </application-desc>
+</jnlp>
+

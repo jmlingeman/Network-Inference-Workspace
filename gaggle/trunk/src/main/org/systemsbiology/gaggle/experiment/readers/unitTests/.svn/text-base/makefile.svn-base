@@ -1,0 +1,60 @@
+# makefile for org/systemsbiology/gaggle/experiment/readers/unitTests
+#-------------------------------------------------------------------------
+# $Revision$
+# $Date: 2005/02/19 00:59:02 $
+# $Author$
+#--------------------------------------------------------------------
+
+JC=javac
+
+PKG=org.systemsbiology.gaggle.experiment.readers.unitTests
+
+.SUFFIXES: .java .class
+.java.class: 
+	$(JC) $<
+
+OBJS = DataMatrixFileReaderTest.class \
+       TextHttpIndirectFileReaderTest.class \
+       MetaDataXmlParserTest.class
+
+help:
+	egrep "^#" makefile | sed "s/^#//"
+
+
+
+objs: $(OBJS)
+
+
+default: objs run
+
+clean:
+	- rm *.class
+
+#------ all
+#  run all the tests
+#
+all: $(OBJS) 0 1 2
+
+#------ 0
+#  test TextHttpIndirectFileReader
+#
+
+0: TextHttpIndirectFileReaderTest.class
+	java $(PKG).TextHttpIndirectFileReaderTest
+
+#------ 1
+#  build and run the DataMatrixFileReaderTest
+#
+1: DataMatrixFileReaderTest.class
+	java -Xmx1G $(PKG).DataMatrixFileReaderTest
+
+
+
+#------ 2
+#  test MetaDataXmlParserTest
+#
+
+2: MetaDataXmlParserTest.class
+	java $(PKG).MetaDataXmlParserTest
+
+

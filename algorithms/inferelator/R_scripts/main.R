@@ -1,0 +1,415 @@
+##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+## /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ / / \ \ / / \ \
+##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
+
+## May 2008 Inferelator version 1.2
+## Bonneau lab - Aviv Madar
+
+##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+## /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ / / \ \ / / \ \
+##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
+rm(list=ls()) # start with a fresh workspace
+
+##################################################################
+# Get the config file from the argument used to run this program.
+##################################################################
+
+
+config_file <- commandArgs(trailingOnly = TRUE)
+print( c('Reading configuration file from: ', config_file ))
+source(config_file[1])
+
+##################################################################
+
+source("R_scripts/initialize.R")
+initialize()
+dir.create( "output" )
+
+if ( ! exists("restart.kk") ) restart.kk <- 1
+
+if (force.reRead) cat ("Forced to reread in data\n")
+
+if ( file.exists( "output/nwInf.startup.RData" ) && ! force.reRead ) {
+  cat( "Reading saved initialization data...\n" )
+  old.restart.kk <- restart.kk
+  load( "output/nwInf.startup.RData" )
+  restart.kk <- old.restart.kk
+  rm( old.restart.kk )
+  initialize()
+
+} else { ### started with arguments
+    currentHost <- system("hostname")
+    ##biclustFile <- "data/k-clust_i6_k273.clean.RData"
+    for (zz in all.data.files) load( paste("data/",zz, sep = "") )
+    rm(zz)
+    gene.ids <- rownames( ratios )
+}
+
+if (plot.it == FALSE) {
+    graphics.off()
+}
+
+#########################################################################################
+## why not do the best clusters first?
+if (trunc.cs) {
+	clusterStack <- sort.cluster.stack( clusterStack , trunc.cs.i)
+	if ( trunc.cs.i > clusterStack$k ) {
+		trunc.cs.i <- clusterStack$k
+	}
+	clusterStack <- clusterStack[1:trunc.cs.i]
+	clusterStack$k <- trunc.cs.i
+	cat("TRUNCATING CLUSTERSTACK TO ",trunc.cs.i, " IS THIS WHAT YOU WANT TO DO????\n")
+}
+
+if ( is.null( clusterStack$k)  ) {
+	if ( length( clusterStack[[ length( clusterStack ) ]] ) == 1 ) {
+		names( clusterStack ) [ length( clusterStack ) ] <- "k"
+	} else {
+		stop( "check cluster stack ... no $k ... \n")
+	}
+}
+
+if (singleInfer > 0 && singleInfer <= clusterStack$k) {
+	cat("infferring for cluster: ", singleInfer, "\n")
+	singleInfer <- as.integer(singleInfer)
+} else {
+	cat("Fire it up! we're inferelating the whole bunch!!!\n singleInfer switch not set or greater than k \n")
+	singleInfer <- "all"
+}
+
+if (lars.use.prob == T){
+	##AM # source regDB interactions as a list of reg->genes
+	source("R_scripts/readRegDBInteractionsFromSif.R")
+	source("R_scripts/getRegDBintoClusterStack.R")
+	for (kk in 1:clusterStack$k ) {
+		############ DEBUG code ###############
+		clusterStack[[kk]]$regDB <- getRegDBintoClusterStack(clusterStack[[kk]],regDB_tf_to_gene,tfNames)
+		clusterStack[[kk]]$regDBnotInClust <- clusterStack[[kk]]$regDB[which(!clusterStack[[kk]]$regDB %in% clusterStack[[kk]]$rows)]
+		##AM ## add priors into cluster stack, that way lapply can send each clust its' own priors
+		clusterStack[[kk]]$prior.names <- clusterStack[[kk]]$regDBnotInClust
+		#clusterStack[[kk]]$prior.pvals <- priorPvals[[kk]]
+		clusterStack[[kk]]$prior.pvals <- rep(1e-50,length(clusterStack[[kk]]$regDBnotInClust))
+		############ END DEBUG code ##############
+	}
+	rm( kk )
+}
+
+
+
+######### READ IN AND PREPARE DATA #############
+#########################################################################################
+  ## Read gene-expression matrix
+  ##RB, ecoli ## source("R_scripts/readExpression.R")
+  cat("preparing to standardize data\n")
+  if (stdRatios) {
+    ## currently to 0-1 with slight inflation of range for logistic regression
+    ##ratios.tmp <- standardize.row.logistic( ratios , delta.xx = 0.05)
+    ratios.tmp <- standardize.row( ratios )
+    dimnames(ratios.tmp) <- dimnames(ratios)
+    ratios <- ratios.tmp
+    rm (ratios.tmp)
+    cat("standardized ratios\n")
+  } else {
+    cat("did not standardize ratios\n")
+  }
+
+  gc()
+
+############################################################################
+  ## read functions (i.e. are you a transcription factor or a kinase)
+  ## also get all regulatory influence squared away
+  ##tf.names <- getTfNames.new(file = "data/halo_NRC1transcription_factors_110804.txt", gene.ids)
+  tf.names <- tfNames[tfNames %in% rownames( ratios )]
+  rm( tfNames )
+  cat("getting list of guys that don't change significantly\n")
+  if (organism == "halo") {
+  	no.change <- lambdaFilt( lambdas, 15, mode = "names", n.thresh = 5)
+  } else if (organism == "ecoli"){
+	## we need to fix this !!!! RB ecoli 7/2007
+	## aviv, you sent the already norm data, so I can't filter no change
+	no.change <- character()
+}
+
+
+
+  cat("slicing tf names by changing vec\n")
+
+  tf.names.sig <- tf.names[! tf.names %in% no.change ]
+  tf.excluded <-  tf.names[ tf.names %in% no.change ]
+
+  ## precluster reg.infs
+  tf.tmp <- pre.cluster.regInfs(  tf.names.sig, ratios, cor.cut = 0.850 )
+
+  ## keep the original list of tfs that change in the prereq number of conds
+  tf.names.sig.raw <-  tf.names.sig
+  ## below we make a list of the guys that I've combined into other tfs
+  tf.removed.combined <-  tf.names.sig[! tf.names.sig %in% tf.tmp$tfs ]
+  ## now I override the surviving, more independent set of tfs (some rep more than one tf)
+  tf.names.sig <- tf.tmp$tfs
+  ## given a tf name in the new set of ind tfs who does each guy represent?
+  ## list with key being members of overwritten tf.names.sig
+  tf.combined.map <- tf.tmp$tf.cors
+
+  ##reg.infs <- c(tf.names.sig, torsionHistone.names, env.sig)
+  env.sig <- relevant.env
+  if ( pred.subset.mode == "env" ) {
+    reg.infs <- env.sig
+  } else {
+    reg.infs <- unique( c(tf.names.sig, env.sig) )
+  }
+
+  cat("loaded list of regulatory influences (tfs)\n")
+  cat("reg infs: \n")
+  print( reg.infs )
+
+### add loners that change sig, and/or are TFs or other things we care
+### about. This can wait until we get the basic protocol working
+### we have to at least add loner tf's
+  if ( add.loners ) {
+    ## we could also pass this gene.ids.sig instead of tf.names.sig to add all loners
+    ##clusterStack.tmp <- addLonerTFs.toClusterStack(clusterStack, tf.names.sig, colnames(ratios) )
+    gene.ids.sig <- gene.ids[! gene.ids %in% no.change ]
+    cat( "Adding loners...\n" )
+    ##clusterStack.tmp <- addLonerTFs.toClusterStack(clusterStack, gene.ids.sig, colnames(ratios) )
+    clusterStack.tmp <- addLonerTFs.toClusterStack(clusterStack,
+                          tf.names.sig, colnames(ratios) )
+    clusterStack <- clusterStack.tmp
+    rm(clusterStack.tmp)
+  } else {
+    cat( "NOT Adding loners...\n" )
+  }
+
+  gc()
+
+#########################################################################################
+
+  ## Calculate reduced expression matrix
+  cat("Calcuting reduced expression matrix\n")
+  redExp <- reduceExpressionBiclust(ratios, clusterStack)
+  colnames( redExp ) <- colnames( ratios )
+
+  gc()
+#########################################################################################
+  ##initialize regNet
+
+  cat("init regulatory network\n")
+  n.clust <- clusterStack$k
+  ##influence.nw <- matrix( data=0,nrow=n.clust,ncol=n.clust)
+  influence.nw <- matrix( data=0, nrow=n.clust, ncol= length( reg.infs) )
+  colnames(influence.nw) <- reg.infs
+  cv.err <- numeric()
+  tau.all <- numeric()
+
+  is.null <- numeric()
+  select.mode <- numeric()
+  beta.0 <- numeric()
+  fraction.from.cv <- numeric()
+
+  inputs.bi <- list()
+  outputs.bi <- list()
+  cand.inf <- list()
+  coeff.inf <- list()
+  high.cor.regs <- list()
+  lars.objs <- list()
+
+  print("init cv.matrix stuff\n")
+  cv.matrix <- list()
+  cv.stdErr.matrix <- list()
+  best.s <- list()
+  frac.degFree.map <- list()
+
+  ##lm.step.list <- list()
+  ## let's skip names and use indexes for clusts for now ...
+  ##rownames(influence.nw) <- clust.names
+  ##colnames(influence.nw) <- clust.names
+
+  ##cat("KK :", kk, "\n")
+  for ( k in 1:clusterStack$k ) {
+    clusterStack[[ k ]]$k <- k
+    clusterStack[[ k ]]$redExp <- redExp[ k, ]
+  }
+
+  fill.all.ts <- FALSE
+  fill.all.ts.frac <- 0.75 ## If >0.75 of a ts in a cluster, put the whole thang in there.
+  remove.all.ts.frac <- 0.25 ## If <0.25 of a ts in a cluster, get rid of it all.
+  ## Otherwise if there's a gap in a ts in the cols in a cluster, fill in the gap
+  fill.ts.gap.size <- 1
+
+  if ( fill.all.ts ) {
+    full.cm <- get.col.map.one.cluster( colnames( ratios ), colMap, clusterStack[[ i ]], bi.cols="all" )
+    firsts <- full.cm$is1stLast[ which( full.cm$is1stLast == "f" ) ]
+    lasts <- full.cm$is1stLast[ which( full.cm$is1stLast == "l" ) ]
+    ts <- list()
+    for ( i in 1:length( firsts ) ) {
+      start <- which( names( full.cm$is1stLast ) == names( firsts[ i ] ) )
+      end <- which( names( full.cm$is1stLast ) == names( lasts[ i ] ) )
+      ts[[ i ]] <- names( full.cm$is1stLast[ start:end ] )
+    }
+    for ( i in 1:clusterStack$k ) {
+      cols <- clusterStack[[ i ]]$cols
+      for ( j in 1:length( ts ) ) {
+        frac <- sum( ts[[ j ]] %in% cols ) / length( ts[[ j ]] )
+        ##cat("HERE:",i,j,sum( ts[[ j ]] %in% cols ),length( ts[[ j ]] ),frac,"\n")
+        if ( frac >= fill.all.ts.frac && frac < 1 ) {
+          new.cols <- ts[[ j ]][ ! ( ts[[ j ]] %in% cols ) ]
+          clusterStack[[ i ]]$cols <- unique( c( cols, new.cols ) )
+          clusterStack[[ i ]]$ncols <- length( clusterStack[[ i ]]$cols )
+          cat( "Added", length( new.cols ), "columns to cluster", i, "(", frac, "):\n" )
+          print( new.cols )
+        } else if ( frac < remove.all.ts.frac ) {
+          remove.cols <- ts[[ j ]][ ts[[ j ]] %in% cols ]
+          clusterStack[[ i ]]$cols <- cols[ ! ( cols %in% remove.cols ) ]
+          clusterStack[[ i ]]$ncols <- length( clusterStack[[ i ]]$cols )
+          if ( length( remove.cols ) > 0 )
+            cat( "Removed", length( remove.cols ), "columns from cluster", i, "(", frac, "):\n" )
+          print( remove.cols )
+        } else {
+          for ( q in 1:fill.ts.gap.size ) {
+            is.in <- which( ts[[ j ]] %in% cols )
+            expand <- unique( sort( c( is.in, is.in-1, is.in+1 ) ) )
+            expand <- expand[ expand > 0 & expand <= length( ts[[ j ]] ) ]
+            if ( length( unique( c( cols, ts[[ j ]][ expand ] ) ) ) - length( cols ) > 0 )
+              cat( "Added", length( unique( c( cols, ts[[ j ]][ expand ] ) ) ) -
+                  length( cols ), "columns to cluster", i, "(", frac, ")\n" )
+            clusterStack[[ i ]]$cols <- unique( c( cols, ts[[ j ]][ expand ] ) )
+            cols <- clusterStack[[ i ]]$cols
+            clusterStack[[ i ]]$ncols <- length( clusterStack[[ i ]]$cols )
+            is.in <- expand
+          }
+        }
+      }
+    }
+  }
+
+## save.image( file="output/nwInf.startup.RData", compress=T )
+
+
+##stop()
+
+#########################################################################################
+######## NOW WE ACTUALLY DO THE CALCULATION ############
+
+
+## cat( "Using maxes:", use.maxes, "\n" )
+
+if ( ! exists( "restart.kk" ) ) restart.kk <- 1
+endInfer <- clusterStack$k
+if ( singleInfer != "all" ) endInfer <- restart.kk <- singleInfer
+
+cat("embarking on meat of calculation ... \n woo woof moo moo!!!\n")
+
+source( "R_scripts/snow-util.R" )
+cl <- NULL
+cl.size <- length( snow.nodes )
+if ( cl.size > 1 ) cl <- init.snow.cluster( find.nodes=T )
+
+if ( ! is.null( cl ) ) {
+  gc()
+  cl.size <- length( cl )
+  ## Pass ratios and colMap to the cluster because theyre big and we only want to have to serialize them once
+  snow.export( cl, c( "ratios", "colMap", "use.maxes" ) )
+}
+
+smooth.tau <- FALSE
+
+for ( ind in seq( restart.kk, endInfer, cl.size ) ) {
+  ks <- 1:clusterStack$k
+
+  ks2 <- ks[ ind:(ind+cl.size-1) ]
+  ks2 <- ks2[ ! is.na( ks2 ) ]
+  inds <- as.list( ks2 )
+
+  cat( "Inferelating on biclusters:", ks2, "\n" )
+  clusters <- clusterStack[ ks2 ]
+
+################# AVIV This is meat of computation ##############
+	ll <- snow.lapply( cl, clusters, infer.one.cluster, reg.infs, smooth.tau = smooth.tau,
+						r.cutoff=max.single.corr.cutoff, max.inter.corr.cutoff = max.inter.corr.cutoff, time.mode = time.mode,
+						pred.subset.mode = pred.subset.mode, lars.use.prob = lars.use.prob, alpha = alpha, tau=tau)
+################# END AVIV ##############
+
+  for ( ii in 1:length( inds ) ) {
+    kk <- inds[[ ii ]]
+    regInf.test <- ll[[ ii ]]$regInf.test
+
+    if ( class( regInf.test ) != "list" ) { cat( "Error: ", regInf.test, "\n" ); break }
+
+    regInf.out <- list()
+    regInf.out[[ kk ]] <- regInf.test
+    cluster <- clusterStack[[ kk ]]
+
+    cat( "\n ... Cluster", kk, ": " )
+	if ( regInf.test$is.null ) {
+		cat( "NULL MODEL\n" )
+	} else {
+      cat( "Tau =", regInf.test$tau, "\n" )
+      nonZeroParents <- regInf.test$cand.influence[ abs(regInf.test$coeff.lars) > 0]
+      nonZeroWeights <- regInf.test$coeff.lars[ abs(regInf.test$coeff.lars) > 0]
+      cat( "\tfound nonZero weights for : ", nonZeroParents, "\n")
+      cat( "\twith weights              : ", nonZeroWeights, "\n\n")
+    }
+
+    cv.err[kk] <- regInf.test$cv.err
+    tau.all[kk] <- regInf.test$tau
+    is.null[kk] <- regInf.test$is.null
+    beta.0[kk] <- regInf.test$intercept
+    coeff.inf[[kk]] <- regInf.test$coeff.lars
+    cand.inf[[kk]] <- regInf.test$cand.influence
+    high.cor.regs[[kk]] <- regInf.test$high.cor.regs
+    inputs.bi[[kk]] <- regInf.test$inputs
+    outputs.bi[[kk]] <- regInf.test$outputs
+    lars.objs[[kk]] <- regInf.test$lars.obj
+    if ( smooth.tau ) {
+      frac.degFree.map[[kk]] <- ll[[ ii ]]$frac.deg
+    }
+    fraction.from.cv[kk] <- regInf.test$fraction
+    ##
+    cat( "filling cv for multi-tau plot\n")
+    cv.matrix[[kk]] <-  ll[[ ii ]]$cv.matrix
+    cv.stdErr.matrix[[kk]] <- ll[[ ii ]]$cv.stdErr.matrix
+    best.s[[kk]] <- ll[[ ii ]]$best.s
+
+    cv.mat <-  ll[[ ii ]]$cv.matrix
+    best.s.cv <-  ll[[ ii ]]$best.s
+
+## save.image( file= paste( "output/nwInf.out.t", time.mode, "_pred", pred.subset.mode, ".RData", sep = ""), compress=T )
+    rm(cv.mat, best.s.cv)
+
+    rm( regInf.test, regInf.out, regInf.lmStep, reg.best )
+    gc()
+  }
+
+## save("cand.inf","clusterStack","coeff.inf","colMap","cv.err","date.nwInf.run","gene.ids", #gene.names, knockIn ## rb Recomve ecoli
+#    "inf.version","redExp","reg.infs","tau.all","beta.0", "high.cor.regs",
+#      file=paste("output/nwInf.fin.t-",time.mode,"_pred-",pred.subset.mode,".RData", sep="" ), compress=T )
+}
+
+if ( ! is.null( cl ) ) kill.snow.cluster( cl )
+
+#########################################################################################
+############ FINISH UP / OUTPUT RESULTS ############
+
+## get gene.id for each cluster such that closest to mean of cluster is rep for that cluster by name
+##    this is an area that could be imporved
+##redNamesClust <- reduceNamesExpMean( ratios, redExp, clusterStack, gene.ids)
+
+if (singleInfer == "all") {
+	models = coeff.inf
+	save(models,file="output/models.RData")
+  ## output reg net and loners/orphans
+  #	 save.image(file = "output/inferRunEnd.RData")
+  ##   outputRegNet(influence.nw, clusterStack, redNamesClust, mode = "all")
+  ##   outputRedExp(redExp, redNamesClust)
+} else {
+  ##   outputRegNet(influence.nw, clusterStack, redNamesClust, mode = "one", cNum = singleInfer)
+  ##   outputRedExp(redExp, redNamesClust, cNum = singleInfer)
+}
+
+##AM need to make it work for pvm
+#if( ! Sys.getenv( "HOST" )[[ 1 ]] == "Phaedra.systemsbiology.net" ) {
+#  kill.pvm()
+#}
+#q( save="no" )
+cat(file="output/log.txt","end at:",date(),"\n",append=T)
+
+

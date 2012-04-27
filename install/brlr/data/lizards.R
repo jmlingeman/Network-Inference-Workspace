@@ -1,0 +1,18 @@
+"lizards" <-
+structure(list(grahami = c(20, 8, 4, 13, 8, 12, 8, 4, 5, 6, 1, 34, 
+69, 18, 31, 55, 13, 17, 60, 8, 12, 21, 4), opalinus = c(2, 1, 4, 0, 
+0, 0, 3, 1, 3, 0, 1, 11, 20, 10, 5, 4, 3, 15, 32, 8, 1, 
+5, 4), height = structure(c(1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 1, 1, 
+1, 2, 2, 2, 1, 1, 1, 2, 2, 2), class = "factor", .Label = c("<5ft", 
+">=5ft")), diameter = structure(c(1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 
+1, 1, 1, 1, 2, 2, 2, 2, 2, 2), class = "factor", .Label = c("<=2in", 
+">2in")), light = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 
+2, 2, 2, 2, 2, 2, 2, 2, 2, 2), class = "factor", .Label = c("sunny", 
+"shady")), time = structure(c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 3, 1, 2, 
+3, 1, 2, 3, 1, 2, 3, 1, 2, 3), class = "factor", .Label = c("early", 
+"midday", "late"))),
+.Names = c("grahami", "opalinus", "height", "diameter", "light", "time"),
+row.names = c("1", 
+"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", 
+"14", "15", "16", "17", "18", "19", "20", "21", "22", "23"),
+class = "data.frame")

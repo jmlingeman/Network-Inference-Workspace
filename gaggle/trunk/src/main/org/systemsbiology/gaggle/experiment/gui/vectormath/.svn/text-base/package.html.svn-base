@@ -1,0 +1,194 @@
+<html>
+<h2>Vector Arithmetic</h2>
+
+This package provides an implementation of vectors of floating-point numbers and
+simple vector operations such as add, subtract, scalar multiplication, normalization,
+and dot product. Two key features are:
+
+<ul>
+<li> Vectors are implemented as wrappers around another data structure that provides
+the storage. This allows the user to gain the utility of vector operations without
+having to repackage their data.
+
+<li> This package offers both read-only and normal read-write vector views of the data.
+</ul>
+
+The point of this package is to avoid repetitive implementations of basic operations.
+Instead of writing a tedious and error-prone for loop every time you want to operate
+on a sequence of floating point numbers, simply wrap the data as a vector object and use
+a strongly tested vector operation. It's easy to do, much more reliable, and doesn't
+require any data copying.<p>
+
+Since this package is designed for convenience, no attempt has been made to make it
+ultra-high performance, although it should not be much slower than a direct for loop.
+If you want to do lots of computations and performance is critical, then you should
+either find a way to extend this package or use something different. For example, it
+wouldn't be too hard to define a special implementation for arrays that would be
+exactly the same as direct for loops - this need simply hasn't come up yet.
+
+Note that this package is not null-safe; in other words, trying to take the dot product
+with a null vector object will throw a run-time NullPointerException.
+
+<hr>
+
+<h3> Creating a new vector</h3>
+
+Vectors are not constructed directly by the user, but are created by the MathVectorFactory
+class.<p>
+
+If your data is stored in a simple data structure such as a floating point array, you
+can create a MathVector directly with a single call to the appropriate MathVectorFactory
+method. For example:<p>
+
+<code>
+double[] myData = new double[10];<br>
+MathVector myVector = MathVectorFactory.makeVector(myData);<br>
+</code><p>
+
+Once you have a MathVector object, you can immediately do vector operations like
+normalizing the vector or taking the dot product with another vector. See the class
+documentation for specifics.<p>
+
+Remember that the MathVector object is only a wrapper around your existing data. In other
+words, making changes to the MathVector actually changes the underlying double array.
+If this isn't what you want, then either use a read-only vector (see below), or use the
+<code>copy()</code> method of MathVector to create a completely new data object.<p>
+
+<hr>
+
+If your data is instead stored in objects not known to MathVectorFactory, then you
+need to create an interface to your data. VectorDataProvider is an interface that
+defines the three needed methods:<p>
+
+<code>
+int size();<br>
+double getQuick(int index);<br>
+void setQuick(int index, double value);<br>
+</code><p>
+
+The method <code>size()</code> returns the number of elements, while the
+<code>getQuick</code> and <code>setQuick</code> methods are used to retrieve and set the
+value of the corresponding element. As the names suggest,
+<code>getQuick</code> and <code>setQuick</code> are not range-checked operations; the
+vector arithmetic package does all the range checking required.<p>
+
+To view your data as a vector, all you need to do is define a simple class that implements
+VectorDataProvider and accesses your data, or rewrite your class to implement
+VectorDataProvider and its three methods. For example, suppose your data was a
+java.util.List of Measurement objects, where each Measurement object contained the
+measured value and its associated error, i.e.:<p>
+
+<pre>
+public class Measurement {
+    public double value;
+    public double error;
+}
+</pre><p>
+
+Here would be the full implementation of an appropriate data provider for the vector
+of measured values:<p>
+
+<pre>
+public class MeasurementVectorDataProvider implements VectorDataProvider {
+
+    private List dataSource;
+    
+    public MeasurementVectorDataProvider(List l) {dataSource = l;}
+    
+    public int size() {return dataSource.size();}
+    public double getQuick{int i) {return ((Measurement)dataSource.get(i)).value;}
+    public void setQuick(int i, double value) {
+        Measurement m = (Measurement)dataSource.get(i);
+        m.value = value;
+    }
+}
+</pre><p>
+
+The data provider simply implements a vector view of the data in terms of the
+operations that make sense for the underlying data structure.
+Obvious extensions could be added, such as access methods for the Measurement object,
+or testing in the constructor that the provided List really contains Measurement objects.
+<p>
+
+Via this interface, one can consider any arbitrarily complex choice of data values as
+a vector, as long as you write a data provider that can determine how many elements there
+are and how to access the i'th element.
+
+If you don't want to write a whole class to implement the data provider interface,
+you can use an anonymous inner class with the VectorDataAdapter class. For example:
+
+<pre>
+final List theData = myData;
+VectorDataProvider p = new VectorDataAdapter() {
+    public int size() {return theData.size();}
+    public double getQuick(int index) {return ((Double)theData.get(index)).doubleValue();}
+    public void setQuick(int index, double d) {theData.set(index, new Double(d));}
+};
+ReadOnlyMathVector vector = MathVectorFactory.makeReadOnlyVector(p);
+</pre><p>
+
+VectorDataAdapter implements the VectorDataProvider interface, so overriding it's methods
+produces a suitable data provider. (This trick is commonly used for creating listeners
+in user interface applications; see the appropriate section in the Java tutorial on
+Swing for more examples.)
+<hr>
+
+Once an appropriate data provider is defined, a vector can be created with a call to a
+method in MathVectorFactory:<p>
+
+<code>
+public void MathVector makeVector(VectorDataProvider p);<br>
+</code><p>
+
+For example:<p>
+
+<code>
+List measurements = getMyMeasurements();<br>
+MathVector mVector = MathVectorFactory.makeVector(new MeasurementVectorDataProvider(measurements));<br>
+</code><p>
+
+In other words, after the data provider is written once, you can create MathVector views
+of your data with a single line of code.<p>
+
+<hr>
+
+<h3>Read-only and read-write vectors</h3>
+
+This package provides read-only vectors as well as normal read-write vectors. Read-only
+vectors only provide access operations to the underlying data, but no operations that
+would change the data. Normal vectors are a subclass of read-only vectors and additionally
+provide methods that modify the underlying data structure. The class ReadOnlyMathVector
+defines read-only vectors, while the subclass MathVector defines normal vectors.<p>
+
+Like normal vectors, read-only vectors are created with a call to MathVectorFactory:<p>
+
+<code>
+public ReadOnlyMathVector makeReadOnlyVector(double[] d);<br>
+public ReadOnlyMathVector makeReadOnlyVector(ReadOnlyVectorDataProvider p);<br>
+</code><p>
+
+As the second method suggests, there is an interface ReadOnlyVectorDataProvider that
+is exactly like VectorDataProvider except that it doesn't include the setQuick method.
+VectorDataProvider is a subinterface of ReadOnlyVectorDataProvider in the same way that
+MathVector is a subclass of ReadOnlyMathVector.<p>
+
+In other words, from a read-write data provider, you can create either a read-only
+vector or a read-write vector. If, instead, the data provider is itself read-only, then
+you can only create a read-only vector from it. Additionally, you can't convert a
+read-only vector to a read-write vector except by copying the data. This allows you
+to enforce read-only access to the data either at the provider level or at the
+vector view.<p>
+
+<hr>
+
+<h3>Vector operations</h3>
+
+Once you have a vector view of your data, ReadOnlyMathVector and MathVector define
+various useful operations. Non-modifying operations like calculating the euclidean
+magnitude or computing the dot product with another vector are defined in
+ReadOnlyMathVector, while modifying operations such as normalization or adding
+another vector are defined in MathVector. See the class documentation for these
+classes for the full set of available operations.<p>
+
+</html>
+

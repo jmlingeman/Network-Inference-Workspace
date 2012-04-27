@@ -1,0 +1,44 @@
+// IpControlPanelPlugin.java
+//------------------------------------------------------------------------------
+/*
+ * Copyright (C) 2006 by Institute for Systems Biology,
+ * Seattle, Washington, USA.  All rights reserved.
+ *
+ * This source code is distributed under the GNU Lesser
+ * General Public License, the text of which is available at:
+ *   http://www.gnu.org/copyleft/lesser.html
+ */
+
+package org.systemsbiology.gaggle.geese.cy.ip;
+//------------------------------------------------------------------------------
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
+
+import cytoscape.*;
+import y.base.*;
+import y.view.*;
+
+import java.util.*;
+
+//------------------------------------------------------------------------------
+public class IpControlPanelPlugin extends AbstractPlugin {
+
+  transient CytoscapeWindow cw;
+
+//------------------------------------------------------------------------------
+public IpControlPanelPlugin (CytoscapeWindow cytoscapeWindow) 
+{
+  cw = cytoscapeWindow;
+  JPanel utilityPanel = cw.getUtilityPanel ();
+  utilityPanel.setBorder (BorderFactory.createCompoundBorder (
+                             BorderFactory.createRaisedBevelBorder (),
+                             BorderFactory.createLoweredBevelBorder ()));
+
+  utilityPanel.add (new ControlPanel (cw));
+  cw.getMainFrame().pack ();
+  org.systemsbiology.gaggle.util.MiscUtil.placeInCenter (cw.getMainFrame ());
+
+}
+//----------------------------------------------------------------------------------------
+} // InferelatorControlPanel

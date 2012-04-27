@@ -1,0 +1,4 @@
+plugin.gaggle.load=org.systemsbiology.gaggle.geese.cy.generic.CyGagglePlugin
+visualStyle=halo
+species=Halobacterium sp.
+

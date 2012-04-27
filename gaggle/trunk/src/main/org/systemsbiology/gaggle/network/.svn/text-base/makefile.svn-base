@@ -1,0 +1,25 @@
+# makefile for org.systemsbiology.gaggle.network
+#-------------------------------------------------------------------------
+# $Revision$
+# $Date$
+# $Author$
+#-------------------------------------------------------------------------
+JC=javac 
+JI=java
+
+.SUFFIXES: .java .class
+.java.class: 
+	$(JC) $<
+
+default: objs 
+
+OBJS =  Interaction.class \
+        Network.class
+
+
+objs: $(OBJS)
+
+clean:
+	- find . -name "*.class" -exec rm  {} ';'
+
+

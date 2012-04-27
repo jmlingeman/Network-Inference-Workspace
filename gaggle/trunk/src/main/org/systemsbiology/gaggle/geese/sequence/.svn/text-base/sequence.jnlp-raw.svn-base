@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp
+  codebase="$CODEBASE$"
+  href="sequence.jnlp">
+  <information>
+    <title>Sequence Goose</title>
+    <vendor> (November 2005)</vendor>
+    <homepage href="docs/help.html"/>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+" max-heap-size="1024M"/>
+    <jar href="sequence.jar"/>
+    <jar href="halo.jar"/>
+  </resources>
+  <application-desc>
+    <argument> -s </argument>
+    <argument> Halobacterium sp.</argument>
+    <argument> -d </argument>
+    <argument> jar://halobacterium_orfs </argument>
+  </application-desc>
+</jnlp>
+

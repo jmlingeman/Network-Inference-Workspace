@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/gaggle/!svn/ver/2971/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence
+END
+SequenceFetcherFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/SequenceFetcherFactory.java
+END
+sequence.jnlp-raw
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/sequence.jnlp-raw
+END
+Config.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/Config.java
+END
+SequenceGoose.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2971/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/SequenceGoose.java
+END
+manifest
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/manifest
+END
+FileBasedSequenceFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/FileBasedSequenceFetcher.java
+END
+halobacterium_orfs
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/halobacterium_orfs
+END
+SequenceFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/SequenceFetcher.java
+END
+CodonTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/CodonTable.java
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/sequence/makefile
+END

@@ -1,0 +1,17 @@
+clean:
+	rm *.asv *.o *.exe
+linux32: clr.c InfoKit2.c
+	gcc -march=i686 -ansi -O3 -finline-functions -ffast-math -funroll-loops -lz -lm InfoKit2.c FileUtil.c clr.c -o clr 
+	gcc -march=i686 -ansi -O3 -finline-functions -ffast-math -funroll-loops -lz -lm InfoKit2.c FileUtil.c fdrThreshold.c -o fdrThreshold
+
+linux64: clr.c InfoKit2.c
+	gcc -fPIC -ansi -O3 -finline-functions -ffast-math -funroll-loops -lz -lm InfoKit2.c FileUtil.c clr.c -o clr 
+	gcc -fPIC -ansi -O3 -finline-functions -ffast-math -funroll-loops -lz -lm InfoKit2.c FileUtil.c fdrThreshold.c -o fdrThreshold 
+
+macosx: clr.c InfoKit2.c
+	gcc -fPIC -ansi -O3 -finline-functions -ffast-math -funroll-loops -lz -lm InfoKit2.c FileUtil.c clr.c -o clr 
+	gcc -fPIC -ansi -O3 -finline-functions -ffast-math -funroll-loops -lz -lm InfoKit2.c FileUtil.c fdrThreshold.c -o fdrThreshold 
+
+cygwin: clr.c InfoKit2.c
+	gcc -L/usr/bin -ansi -O2 -finline-functions -funroll-loops -lz -lm InfoKit2.c FileUtil.c clr.c -o clr 
+	gcc -L/usr/bin -ansi -O2 -finline-functions -funroll-loops -lz -lm InfoKit2.c FileUtil.c fdrThreshold.c -o fdrThreshold

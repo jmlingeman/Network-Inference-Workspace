@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#python TestMCZ.py dream410
+#python TestMCZ.py dream4100
+#python TestDFG.py dream410
+#python TestDFG.py dream4100
+#python TestCLR.py dream410
+#python TestCLR.py dream4100
+#python TestNIR.py dream410
+#python TestNIR.py dream4100
+#python TestTLCLR.py dream410
+#python TestTLCLR.py dream4100
+##python TestInferelator.py dream410
+##python TestInferelator.py dream4100
+#python TestGENIE3.py dream410
+#python TestGENIE3.py dream4100
+python TestBanjo.py dream410
+python TestBanjo.py dream4100
+#python TestVoting.py dream410
+#python TestVoting.py dream4100
+#python TestTDARACNE.py dream410
+#python TestTDARACNE.py dream4100
+#python TestMCZ-DFG2.py dream410
+#python TestMCZ-DFG2.py dream4100
+#python TestSimAnneal.py dream410
+#python TestSimAnneal.py dream4100
+#python TestInferelator-Pipeline.py dream410
+#python TestInferelator-Pipeline.py dream4100

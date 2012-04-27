@@ -1,0 +1,19 @@
+function buildChipTree(data)
+%buildChipTree(data)
+%
+%build a dendrogram of all experiments
+%rows: experiment data with genes in rows
+
+%--------------------------------------
+%find condition clusters
+%--------------------------------------
+%find coefficient of variation and pick top 1000 genes
+cv = zeros(size(data.rma, 1), 1);
+cv(i) = std(data.rma').
+Y = double(clr(, 'rayleigh', 10, 3));
+Y = Y - diag(diag(Y));
+Y = squareform(Y, 'tovector');
+
+%Y = pdist(r', 'mahal');
+Z = linkage(Y, 'complete');
+[H, T, PERM] = dendrogram(Z, length(Y), 'orientation', 'left', 'labels', data.conditions);

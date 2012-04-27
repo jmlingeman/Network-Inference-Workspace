@@ -1,0 +1,11 @@
+Package: brlr
+Version: 0.9-1
+Date: 2008-05-31
+Title: Bias-reduced logistic regression
+Author: David Firth
+URL: http://www.warwick.ac.uk/go/dfirth
+Maintainer: David Firth <d.firth@warwick.ac.uk>
+Description: Logistic regression models by maximum penalized likelihood.  Now superseded by the brglm package.
+Suggests: brglm
+License: GPL Version 2 or later
+Packaged: Sat May 31 10:13:57 2008; david

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<experiment name="afsQ2" date="2004-03-01">
+
+  <predicate category='species'       value='Halobacterium NRC-1'/>
+  <predicate category='strain'        value='afsQ2 knockout'/>
+  <predicate category='perturbation'  value='genetic'/>
+
+  <dataset status='primary' type='log10 ratios'>
+    <uri> http://db.systemsbiology.net:8060/halo/data/afsQ2.ratio</uri>
+  </dataset>
+
+  <dataset status='derived' type='lambdas'>
+    <uri> http://db.systemsbiology.net:8060/halo/data/afsQ2.lambda</uri>
+  </dataset>
+
+  <condition alias="afsQ2__HO_D_vs_NRC-1">  
+    <variable name="oxygen" value="High"/>
+    <variable name="illumination" value="Dark"/>
+  </condition>
+
+  <condition alias="afsQ2__HO_L_vs_NRC-1">  
+    <variable name="oxygen" value="High"/>
+    <variable name="illumination" value="Light"/>
+  </condition>
+
+  <condition alias="afsQ2__LO_D_vs_NRC-1">  
+    <variable name="oxygen" value="Low"/>
+    <variable name="illumination" value="Dark"/>
+  </condition>
+
+  <condition alias="afsQ2__LO_L_vs_NRC-1">  
+    <variable name="oxygen" value="Low"/>
+    <variable name="illumination" value="Light"/>
+  </condition>
+
+</experiment>
+

@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars
+END
+images.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/images.jar
+END
+JSciPartial.jar
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/JSciPartial.jar
+END
+jama.jar
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/jama.jar
+END
+dialogHelp.jar
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/dialogHelp.jar
+END
+mev-gui-impl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/mev-gui-impl.jar
+END
+mev-algorithm-impl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/mev-algorithm-impl.jar
+END
+jai_core.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/jai_core.jar
+END
+HTTPClient.jar
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/HTTPClient.jar
+END
+mev-gui-support.jar
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/mev-gui-support.jar
+END
+base64.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/base64.jar
+END
+servlet.jar
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/servlet.jar
+END
+mev-algorithm-support.jar
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/mev-algorithm-support.jar
+END
+normalization.jar
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/normalization.jar
+END
+vecmath.jar
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/vecmath.jar
+END
+jconn2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/jconn2.jar
+END
+j3dcore.jar
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/j3dcore.jar
+END
+xerces.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/xerces.jar
+END
+parser.jar
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/parser.jar
+END
+mev-base.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/mev-base.jar
+END
+jai_codec.jar
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/jai_codec.jar
+END
+j3dutils.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/j3dutils.jar
+END
+JSciCore.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/JSciCore.jar
+END
+jaxp.jar
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/jaxp.jar
+END
+j3daudio.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/j3daudio.jar
+END
+mev-util.jar
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gaggle/!svn/ver/2501/gaggle/trunk/src/main/org/systemsbiology/gaggle/geese/mev/jars/mev-util.jar
+END

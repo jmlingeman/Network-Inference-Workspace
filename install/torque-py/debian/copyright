@@ -1,0 +1,20 @@
+This package was debianized by 
+ Yaroslav Halchenko <yoh@psychology.rutgers.edu>
+ on Sat, 10 May 2003 20:34:31 -0400.
+
+It was built based on CVS snapshot of 'rumba-manifold'
+ from  :pserver:anonymous@cnrg2.rutgers.edu:/home/cvs
+ on Sat, 10 May 2003 20:34:31 -0400.
+
+Upstream Author:
+ Donovan Rebbechi <elflord@psychology.rutgers.edu>
+ Benjamin Martin Bly <ben@psychology.rutgers.edu>
+
+Copyright:
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the "Artistic License" which comes
+    with Perl.
+
+On Debian GNU/Linux systems, the complete text of the Artistic Licence
+in `/usr/share/common-licenses/Artistic'.

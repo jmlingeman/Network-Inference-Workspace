@@ -1,0 +1,7 @@
+library (rJava)
+cat ("calling .jinit (gaggleRShell.jar)\n")
+.jinit ("gaggleRShell.jar")
+cat ('  os version: ', .jcall ("java/lang/System", "S", "getProperty", "os.name"),'\n')
+cat (' jvm version: ', .jcall ("java/lang/System", "S", "getProperty", "java.version"), '\n')
+goose <- .jnew ("org/systemsbiology/gaggle/geese/rShell/RShellGoose")
+print (.jcall (goose, "S", "getName"))

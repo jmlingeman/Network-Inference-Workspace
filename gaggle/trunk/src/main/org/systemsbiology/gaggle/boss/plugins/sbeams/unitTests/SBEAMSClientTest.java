@@ -1,0 +1,90 @@
+// ExperimentRepositoryTest.java
+//--------------------------------------------------------------------------------------
+// $Revision: 843 $
+// $Date: 2006-06-30 14:41:49 -0400 (Fri, 30 Jun 2006) $
+// $Author: cbare $
+//--------------------------------------------------------------------------------------
+/*
+ * Copyright (C) 2006 by Institute for Systems Biology,
+ * Seattle, Washington, USA.  All rights reserved.
+ *
+ * This source code is distributed under the GNU Lesser
+ * General Public License, the text of which is available at:
+ *   http://www.gnu.org/copyleft/lesser.html
+ */
+
+package org.systemsbiology.gaggle.boss.plugins.sbeams.unitTests;
+//--------------------------------------------------------------------------------------
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.systemsbiology.gaggle.boss.plugins.sbeams.SBEAMSClient;
+
+//--------------------------------------------------------------------------------------
+public class SBEAMSClientTest extends TestCase {
+
+  private String testUser; //  = "pshannon";
+  static public String testPassword;
+  private SBEAMSClient client;
+  //private String baseUrl = "http://db.systemsbiology.net/sbeams/";
+  private String baseUrl = "http://db.systemsbiology.net/devDC/sbeams/";
+
+//------------------------------------------------------------------------------
+public SBEAMSClientTest (String name) 
+{
+  super (name);
+}
+//------------------------------------------------------------------------------
+public void setUp () throws Exception
+{
+}
+//------------------------------------------------------------------------------
+public void tearDown () throws Exception
+{
+}
+//--------------------------------------------------------------------------------------
+public void testSBEAMSClientSetup () throws Exception
+{
+  System.out.println ("testSBEAMSClientSetup");
+  System.out.println ("\n about to construct SBEAMSClient");
+  client = new SBEAMSClient (testUser, testPassword);
+  System.out.println ("after constructing SBEAMSClient\n\n");
+  String haloSearchPageUrl = "http://halo.systemsbiology.net/halobacterium/";
+  String haloIronSearchUrl = baseUrl + "cgi/ProteinStructure/GetAnnotations?" +
+                "search_scope=All&search_key=iron&action=GO&biosequence_set_id=2&" +
+                "SBEAMSentrycode=DF45jasj23jhapply_action=QUERY";
+
+  String result = client.fetchSbeamsPage (haloSearchPageUrl);
+  //String result = client.fetchSbeamsPage (haloIronSearchUrl);
+  //System.out.println ("result: " + result);
+
+  assertTrue (client.getCookie() != null);
+    
+} // testFileRepository
+//--------------------------------------------------------------------------------------
+public void testSearch_bop () throws Exception
+{
+  System.out.println ("testSearch_bop");
+  System.out.println ("\n about to construct SBEAMSClient");
+  client = new SBEAMSClient (testUser, testPassword);
+  System.out.println ("after constructing SBEAMSClient\n\n");
+  String pageUrl = baseUrl + "cgi/ProteinStructure/GetAnnotations?";
+  String search  = "search_scope=All&search_key=bop";
+  String action =  "&action=GO&biosequence_set_id=2&action=QUERY&output_mode=tsv";
+  String fullUrl = pageUrl + search + action;
+  System.out.println ("\n\n" + fullUrl + "\n\n\n");
+  String result = client.fetchSbeamsPage (fullUrl);
+  // System.out.println (result);
+
+    
+} // testFileRepository
+//--------------------------------------------------------------------------------------
+public static void main (String [] args) 
+{
+  if (args.length == 1)
+    testPassword = args [0];
+
+  junit.textui.TestRunner.run (new TestSuite (SBEAMSClientTest.class));
+}
+//--------------------------------------------------------------------------------------
+} // ExperimentRepositoryTest
