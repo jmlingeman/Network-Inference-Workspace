@@ -74,7 +74,7 @@ function params = GRN_Batch_AR1(model_num, script_name, file_res, varargin)
 % --------------
 
 DFG_InitOctave;
-addpath('./libs/bolasso');
+addpath('../libs/bolasso');
 
 
 % Loading data and parameters

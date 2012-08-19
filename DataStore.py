@@ -83,6 +83,24 @@ class MicroarrayData:
        medexp.ratios[gene] = numpy.median(gene_vals)
      self.experiments = [medexp]
 
+   def filter(self, filtered_gene_list):
+    filtered_experiments = []
+    for e in self.experiments:
+        f = Experiment(e.name, e.file, e.type)
+        for gene in e.ratios.keys():
+            if gene in filtered_gene_list:
+                f.ratios[gene] = e.ratios[gene]
+        f.gene_list = filtered_gene_list
+        filtered_experiments.append(f)
+    self.experiments = filtered_experiments
+    self.gene_list = filtered_gene_list
+
+
+    for gene in self.gene_list:
+        if gene not in filtered_gene_list:
+            for e in self.experiments:
+                del e.ratios[gene]
+            self.gene_list.remove(gene)
 
    def combine(self, x):
        if type(x) == type([]):

@@ -103,14 +103,18 @@ class Algorithm:
         try:
             retcode = subprocess.check_call(shlex.split(self.cmd), 0, None, None, stdout, \
               stderr, None, False, False, self.cwd) # Launch process
+            #retcode = subprocess.check_call(shlex.split(self.cmd), 0, cwd=self.cwd)
             self.read_output(self.settings)
             self.write_output(self.settings)
             self.save()
             return retcode
         except subprocess.CalledProcessError:
-            return 1
+            print "Unexpected error:", sys.exc_info()
+            sys.exc_info()[2].print_exc()
+            return -100
         except:
-            print "Unexpected error:", sys.exc_info()[0]
+            print "Unexpected error:", sys.exc_info()
+            sys.exc_info()[2].print_exc()
             return 1
 
 
@@ -164,6 +168,19 @@ class Algorithm:
                   os.remove(settings[self.alg_name]["working_dir_config"])
         os.symlink( settings[self.alg_name]["settings_file"], \
               settings[self.alg_name]["working_dir_config"])
+
+    def write_dex(self, settings, dex_storage):
+        """ Write out the dex ratios in gene\tratio format"""
+        settings[self.alg_name]["dex_file"] =  settings[self.alg_name]["data_dir"] + "/"\
+               + settings[self.alg_name]["dex_file"]
+        f = open(settings[self.alg_name]["dex_file"], 'w')
+        print len(dex_storage.experiments)
+        for gene in dex_storage.gene_list:
+            f.write(gene)
+            for i in range(len(dex_storage.experiments)):
+                f.write("\t" + str(dex_storage.experiments[i].ratios[gene]))
+            f.write("\n")
+        f.close()
 
     def write_prior(self, settings, prior):
         settings[self.alg_name]["prior_file"] =  settings[self.alg_name]["data_dir"] + "/"\

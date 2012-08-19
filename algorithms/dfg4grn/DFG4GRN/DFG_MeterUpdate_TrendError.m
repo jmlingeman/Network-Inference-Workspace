@@ -49,7 +49,7 @@ indVars = params.indVars;
 dYmean = params.dYmean;
 
 % Statistics on the trend (over all sequences), selected variables (genes)
-[eTrendSign, eTrendR2,eSignMat,indVars,x,xStar,dX,dXstar] = DFG_TrendError(z, zOut, dYmean, indVars);
+[eTrendSign, eTrendR2] = DFG_TrendError(z, zOut, dYmean, indVars);
 e_trend_sign = mean(eTrendSign);
 e_trend_r2 = mean(eTrendR2);
 if (params.verbosity_level > 0)
@@ -57,21 +57,9 @@ if (params.verbosity_level > 0)
 end
 meter = DFG_MeterUpdate(meter, 'error_trend_sign', e_trend_sign, model_num);
 meter = DFG_MeterUpdate(meter, 'error_trend_r2', e_trend_r2, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'error_trend_sign_mat', eSignMat, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'error_trend_indvars', indVars, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'x', x, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'xStar', xStar, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'dX', dX, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'dXstar', dXstar, model_num);
 
 % Statistics on the trend (over all sequences), all variables (genes)
-[eTrendSign, eTrendR2,eSignMat,indVars,x,xStar,dX,dXstar] = DFG_TrendError(z, zOut, dYmean, []);
+[eTrendSign, eTrendR2] = DFG_TrendError(z, zOut, dYmean, []);
 e_trend_sign = mean(eTrendSign);
 e_trend_r2 = mean(eTrendR2);
 if (params.verbosity_level > 0)
@@ -81,15 +69,3 @@ meter = ...
   DFG_MeterUpdate(meter, 'error_trend_sign_all', e_trend_sign, model_num);
 meter = ...
   DFG_MeterUpdate(meter, 'error_trend_r2_all', e_trend_r2, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'error_trend_sign_mat_all', eSignMat, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'error_trend_indvars_all', indVars, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'x_all', x, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'xStar_all', xStar, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'dX_all', dX, model_num);
-meter = ...
-  DFG_MeterUpdate(meter, 'dXstar_all', dXstar, model_num);

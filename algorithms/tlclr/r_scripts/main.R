@@ -119,9 +119,9 @@ while (b <= N_b) {
 	if(PARAMS[["general"]][["processorsNumber"]] > 1){
 		Ms = calc_MI_one_by_one_parallel( Y_clr_p, X_clr_p, Pi_s_clr, processorsNumber = PARAMS[["general"]][["processorsNumber"]])
 	} else {
-        print(Y_clr_p)
-        print(X_clr_p)
-        print(btch_size)
+        #print(Y_clr_p)
+        #print(X_clr_p)
+        #print(btch_size)
 		Ms = calc_MI_inBatces(Y_clr_p,X_clr_p,btch_size)
 	}
 	diag(Ms) = 0

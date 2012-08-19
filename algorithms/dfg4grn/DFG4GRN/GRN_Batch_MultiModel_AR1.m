@@ -92,7 +92,6 @@ end
 for model_num = 1:n_models
   params = GRN_Batch_AR1(model_num, script_name, [], varargin);
 end
-global eSignMat
-eSignMat = 0;
+
 % Compute statistics on the average model
 GRN_EvaluateModels_AR1(params, script_name, dir_res, file_res, varargin);

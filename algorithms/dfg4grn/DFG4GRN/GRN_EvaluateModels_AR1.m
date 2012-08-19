@@ -130,27 +130,23 @@ global MODEL
 n_models = length(MODEL);
 
 % Create an average model with statistically significant links
-[wAverage, biasAverage, pNet, pNetBinary, zScores] = ...
+[wAverage, biasAverage, pNet, pNetBinary] = ...
   GRN_AverageModel_AR1(params.p_level);
-
-zScores_mask = zScores .* pNetBinary;
-
 
 % Plots
 % -----
-try
-    if (params.n_steps_display > 0)
-      for k = 1:n_models
-        GRN_Plot(MODEL{k}.dynamic.w, ...
-          sprintf('GRN model %d', k), params.labels_y, []);
-      end
-      GRN_Plot(wAverage, ...
-        'Average GRN', params.labels_y, []);
-      GRN_Plot(wAverage .* pNetBinary, ...
-        'Average GRN, significant links', params.labels_y, []);
-    end
-catch
+
+if (params.n_steps_display > 0)
+  for k = 1:n_models
+    GRN_Plot(MODEL{k}.dynamic.w, ...
+      sprintf('GRN model %d', k), params.labels_y, []);
+  end
+  GRN_Plot(wAverage, ...
+    'Average GRN', params.labels_y, []);
+  GRN_Plot(wAverage .* pNetBinary, ...
+    'Average GRN, significant links', params.labels_y, []);
 end
+
 
 % Evaluation of simple average model on data
 % ------------------------------------------
@@ -179,7 +175,7 @@ global METER_INFER_TRAIN
 global METER_INFER_TEST
 save([dir_res file_res], '-mat', 'params', 'MODEL', ...
   'METER_INFER_TRAIN', 'METER_INFER_TEST', 'METER_LEARN', ...
-  'zScores', 'zScores_mask', 'wAverage', 'biasAverage', 'pNet', 'pNetBinary');
+  'wAverage', 'biasAverage', 'pNet', 'pNetBinary');
 
 % Export main results to a text file
 GRN_SaveResultsText(params, [dir_res file_res], pNet);

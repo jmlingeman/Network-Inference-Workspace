@@ -97,7 +97,7 @@ class Network:
             #print gene_list
 
 
-    def read_netmatrix(self, network_list, gene_list, signed=False, binary=False, thresh=0, cutoff=0):
+    def read_netmatrix(self, network_list, gene_list, signed=True, binary=False, thresh=0, cutoff=0):
         """ This function takes an NxN list of network connections either in
         binary or floating point format between nodes.  Gene list is a simple
         list of gene names that are ordered in the same way that the NxN
@@ -132,7 +132,7 @@ class Network:
 
                 self.network[gene_list[i]][gene_list[j]] = val
 
-    def read_netmatrix_file(self, file, gene_list, signed=False, binary=False, thresh=0, cutoff=0):
+    def read_netmatrix_file(self, file, gene_list, signed=True, binary=False, thresh=0, cutoff=0):
         """ This function takes an NxN list of network connections either in
         binary or floating point format between nodes.  Gene list is a simple
         list of gene names that are ordered in the same way that the NxN
@@ -189,21 +189,27 @@ class Network:
 
       Gp = nx.to_pydot(G)
 
-      for gene1 in net.network.keys():
-        for gene2 in net.network.keys():
-          # Figure out of node is correct, apply color/style based on that
-          # If true positive, bold line
-          if net.network[gene1][gene2] != 0 and goldnet.network[gene1][gene2] != 0:
-            # thick line
-            Gp.add_edge(pydot.Edge(gene1, gene2, style="bold"))
+      if goldnet == []:
+        for gene1 in net.network.keys():
+            for gene2 in net.network.keys():
+                if net.network[gene1][gene2] != 0:
+                    Gp.add_edge(pydot.Edge(gene1, gene2, style="bold"))
+      else:
+          for gene1 in net.network.keys():
+            for gene2 in net.network.keys():
+              # Figure out of node is correct, apply color/style based on that
+              # If true positive, bold line
+              if net.network[gene1][gene2] != 0 and goldnet.network[gene1][gene2] != 0:
+                # thick line
+                Gp.add_edge(pydot.Edge(gene1, gene2, style="bold"))
 
-          # If false positive, dashed line
-          elif net.network[gene1][gene2] != 0 and goldnet.network[gene1][gene2] == 0:
-            Gp.add_edge(pydot.Edge(gene1, gene2, style="dashed"))
+              # If false positive, dashed line
+              elif net.network[gene1][gene2] != 0 and goldnet.network[gene1][gene2] == 0:
+                Gp.add_edge(pydot.Edge(gene1, gene2, style="dashed"))
 
-          # If false negative, dotted line
-          elif net.network[gene1][gene2] == 0 and goldnet.network[gene1][gene2] != 0:
-            Gp.add_edge(pydot.Edge(gene1, gene2, style="dotted"))
+              # If false negative, dotted line
+              elif net.network[gene1][gene2] == 0 and goldnet.network[gene1][gene2] != 0:
+                Gp.add_edge(pydot.Edge(gene1, gene2, style="dotted"))
 
       # now output your graph to a file and display it
       outstem = filename
@@ -264,10 +270,65 @@ class Network:
                 ranking[i] = (gene1, gene2, 0)
         self.read_networklist(ranking)
 
+    def set_bottom_edges_percent(self, topn):
+        ranking = []
+        for g1 in self.gene_list:
+            for g2 in self.gene_list:
+                ranking.append((g1, g2, self.network[g1][g2]))
+        ranking = sorted(ranking, key=lambda ranking: abs(ranking[2]), reverse=False)
+        for i,row in enumerate(ranking):
+            if i / float(len(self.gene_list) * len(self.gene_list)) * 100 < topn:
+                gene1, gene2, val = row
+                ranking[i] = (gene1, gene2, val)
+            else:
+                gene1, gene2, val = row
+                ranking[i] = (gene1, gene2, 0)
+        self.read_networklist(ranking)
 
-    def normalize_values(self):
+    def set_top_and_bottom_edges_percent(self, topn):
+        topn = float(topn)
+        ranking = []
+        for g1 in self.gene_list:
+            for g2 in self.gene_list:
+                ranking.append((g1, g2, self.network[g1][g2]))
+        top_ranking = sorted(ranking, key=lambda ranking: abs(ranking[2]), reverse=True)
+        bottom_ranking = sorted(ranking, key=lambda ranking: abs(ranking[2]), reverse=False)
+
+
+        for i,row in enumerate(top_ranking):
+            if i / float(len(self.gene_list) * len(self.gene_list)) * 100 < (topn/2.0):
+                gene1, gene2, val = row
+                top_ranking[i] = (gene1, gene2, val)
+            else:
+                gene1, gene2, val = row
+                top_ranking[i] = (gene1, gene2, 0)
+
+        for i,row in enumerate(bottom_ranking):
+            if i / float(len(self.gene_list) * len(self.gene_list)) * 100 < (topn/2.0):
+                gene1, gene2, val = row
+                bottom_ranking[i] = (gene1, gene2, val)
+            else:
+                gene1, gene2, val = row
+                bottom_ranking[i] = (gene1, gene2, 0)
+
+        ranking = sorted(ranking, key=lambda ranking: abs(ranking[2]), reverse=False)
+        for i,row in enumerate(ranking):
+            if i <= topn:
+                ranking[i] = bottom_ranking[i]
+
+
+        #ranking = sorted(ranking, key=lambda ranking: abs(ranking[2]), reverse=True)
+        for i,row in enumerate(ranking):
+            if i > topn:
+                ranking[i] = top_ranking[i]
+        self.read_networklist(ranking)
+
+
+    def normalize(self):
         minimum = sys.maxint
+        newmin = sys.maxint
         maximum = -sys.maxint
+        newmax = -sys.maxint
 
         for g in self.gene_list:
             if min(self.network[g].values()) < minimum:
@@ -278,6 +339,7 @@ class Network:
         for g1 in self.gene_list:
             for g2 in self.gene_list:
                 self.network[g1][g2] = (self.network[g1][g2] - float(minimum)) / float((maximum - minimum))
+
 
     def apply_threshold(self, thresh):
         thresh_net = self.network.copy()

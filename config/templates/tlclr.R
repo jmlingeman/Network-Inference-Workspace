@@ -55,7 +55,7 @@ PARAMS[["general"]][["inf.version"]] = "nwInf.1.2"
 x = unlist(strsplit(date()," "))
 PARAMS[["general"]][["date"]] = paste(x[2],x[3],x[5],x[4],sep="_")
 #PARAMS[["general"]][["data"]] = let_usr_choose_dataset()
-PARAMS[["general"]][["use_t0_as_steady_state"]] = FALSE
+PARAMS[["general"]][["use_t0_as_steady_state"]] = TRUE
 PARAMS[["general"]][["use_mixCLR"]] = TRUE #for DREAM4
 PARAMS[["general"]][["use_delt_bigger_than_delT_max_as_steady_state"]] = TRUE
 #making the directory name to save files into
@@ -130,6 +130,7 @@ x <- obj
 
 #x = get_usr_chosen_dataset(PARAMS[["general"]][["data"]])
 INPUT[["general"]][["dataset"]] = x[[1]]
+print(x[[1]])
 INPUT[["general"]][["clusterStack"]] = x[[2]]
 INPUT[["general"]][["colMap"]] = x[[3]]
 INPUT[["general"]][["tf_names"]] = x[[4]]

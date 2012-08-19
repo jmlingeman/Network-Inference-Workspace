@@ -31,24 +31,60 @@
 %     719 Broadway, 12th Floor, New York, NY 10003, USA.
 %     email: mirowski [AT] cs [DOT] nyu [DOT] edu
 
+% Revision 1: Corrected small typo with params.n_steps_archive
+% Revision 2: Save number of transcription factors
+
 function params = DFG_Params_Default_Arabidopsis(n_genes, n_tfs, geneNames)
 
 % Initialize the parameters
 params = DFG_Params_Default(n_genes);
 
-% Modify default parameters
-params.lambda_w = 5e-3;
-params.n_max_m_steps = 100;
-params.n_max_e_steps = 100;
-params.n_steps_save = 0;
-params_n_steps_archive = 20;
-
 % Select subset of TFs
 if (nargin > 1)
   params.dynamic_connections(:, (n_tfs+1):end) = 0;
+else
+  n_tfs = n_genes;
 end
+params.n_tfs = n_tfs;
 
 % Set gene names
 if (nargin > 2)
   params.labels_y = geneNames;
 end
+
+
+% Limit the number of disk access and verbosity, no plot
+params.n_steps_display = 0;
+params.n_steps_save = 0;
+params.n_steps_archive = 0;
+params.verbosity_level = 1;
+
+% Linear dynamics for Arabidopsis
+params.dynamic_transfer = 'linear';
+params.coeff_delta = 1;
+
+
+% Default configuration (different scripts might have different config.)
+params.normalize_data = 0;
+params.pde_type = 'kinetic';
+params.dynamic_algorithm = 'gradient';
+
+% Do not use a correlation prior to initialize the GRN matrix
+params.correlation_prior = 0;
+
+% Be conservative with learning and inference
+params.n_max_e_steps = 100;
+params.n_max_m_steps = 100;
+params.n_epochs = 100;
+
+
+% Parameters that could be tuned: here are their default values
+params.eta_w = 0.1;
+params.eta_z = 0.01;
+
+% Parameters that should be optimized
+params.lambda_w = 1e-4;
+params.gamma = 1;
+params.tau = 6;
+
+

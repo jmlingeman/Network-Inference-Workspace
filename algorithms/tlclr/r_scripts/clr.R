@@ -3,8 +3,8 @@
 ##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
 
 ## May 2010 Dream3/4 pipeline (MCZ,tlCLR,Inferelator)
-## Bonneau lab - "Aviv Madar" <am2654@nyu.edu>, 
-##  		     "Alex Greenfield" <ag1868@nyu.edu> 
+## Bonneau lab - "Aviv Madar" <am2654@nyu.edu>,
+##  		     "Alex Greenfield" <ag1868@nyu.edu>
 ## NYU - Center for Genomics and Systems Biology
 
 ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
@@ -17,19 +17,19 @@ clr <- function(m) {
 	uc = apply(m, 2, mean)
 	sr = apply(m, 1, sd)
 	sc = apply(m, 2, sd)
-	
+
 	uc = t(repmat(uc, 1, nrow(m)))
 	sc = t(repmat(sc, 1, nrow(m)))
-	
+
 	z1 = (m - ur) / sr
-	
+
 	z2 = (m - uc) / sc
-	
+
 	z1[which(z1 < 0)] = 0
 	z2[which(z2 < 0)] = 0
-	
-	z = sqrt(z1 ^ 2 + z2 ^ 2) 
-	
+
+	z = sqrt(z1 ^ 2 + z2 ^ 2)
+
 	return(z)
 }
 
@@ -50,12 +50,12 @@ mixed_clr <- function(m1,m2) {
 		} else {
 # /we predict the middle one so it is advanced the rest is lagged
 			m = m1[1:(ix-1),]
-			m = rbind(m,m2[ix,])		
-			m = rbind(m,m1[(ix+1):predNum,])				
+			m = rbind(m,m2[ix,])
+			m = rbind(m,m1[(ix+1):predNum,])
 		}
 		clr_mat = clr(m)
 		rownames(clr_mat) = rownames(m2)
-		colnames(clr_mat) = colnames(m2)	
+		colnames(clr_mat) = colnames(m2)
 		Z = rbind(Z,clr_mat[ix,])# add predicted row results
 	}
 	return(Z)
@@ -67,7 +67,18 @@ calc_MI_inBatces <- function(Y,X,btch_size) {
 	x= nrow(Y)
 	y=1
 	cat("mi calculation for: ")
-	while(x > btch_size){ 
+    print(M)
+    print("--------------------------------------Y")
+    print(Y)
+    if(is.na(Y[1,"rSS"]))
+        Y[,"rSS"] = Y[,"TS_1delt_0"]
+
+    print("--------------------------------------X")
+    print(X)
+    if(is.na(X[1,"rSS"]))
+        X[,"rSS"] = X[,"TS_1delt_0"]
+
+	while(x > btch_size){
 		cat(y,":",(y+(btch_size-1)),", ", sep="") ; 	flush.console()
 		M[y:(y+(btch_size-1)),] = mi(Y[y:(y+(btch_size-1)),], X)
 		x = x - btch_size

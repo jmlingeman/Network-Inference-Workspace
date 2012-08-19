@@ -75,8 +75,10 @@ if sys.argv[1] == "dream4100":
 
 # Read data into program
 # Where the format is "FILENAME" "DATATYPE"
-knockout_storage = ReadData(ko_file[0], "knockout")
-knockdown_storage = ReadData(kd_file[0], "knockdown")
+#knockout_storage = ReadData(ko_file[0], "knockout")
+knockout_storage = None
+#knockdown_storage = ReadData(kd_file[0], "knockdown")
+knockdown_storage = None
 timeseries_storage = ReadData(ts_file[0], "timeseries")
 wildtype_storage = ReadData(wt_file[0], "wildtype")
 

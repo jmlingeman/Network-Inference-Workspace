@@ -39,7 +39,7 @@
 %     719 Broadway, 12th Floor, New York, NY 10003, USA.
 %     email: mirowski [AT] cs [DOT] nyu [DOT] edu
 
-function [wAverage, biasAverage, pNet, pNetBinary, zScores] = ...
+function [wAverage, biasAverage, pNet, pNetBinary] = ...
   GRN_AverageModel_AR1(p_level)
 
 % Significance level
@@ -55,19 +55,11 @@ wAverage = zeros(size(MODEL{1}.dynamic.w));
 biasAverage = zeros(size(MODEL{1}.dynamic.bias));
 for k = 1:n_models
   nets{k} = MODEL{k}.dynamic.w;
-  size(nets{k})
-  size(wAverage)
   wAverage = wAverage + nets{k};
   biasAverage = biasAverage + MODEL{k}.dynamic.bias;
 end
 wAverage = wAverage / n_models;
 biasAverage = biasAverage / n_models;
-zScores = zeros(size(wAverage));
-for i = 1:size(wAverage,1)
-    for j = 1:size(wAverage,2)
-        zScores(i,j) = wAverage(i,j) / (biasAverage(i) + sum(wAverage(:,j)));
-    end
-end
 
 % Compute statistically significant links
 [pNet, pNetBinary] = ...

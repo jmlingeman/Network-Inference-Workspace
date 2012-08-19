@@ -8,7 +8,7 @@ class DFG4GRN(Algorithm):
         # Read in the default values for dfg4grn, we'll override these later
 
 
-    def setup(self, input_files, tfs, settings, name=None, num_models=None, time_mask=None, prior=None, prior_type=None):
+    def setup(self, input_files, tfs, settings, name=None, num_models=None, time_mask=None, prior=None, prior_type=None, inferelator=False, dex=None, dex_target=None):
 
       """ This function sets up DFG4GRN based on the input parameters above.
        For setting something up with just a config file, use setup_config """
@@ -39,22 +39,33 @@ class DFG4GRN(Algorithm):
           self.write_prior(settings, prior)
       else:
           settings["dfg4grn"]["prior_file"] = ""
+      if dex != None:
+          settings["dfg4grn"]["use_dex"] = 1
+          settings["dfg4grn"]["dex_target"] = dex_target
+          self.write_dex(settings, dex)
+      else:
+          settings["dfg4grn"]["use_dex"] = 0
 
       self.prior_type = prior_type
       if prior_type != None:
         settings["dfg4grn"]["prior_type"] = prior_type
 
+      self.inferelator = inferelator
+      if inferelator:
+        settings["dfg4grn"]["inferelator"] = "true"
+      else:
+        settings["dfg4grn"]["inferelator"] = "false"
       # This must happen after all data is written, otherwise we dont know where it is!
       self.write_config(settings)
 
       self.tau = settings["dfg4grn"]["tau"]
       self.eta_z = settings["dfg4grn"]["eta_z"]
       self.lambda_w = settings["dfg4grn"]["lambda_w"]
-      self.n_models = settings["dfg4grn"]["n_models"]
+      self.n_models = settings["dfg4grn"]["num_models"]
+
 
       self.cmd = "bash start_local.sh " + str(self.n_models) + " " + \
-               "../output/" + " " + \
-              str(self.eta_z) + " " + str(self.tau) + " " + str(self.lambda_w)
+               "../output/"
       self.cwd = self.working_dir
 
     def write_data(self, input_files, tfs, settings, time_mask=None):
@@ -137,8 +148,8 @@ class DFG4GRN(Algorithm):
       #self.network = dfg_output["pNetBinary"].tolist()
       self.raw_network = dfg_output["wAverage"].tolist()
       self.raw_network_cutoff = dfg_output["pNetBinary"].tolist()
-      self.raw_zscores = dfg_output["zScores"].tolist()
-      self.raw_zscores_mask = dfg_output["zScores_mask"].tolist()
+      #self.raw_zscores = dfg_output["zScores"].tolist()
+      #self.raw_zscores_mask = dfg_output["zScores_mask"].tolist()
       #self.beta_weights = dfg_output["beta_weights"].tolist()
       self.pred_mat = dfg_output["pNet"].tolist()
       self.bias = dfg_output["biasAverage"].tolist()
@@ -146,8 +157,8 @@ class DFG4GRN(Algorithm):
 
       #print self.raw_zscores_mask
 
-      for i in range(len(self.raw_zscores)):
-        self.raw_zscores[i] = map(abs, self.raw_zscores[i])
+      #for i in range(len(self.raw_zscores)):
+        #self.raw_zscores[i] = map(abs, self.raw_zscores[i])
 
       #for i,row in enumerate(self.raw_network):
         #for j,datum in enumerate(row):
@@ -157,16 +168,24 @@ class DFG4GRN(Algorithm):
             #self.raw_network_cutoff[i][j] = 0
 
       self.network = net = Network()
+      #print "BUILDING NET"
+      #print self.gene_list
+      #print self.raw_network
       net.read_netmatrix(self.raw_network, self.gene_list)
-      self.network_cutoff = net = Network()
-      net.read_netmatrix(self.raw_network_cutoff, self.gene_list)
-      self.zscores = net = Network()
-      net.read_netmatrix(self.raw_zscores, self.gene_list)
-      self.zscores_mask = net = Network()
-      net.read_netmatrix(self.raw_zscores_mask, self.gene_list)
+      #self.network_cutoff = net = Network()
+
+      #print "BUILDING CUTOFF"
+      #net.read_netmatrix(self.raw_network_cutoff, self.gene_list)
+      #self.zscores = net = Network()
+      #print "ZSCORES"
+      #net.read_netmatrix(self.raw_zscores, self.gene_list)
+      #self.zscores_mask = net = Network()
+      #print "ZSCORES MASK"
+      #net.read_netmatrix(self.raw_zscores_mask, self.gene_list)
 
       # Use the zscores to build the network
-      self.network = self.zscores
+      #self.network = self.
+      #print "COMPLETE"
 
       ###
       #self.network = self.network_cutoff
@@ -180,20 +199,45 @@ class DFG4GRN(Algorithm):
           #for j,datum in enumerate(row):
                 #self.network[i][j] = float(datum)
 
-      #best_sign = 0
-      #for line in output_file:
-          ##print line
-          #if "error_trend_sign_all" in line:
-              #line = line.split(",")
-              #error = float(line[len(line)-1])
-              #if error > cutoff:
-                  #best_sign = error
-      ##print best_sign
-      #self.best_sign = best_sign
+      avg_sign = 0
+      avg_sign_all = 0
+      for line in output_file:
+          if "error_trend_sign" in line and "testAv" in line and "all" not in line:
+              line = line.split(",")
+              error = float(line[len(line)-1])
+              if error > avg_sign:
+                  avg_sign = error
+          if "error_trend_sign_all" in line and "testAv" in line:
+              line = line.split(",")
+              error = float(line[len(line)-1])
+              if error > avg_sign_all:
+                  avg_sign_all = error
+      #print best_sign
+      self.avg_sign = avg_sign
+      self.avg_sign_all = avg_sign_all
+
+      output_file = open(self.output_dir + "/output/" + \
+              "/dfg4grn_output.txt", 'r')
+      best_sign = 0
+      best_sign_all = 0
+      for line in output_file:
+          if "error_trend_sign" in line and "test" in line and "all" not in line:
+              line = line.split(",")
+              error = float(line[len(line)-1])
+              if error > best_sign:
+                  best_sign = error
+          if "error_trend_sign_all" in line and "test" in line:
+              line = line.split(",")
+              error = float(line[len(line)-1])
+              if error > best_sign_all:
+                  best_sign_all = error
+      self.best_sign = best_sign
+      self.best_sign_all = best_sign_all
+
 
       # Now get the network
       #return self.network
-      return self.zscores
+      return self.network
 
     def write_output(self,settings):
       pass

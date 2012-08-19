@@ -81,8 +81,8 @@ makeRatios <- function(chalName, ts_filename, ko_filename, kd_filename, wt_filen
 	splitTs <- FALSE #this boolean is set to TRUE only for DREAM4
 	numMesPerTs <- c()
 	if( chalName == "DREAM4" ){
-		splitTs <- TRUE
-		numMesPerTs <- 11
+		#splitTs <- TRUE
+		numMesPerTs <- 6
 	}else if(chalName == "DREAM3"){
 		numMesPerTs <- 21
 	}else{

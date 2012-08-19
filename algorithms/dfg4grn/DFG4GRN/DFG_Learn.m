@@ -395,6 +395,9 @@ switch dynamic_model
     else
       MODEL{n}.dynamic.w = randn(dim_z, dim_z) / sqrt(dim_z);
     end
+    if (isfield(params, 'use_dex') && params.use_dex)
+        ModelApplyDexToWeights(params, n);
+    end
 end
 
 % Enforce missing connections
@@ -470,6 +473,52 @@ end
 %         MODEL{model_num}.dynamic.w .* params.dynamic_connections;
 
 
+function ModelApplyDexToWeights(params, model_num)
+    global MODEL
+    global geneNames
+
+    sprintf('Applying dex to the current network weights\n')
+
+    rfile = textread(params.dex_file, '%s', 'delimiter', '\n');
+
+    weights = MODEL{model_num}.dynamic.w;
+    target_index = 0;
+    dex_targets = regexp(params.dex_target, ',', 'split');
+
+    target_indexes = [];
+    for j=1:length(dex_targets)
+        for i=1:length(geneNames)
+            if strcmpi(geneNames{i}, dex_targets{j})
+                target_indexes(j) = i;
+            end
+        end
+    end
+
+    for k=1:length(dex_targets)
+        for i=1:length(rfile)
+            l = regexp(rfile{i}, '\t', 'split');
+            gene_name = l{1};
+            ratio = str2num(l{k});
+            idx = 0;
+            for j=1:length(geneNames)
+                if strcmpi(geneNames{j}, gene_name)
+                    idx = j;
+                end
+            end
+            if ratio >= 2.0
+                %weights(target_indexes(k), idx) = abs(weights(target_indexes(k), idx)) * ratio;
+                weights(target_indexes(k), idx) = 1;
+            elseif ratio <= 0.5
+                %weights(target_indexes(k), idx) = -abs(weights(target_indexes(k), idx)) * (1-ratio);
+                weights(target_indexes(k), idx) = -1;
+            end
+        end
+    end
+
+    MODEL{model_num}.dynamic.w = weights;
+    MODEL{model_num}.dynamic.w_init = weights;
+
+
 function ModelFilePriorWeights(params, model_num)
   global MODEL
 
@@ -487,23 +536,41 @@ function ModelFilePriorWeights(params, model_num)
   % Now read in gene names and exp values
   prior = zeros(length(geneNames));
   for i=2:size(rfile)
-      l = regexp(rfile{i}, '\t', 'split')
-      l = l{1}
+      l = regexp(rfile{i}, '\t', 'split');
+      l = l{1};
       geneNames{i-1} = l{1}; % Read in gene name
       for j = 2:length(l)
         val = str2num(l{j});
         if val > 0
-          prior(i-1,j-1) = 1;
+          prior(i-1,j-1) = val;
         elseif val < 0
-          prior(i-1,j-1) = -1;
+          prior(i-1,j-1) = val;
         else
-          prior(i-1,j-1) = 0;
+          % Keep it between 0.2 and -0.2
+          prior(i-1,j-1) = (rand * 2 - 1) / 5.0;
         end
       end
   end
 
+  %for i=1:size(prior,1)
+      %for j=1:size(prior,2)
+          %if(i == j)
+            %prior(i,j) = 0;
+          %end
+      %end
+  %end
+
   MODEL{model_num}.dynamic.w = prior;
   MODEL{model_num}.dynamic.w_init = prior;
+
+  %A = ones(size(prior));
+  %A(logical(eye(size(A)))) = 0;
+
+  %MODEL{model_num}.dynamic.connections = logical(A);
+  %MODEL{model_num}.dynamic.connections_init = logical(A);
+
+  %params.dynamic_connections = logical(A);
+
 
 % -------------------------------------------------------------------------
 function ModelFilePriorConnections(params, model_num)
@@ -523,13 +590,21 @@ function ModelFilePriorConnections(params, model_num)
   % Now read in gene names and exp values
   prior = zeros(length(geneNames));
   for i=2:size(rfile)
-      l = regexp(rfile{i}, '\t', 'split')
-      l = l{1}
+      l = regexp(rfile{i}, '\t', 'split');
+      l = l{1};
       geneNames{i-1} = l{1}; % Read in gene name
       for j = 2:length(l)
           prior(i-1,j-1) = str2num(l{j});
       end
   end
+
+  %for i=1:size(prior,1)
+      %for j=1:size(prior,2)
+          %if(i == j)
+            %prior(i,j) = 0;
+          %end
+      %end
+  %end
 
   MODEL{model_num}.dynamic.connections = logical(prior);
   MODEL{model_num}.dynamic.connections_init = logical(prior);

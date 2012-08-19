@@ -13,7 +13,7 @@ def ReadData(input_file, type):
           file = open(input_file, 'r')
           file = file.readlines()
 
-          header = line_split.split(file.pop(0).replace('"',''))
+          header = line_split.split(file.pop(0).replace('"','').replace("\n",'').strip())
 
           datasets = []
           # TODO: Add in non-timeseries GNW files
@@ -44,9 +44,38 @@ def ReadData(input_file, type):
                     #print ls
                     datasets[i].experiments.append(Experiment(ls[0].strip(), input_file, type))
                     for k, gene in enumerate(genes):
-                        datasets[i].experiments[j].ratios[genes[k]] = ls[k+1].strip()
+                        datasets[i].experiments[j].ratios[genes[k]] = float(ls[k+1].strip())
 
           # Return steady state dataset
+          elif type == "dex":
+              exp_names = header
+              microarray = MicroarrayData(input_file, type)
+              gene_list = []
+
+              for e in exp_names:
+                  microarray.experiments.append(Experiment(e, input_file, type))
+
+              for row in file:
+                  row.replace("\r\n","")
+                  row.replace("\n", "")
+                  row = row.strip()
+                  l = line_split.split(row)
+                  gene = l[0]
+                  gene_list.append(gene)
+                  expressions = l[1:]
+                  for i, e in enumerate(expressions):
+                      microarray.experiments[i].ratios[gene] = float(e)
+
+              microarray.gene_list = gene_list
+              return microarray
+
+          elif type == "dex_ts":
+              exp_names = header
+              # Take header, split into replicates and times
+              gene = l[0]
+              gene_list.append(gene)
+
+
           else:
               genes = map(str.strip, header)
               microarray = MicroarrayData(input_file, type)
@@ -61,7 +90,7 @@ def ReadData(input_file, type):
               for i in range(len(expmatrix[genes[0]])):
                   exp = Experiment(str(i), input_file, type)
                   for gene in genes:
-                      exp.ratios[gene] = expmatrix[gene][i]
+                      exp.ratios[gene] = float(expmatrix[gene][i])
                   microarray.experiments.append(exp)
 
               return microarray

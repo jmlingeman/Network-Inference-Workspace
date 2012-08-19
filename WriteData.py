@@ -9,13 +9,18 @@ def WriteDream4(data_store, settings, filename):
 def WriteDream4_Timeseries(data_store, settings, filename):
     file = open(filename, 'w')
     ts0 = data_store[0] # At minimum this should have one
+    data_store = [data_store[0]]
     header = "\"Time\"\t" + "\t".join(ts0.gene_list) + "\r\n\r\n"
     file.write(header)
+    print ts0.gene_list
     for i, ts in enumerate(data_store):
         out = ""
-        for experiment in ts.experiments:
-            out += str(int(float(experiment.name))) + "\t"
+        for experiment in ts.experiments[0:len(ts.experiments)-1]:
+            name = experiment.name.replace("m", '')
+            out += str(int(float(name))) + "\t"
             for gene in ts0.gene_list:
+               print experiment.name
+               print experiment.ratios
                out += str(experiment.ratios[gene]) + "\t"
             out = out.strip() + "\r\n"
         if i != len(data_store)-1:

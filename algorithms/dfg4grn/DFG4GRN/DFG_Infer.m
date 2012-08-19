@@ -248,8 +248,10 @@ else
 end
 nmse_obs = e_obs_mean / e_obs_mean_signal;
 nmse_dyna = e_dyna_mean / e_dyna_mean_signal;
+warning('off');
 snr_obs = -10 * log10(nmse_obs);
 snr_dyna = -10 * log10(nmse_dyna);
+warning('on');
 [z_smoothness, z_sparsity] = StatisticsLatentVar(z);
 
 % Trace after convergence

@@ -46,7 +46,7 @@
 
 % Revision 1: compute trend error on all sequences at once
 
-function [eSign, c, eSignMat, indVars,x,xStar, dX, dXstar] = DFG_TrendError(x, xStar, dXmean, indVars, xKnown)
+function [eSign, c] = DFG_TrendError(x, xStar, dXmean, indVars, xKnown)
 
 % If we evaluate sign error on all genes, not only on a selection
 n_genes = length(dXmean);
@@ -107,7 +107,6 @@ dXstar(abs(dXstar) < tol) = 0;
 % for each time point
 eSignMat = (sign(dX) == sign(dXstar));
 eSign = mean(eSignMat, 1);
-
 cNum = sum((dXstar - dX).^2, 1);
 cDen = sum((dX - dXmean).^2, 1);
 c = 1 - cNum ./ cDen;

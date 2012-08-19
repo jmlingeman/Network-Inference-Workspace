@@ -13,7 +13,7 @@ class Job:
         self.settings = settings
 
     def printStatus(self):
-        print "Job ID: " + str(self.id) + " is " + self.status
+        print "Job ID: " + str(self.id) + "\t" + str(self.alg.name) + " is " + self.status
 
     def setStatusRunning(self):
         self.status = "Running."
@@ -56,10 +56,10 @@ class JobThread(Thread):
 
             self.jobman.running.remove(self.job)
             print retcode
-            if retcode <= 0:
+            if retcode == 0:
                 self.jobman.finished.append(self.job)
                 self.job.setStatusFinished()
-            elif retcode > 0:
+            else:
                 self.jobman.error.append(self.job)
                 self.job.setStatusError(retcode)
 

@@ -1,6 +1,52 @@
 # coding: utf-8
 import math, itertools, random
+from scipy import linspace, polyval, polyfit, sqrt, stats, randn
+import scipy
+import itertools
 from AnalyzeResults import *
+
+class GradientDescent:
+
+    def run(self, jobs, goldnets):
+        # The idea is to run a gradient descent to create a new model
+        # for each gene across the jobs, solving for weights a_n for the
+        # model target_gene = a1A + a2B + a3C + a4AC + a5AB + a6BC +
+        # a7ABC ...
+
+        # Are A B C etc weights or expvals? I'll try weights first
+
+        # Just try this for one job first
+        for job in jobs:
+            gene_list = job.alg.gene_list
+
+            combination_list = []
+            for L in range(len(gene_list)+1):
+                combination_list.append( itertools.combinations(gene_list), L )
+
+            for target_gene in gene_list:
+                # We want to build a model for target_gene from a
+                # combination of all of the other genes in the network
+                # (most of which will be 0, but include them... those
+                # terms will just be 0) using those genes in-weights to
+                # target_gene
+
+                # Initialize the weights for this gene between -1 and 1
+                a_weights = {}
+                for c in combination_list:
+                    a_weights[c] = random.random() * 2 - 1
+
+
+# TODO
+class LinearRegression:
+
+    def run(self, jobs, goldnet=None):
+        return 0
+
+
+
+
+
+
 
 class SimulatedAnnealing:
 

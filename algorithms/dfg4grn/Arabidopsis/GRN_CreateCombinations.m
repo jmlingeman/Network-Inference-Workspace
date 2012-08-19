@@ -3,11 +3,12 @@
 %
 % Syntax:
 %   [nComb, KNO3, KCl, ratio] = ...
-%     GRN_CreateCombinations(geneNames, dataKNO31, dataKNO32, ...
+%     GRN_CreateCombinations(geneNames, use_log, dataKNO31, dataKNO32, ...
 %                            [dataKCl1, dataKCl2])
 %
 % Inputs:
 %   <geneNames>  : cell of size <nGenes> with gene names
+%   <use_log>    : use log normalization or not
 %   <dataKNO31>  : matrix of size <nGenes> x <nTimes> containing
 %                  micro-array data for experiments on the reaction to KN03
 %                  for replicate 1
@@ -63,16 +64,25 @@
 %     email: mirowski [AT] cs [DOT] nyu [DOT] edu
 
 function [nComb, KNO3, KCl] = ...
-  GRN_CreateCombinations(geneNames, dataKNO31, dataKNO32, ...
+  GRN_CreateCombinations(geneNames, use_log, dataKNO31, dataKNO32, ...
                          dataKCl1, dataKCl2)
 
 nGenes = length(geneNames);
 
-dataKNO3{1} = log2(dataKNO31);
-dataKNO3{2} = log2(dataKNO32);
-if nargin == 5
-  dataKCl{1} = log2(dataKCl1);
-  dataKCl{2} = log2(dataKCl2);
+if (use_log)
+  dataKNO3{1} = log2(dataKNO31);
+  dataKNO3{2} = log2(dataKNO32);
+  if nargin == 6
+    dataKCl{1} = log2(dataKCl1);
+    dataKCl{2} = log2(dataKCl2);
+  end
+else
+  dataKNO3{1} = dataKNO31;
+  dataKNO3{2} = dataKNO32;
+  if nargin == 6
+    dataKCl{1} = dataKCl1;
+    dataKCl{2} = dataKCl2;
+  end
 end
 
 % Create new series by combining replicates
@@ -89,7 +99,7 @@ nComb = size(comb, 1);
 
 % Initialize output data
 KNO3 = cell(nComb, 1);
-if nargin == 5
+if nargin == 6
   KCl = cell(nComb, 1);
   ratio = cell(nComb, 1);
 end
@@ -97,20 +107,20 @@ end
 % Loop over all combinations
 for k = 1:nComb
   KNO3{k} = zeros(nGenes, lenComb);
-  if nargin == 5
+  if nargin == 6
     KCl{k} = zeros(nGenes, lenComb);
   end
   c = comb(k, :);
   for j = 1:lenComb
     if (c(j) == '1')
       KNO3{k}(:, j) = dataKNO3{1}(:, j);
-      if nargin == 5
+      if nargin == 6
         KCl{k}(:, j) = dataKCl{1}(:, j);
         ratio{k}(:, j) = dataKNO3{1}(:, j) - dataKCl{1}(:, j);
       end
     else
       KNO3{k}(:, j) = dataKNO3{2}(:, j);
-      if nargin == 5
+      if nargin == 6
         KCl{k}(:, j) = dataKCl{2}(:, j);
         ratio{k}(:, j) = dataKNO3{2}(:, j) - dataKCl{2}(:, j);
       end

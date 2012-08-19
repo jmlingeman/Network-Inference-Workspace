@@ -79,6 +79,7 @@ lambda = params.lambda_w;
 w = zeros(size(MODEL{model_num}.dynamic.w));
 n_genes = size(w, 1);
 b = zeros(n_genes, 1);
+warning('off');
 
 % Perform Lasso gene by gene
 for k = 1:n_genes
@@ -103,3 +104,4 @@ e_current = mean(DFG_Energy_Gaussian(zTarget, zStar));
 
 % Trace
 fprintf(1, 'Dynamic Lasso: E=%9.8f->%9.8f\n', e_previous, e_current);
+warning('on');
