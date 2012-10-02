@@ -135,17 +135,17 @@ n_models = length(MODEL);
 
 % Plots
 % -----
-
-if (params.n_steps_display > 0)
-  for k = 1:n_models
-    GRN_Plot(MODEL{k}.dynamic.w, ...
-      sprintf('GRN model %d', k), params.labels_y, []);
-  end
-  GRN_Plot(wAverage, ...
-    'Average GRN', params.labels_y, []);
-  GRN_Plot(wAverage .* pNetBinary, ...
-    'Average GRN, significant links', params.labels_y, []);
-end
+% 
+% if (params.n_steps_display > 0)
+%   for k = 1:n_models
+%     GRN_Plot(MODEL{k}.dynamic.w, ...
+%       sprintf('GRN model %d', k), params.labels_y, []);
+%   end
+%   GRN_Plot(wAverage, ...
+%     'Average GRN', params.labels_y, []);
+%   GRN_Plot(wAverage .* pNetBinary, ...
+%     'Average GRN, significant links', params.labels_y, []);
+% end
 
 
 % Evaluation of simple average model on data

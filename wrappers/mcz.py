@@ -156,7 +156,7 @@ class MCZ(Algorithm):
       zscores = []
       for g1, line in enumerate(output_file[1:]):
           for g2, val in enumerate(line.split('\t')[1:]):
-              zscores.append((self.gene_list[g2], self.gene_list[g1], abs(float(line.split()[1:][g2]))))
+              zscores.append((self.gene_list[g2], self.gene_list[g1], float(line.split()[1:][g2])))
       topn = settings["mcz"]["top_n_edges"]
       #for line in output_file:
           #gene1, gene2, zscore = line.split()

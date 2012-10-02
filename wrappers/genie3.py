@@ -51,7 +51,7 @@ class GENIE3(Algorithm):
       # Now build the command
       # This algorithm uses matlab, so we need to get the matlab path.
       matlab_path = settings["global"]["matlab_path"]
-      command = matlab_path + " -nodesktop -nodisplay -nosplash -r \"addpath(genpath('./'));try;run_genie3, catch err, err, end, exit\""
+      command = matlab_path + " \"addpath(genpath('./'));try;run_genie3, catch err, err, end, exit\""
       self.cmd = command
       print self.cmd
 

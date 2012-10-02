@@ -59,6 +59,7 @@ for k = 1:n_models
   biasAverage = biasAverage + MODEL{k}.dynamic.bias;
 end
 wAverage = wAverage / n_models;
+%wAverage = rand(size(wAverage));
 biasAverage = biasAverage / n_models;
 
 % Compute statistically significant links

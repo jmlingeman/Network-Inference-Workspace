@@ -68,6 +68,17 @@ class DFG4GRN(Algorithm):
                "../output/"
       self.cwd = self.working_dir
 
+    def predict_from_weights(self, weights, settings):
+        output_file = self.output_dir + "/output/" + \
+              "/dfg4grn_output.mat"
+        settings["dfg4grn"]["prior_type"] = "weights"
+        settings["dfg4grn"]["prior_file"] = "predict_weights.csv"
+        self.prior_type = "weights"
+        self.prior = weights
+        self.write_prior(settings, weights)
+        self.cmd = "bash start_prediction.sh " + "../output/" + " " + output_file + " " + settings[self.alg_name]["prior_file"]
+        self.run_local(settings)
+
     def write_data(self, input_files, tfs, settings, time_mask=None):
           # This will write out the data files that dfg4grn is going to read in
        # and set up the input folder.

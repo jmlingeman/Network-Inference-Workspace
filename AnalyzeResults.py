@@ -14,12 +14,12 @@ import matplotlib.font_manager as fm
 import pickle
 import math
 
-def VotingNetwork(finished_jobs,gene_list, top_n, prop_weights=False):
+def VotingNetwork(finished_jobs,gene_list, top_n=None, prop_weights=False):
   """Takes a list of networks, the list of genes, and the top n genes to use from
   each network, and returns a matrix of votes for each edge. These votes can then
   be used to build a consensus network. """
   if top_n == None:
-    top_n = 5
+    top_n = len(gene_list)
   networks = []
   for job in finished_jobs:
     networks.append(job.alg.network)
