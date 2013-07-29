@@ -1,11 +1,13 @@
 from Algorithm import *
 
 class DFG4GRN(Algorithm):
-    def __init__(self):
+    def __init__(self, settings):
 
         #os.chdir("/Users/Jesse/Workspace/School/MastersThesis/Program")
         self.alg_name = "dfg4grn"
         # Read in the default values for dfg4grn, we'll override these later
+        settings = ReadConfig(settings, "./config/default_values/dfg4grn.cfg")
+        settings = ReadConfig(settings, settings["dfg4grn"]["config"])
 
 
     def setup(self, input_files, tfs, settings, name=None, num_models=None, time_mask=None, prior=None, prior_type=None, inferelator=False, dex=None, dex_target=None):
@@ -26,8 +28,6 @@ class DFG4GRN(Algorithm):
           input_files = ReadData(input_files, "timeseries")
 
       # Read in settings
-      settings = ReadConfig(settings, "./config/default_values/dfg4grn.cfg")
-      settings = ReadConfig(settings, settings["dfg4grn"]["config"])
       if num_models != None:
           settings["dfg4grn"]["num_models"] = num_models
 

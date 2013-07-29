@@ -13,6 +13,7 @@ from sklearn.metrics import precision_recall_curve
 import matplotlib.font_manager as fm
 import pickle
 import math
+import random
 
 def VotingNetwork(finished_jobs,gene_list, top_n=None, prop_weights=False):
   """Takes a list of networks, the list of genes, and the top n genes to use from
@@ -97,8 +98,6 @@ def SaveResults(finished_jobs, goldnet, settings, graph_name="Overall", topn=Non
       continue
 
     else:
-
-        #print job.alg.name
         jobnet = job.alg.network
         accs.append((job.alg.name, jobnet.calculateAccuracy(goldnet)))
 
@@ -107,11 +106,11 @@ def SaveResults(finished_jobs, goldnet, settings, graph_name="Overall", topn=Non
 
         if len(job.alg.network.gene_list) <= 20:
           job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network20", 20)
-          job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network25", 25)
-          #job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network50", 50)
-          #job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network10", 10)
-        elif len(job.alg.network.gene_list) <= 100:
-          job.alg.network.compare_graph_network(goldnet, settings["global"]["output_dir"] + "/" + job.alg.name + "-network", 1)
+          #job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network25", 25)
+          ##job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network50", 50)
+          ##job.alg.network.compare_graph_network(goldnet,settings["global"]["output_dir"] + "/" + job.alg.name + "-network10", 10)
+        #elif len(job.alg.network.gene_list) <= 100:
+          #job.alg.network.compare_graph_network(goldnet, settings["global"]["output_dir"] + "/" + job.alg.name + "-network", 1)
 
 
     #accs.append(jobnet.analyzeMotifs(goldnet))
@@ -120,8 +119,8 @@ def SaveResults(finished_jobs, goldnet, settings, graph_name="Overall", topn=Non
 
   if goldnet == []:
       return
-  tprs, fprs, rocs = GenerateMultiROC(finished_jobs, goldnet, False, settings["global"]["output_dir"] + "/" + graph_name + "ROC.pdf")
-  ps, rs, precs = GenerateMultiPR(finished_jobs, goldnet, False, settings["global"]["output_dir"] + "/" + graph_name + "PR.pdf")
+  tprs, fprs, rocs = GenerateMultiROC(finished_jobs, goldnet, False, settings["global"]["output_dir"] + "/" + graph_name + "ROC.pdf", False)
+  ps, rs, precs = GenerateMultiPR(finished_jobs, goldnet, False, settings["global"]["output_dir"] + "/" + graph_name + "PR.pdf", False)
 
   print "Accuracy:"
   for row in accs:
@@ -142,8 +141,8 @@ def SaveResults(finished_jobs, goldnet, settings, graph_name="Overall", topn=Non
       for j in finished_jobs:
         if r[0] == j.alg.name:
           sorted_jobs.append(j)
-    GenerateMultiROC(sorted_jobs, goldnet, False, settings["global"]["output_dir"] + "/OverallROC-Top" + str(topn) + ".pdf")
-    GenerateMultiPR(sorted_jobs, goldnet, False, settings["global"]["output_dir"] + "/OverallPR-Top" + str(topn) + ".pdf")
+    GenerateMultiROC(sorted_jobs, goldnet, False, settings["global"]["output_dir"] + "/OverallROC-Top" + str(topn) + ".pdf", False)
+    GenerateMultiPR(sorted_jobs, goldnet, False, settings["global"]["output_dir"] + "/OverallPR-Top" + str(topn) + ".pdf", False)
 
   pickle.dump((finished_jobs, accs, rocs, precs), open(settings["global"]["output_dir"] + "./" + settings["global"]["experiment_name"] + ".pickle", 'w'))
 
@@ -200,7 +199,7 @@ def GenerateMultiROC(finished_jobs, goldnet, show=True, save_path="", plot=True)
 
     return tprs, fprs, areas
 
-def GenerateMultiPR(finished_jobs, goldnet, show=True, save_path="", plot=True):
+def GenerateMultiPR(finished_jobs, goldnet, show=True, save_path="", plot=True, title=None):
     networks = []
     ps = []
     rs = []
@@ -218,15 +217,41 @@ def GenerateMultiPR(finished_jobs, goldnet, show=True, save_path="", plot=True):
     networks = sorted(networks, key=operator.itemgetter(0))
     for i,net in enumerate(networks):
         color = cm(1.*i/len(finished_jobs))  # color will now be an RGBA tuple
-        #color = 'black'
+        color = 'black'
         l = lines[i % 4]
         if i != len(networks)-1:
-            p, r, area = GeneratePR(net[1], goldnet, fig, ax, plot, False, "", net[0], color, l)
+            p, r, area = GeneratePR(net[1], goldnet, fig, ax, plot, False, "", net[0], color, l, title)
         else:
-            p, r, area = GeneratePR(net[1], goldnet, fig, ax, plot, show, save_path, net[0], color, l)
+            p, r, area = GeneratePR(net[1], goldnet, fig, ax, plot, show, save_path, net[0], color, l, title)
         ps.append((net[0], p))
         rs.append((net[0], r))
         areas.append((net[0], area))
+
+    return ps, rs, areas
+
+def GenerateMultiPRList(networks, goldnet, show=True, save_path="", plot=True):
+    ps = []
+    rs = []
+    areas = []
+    fig = pl.figure()
+    ax = pl.subplot(111)
+    # Shink current axis by 20%
+    box = ax.get_position()
+    #ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    cm = pl.get_cmap('Dark2')
+    lines = ['-', '--', ':', '-.']
+
+    for i,net in enumerate(networks):
+        color = cm(1.*i/len(networks))  # color will now be an RGBA tuple
+        color = 'black'
+        l = lines[i % 4]
+        if i != len(networks)-1:
+            p, r, area = GeneratePR(net, goldnet, fig, ax, plot, False, "", "", color, l)
+        else:
+            p, r, area = GeneratePR(net, goldnet, fig, ax, plot, show, save_path, "", color, l)
+        ps.append((i, p))
+        rs.append((i, r))
+        areas.append((i, area))
 
     return ps, rs, areas
 
@@ -237,6 +262,7 @@ def GenerateROC(inferred_network, goldnet, fig=None, ax=None, plot=False, show=F
     predictions = []
     for gene1 in inferred_network.gene_list:
         for gene2 in inferred_network.gene_list:
+            print gene1, gene2
             labels.append(goldnet.network[gene1][gene2])
             predictions.append(inferred_network.network[gene1][gene2])
 
@@ -269,16 +295,17 @@ def GenerateROC(inferred_network, goldnet, fig=None, ax=None, plot=False, show=F
         pl.title("ROC Curve - {0} Gene Network".format(len(inferred_network.gene_list)))
 
         # Put a legend to the right of the current axis
-        prop = fm.FontProperties(size=10)
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), prop=prop)
+        prop = fm.FontProperties(size=6)
+        ax.legend(loc='top right', prop=prop)
 
         if show:
           pl.show()
         if save_path != "":
+          #pl.tight_layout()
           pl.savefig(save_path)
     return tpr, fpr, roc_auc
 
-def GeneratePR(inferred_network, goldnet, fig=None, ax=None, plot=False, show=False, save_path="", name="", line_color=None, line_style=None):
+def GeneratePR(inferred_network, goldnet, fig=None, ax=None, plot=False, show=False, save_path="", name="", line_color=None, line_style=None, title=None):
     labels = []
     predictions = []
     for gene1 in inferred_network.gene_list:
@@ -286,9 +313,38 @@ def GeneratePR(inferred_network, goldnet, fig=None, ax=None, plot=False, show=Fa
             labels.append(goldnet.network[gene1][gene2])
             predictions.append(inferred_network.network[gene1][gene2])
 
+
+    num_correct = 0
+    labels_np = np.array(labels)
+    pred_np = np.array(predictions)
+    decreasing_probas_indices = np.argsort(pred_np, kind="mergesort")[::-1]
+    probas_pred = pred_np[decreasing_probas_indices]
+    y_true = labels_np[decreasing_probas_indices]
+    #print y_true[0:30]
+    #print probas_pred[0:30]
+    for i in range(100):
+        if y_true[i] == 1:
+            num_correct += 1
+
+    inferred_network.num_correct_100 = num_correct
+    inferred_network.per_correct_100 = num_correct / float(sum(y_true))
+
+    num_correct = 0
+    for i in range( int(round(len(y_true) * 0.10)) ):
+        if y_true[i] == 1:
+            num_correct += 1
+
+    inferred_network.num_correct_10p = num_correct
+    inferred_network.per_correct_10p = num_correct / float(sum(y_true))
+    #if shuffle:
+    #random.shuffle(labels)
+    #print labels
     # Compute ROC curve and area the curve
     # Compute Precision-Recall and plot curve
     precision, recall, thresholds = precision_recall_curve(np.array(labels), np.array(predictions))
+    #print precision[::-1]
+    #print recall[::-1]
+    #print thresholds[::-1]
     area = auc(recall, precision)
     #print "Area Under Curve: %0.2f" % area
 
@@ -309,11 +365,16 @@ def GeneratePR(inferred_network, goldnet, fig=None, ax=None, plot=False, show=Fa
         pl.xlim([0.0, 1.0])
         pl.xlabel('Recall')
         pl.ylabel('Precision')
-        pl.title("Precision-Recall Curve - {0} Gene Network".format(len(inferred_network.gene_list)))
+        if title == None:
+            pl.title("Precision-Recall Curve - {0} Gene Network".format(len(inferred_network.gene_list)))
+        else:
+            pl.title(title)
 
         # Put a legend to the right of the current axis
-        prop = fm.FontProperties(size=10)
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), prop=prop)
+        prop = fm.FontProperties(size=6)
+        ax.legend(loc=1, prop=prop)
+
+        pl.tight_layout()
 
         if show:
           pl.show()

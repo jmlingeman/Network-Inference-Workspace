@@ -15,7 +15,7 @@
 %% Load expression file
 
 % First read in file into an NxM matrix.
-
+%rng('shuffle')
 rfile = textread('{{ratio_files}}', '%s', 'delimiter', '\n', 'bufsize', 20000);
 
 % Split the file on spaces

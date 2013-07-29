@@ -1,19 +1,19 @@
 function VIM = genie3(expr_matrix,input_idx,tree_method,K,nb_trees)
 %Computation of tree-based weights for all putative edges.
 %
-%VIM = genie3(expr_matrix) learns p tree models from expr_matrix, where p 
-%is the number of columns (genes) in expr_matrix, and assigns a weight to 
-%each edge directed from any gene in expr_matrix to any other gene. 
-%expr_matrix is a matrix containing expression values. Each line 
-%corresponds to an experiment and each column corresponds to a gene. 
-%VIM is a matrix of size p x p. VIM(i,j) is the weight of edge directed 
+%VIM = genie3(expr_matrix) learns p tree models from expr_matrix, where p
+%is the number of columns (genes) in expr_matrix, and assigns a weight to
+%each edge directed from any gene in expr_matrix to any other gene.
+%expr_matrix is a matrix containing expression values. Each line
+%corresponds to an experiment and each column corresponds to a gene.
+%VIM is a matrix of size p x p. VIM(i,j) is the weight of edge directed
 %from the ith gene of expr_matrix to the jth gene. VIM(i,i) is set to zero
 %for all i.
 %
 %VIM = genie3(expr_matrix,input_idx) only uses as input
-%genes the genes whose index (as ordered in expr_matrix) is in input_idx. 
-%input_idx is a vector of length <= p. VIM(i,:) such that i is not in 
-%input_idx is set to zero. The default vector contains the indexes of all 
+%genes the genes whose index (as ordered in expr_matrix) is in input_idx.
+%input_idx is a vector of length <= p. VIM(i,:) such that i is not in
+%input_idx is set to zero. The default vector contains the indexes of all
 %genes in expr_matrix.
 %
 %VIM = genie3(expr_matrix,input_idx,tree_method) specifies
@@ -44,6 +44,7 @@ function VIM = genie3(expr_matrix,input_idx,tree_method,K,nb_trees)
 
 %%
 tic;
+%rng('shuffle')
 
 %% Check input arguments
 error(nargchk(1,5,nargin));
@@ -88,5 +89,5 @@ end
 
 VIM = VIM';
 
-%% 
+%%
 toc;

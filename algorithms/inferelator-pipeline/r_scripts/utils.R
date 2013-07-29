@@ -3,8 +3,8 @@
 ##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
 
 ## May 2010 Dream3/4 pipeline (MCZ,tlCLR,Inferelator)
-## Bonneau lab - "Aviv Madar" <am2654@nyu.edu>, 
-##  		     "Alex Greenfield" <ag1868@nyu.edu> 
+## Bonneau lab - "Aviv Madar" <am2654@nyu.edu>,
+##  		     "Alex Greenfield" <ag1868@nyu.edu>
 ## NYU - Center for Genomics and Systems Biology
 
 ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
@@ -26,7 +26,7 @@ getMedianNetworkFromBootstraps <- function(allRes, pipeline = "MCZ.MixCLR.Inf"){
 		for(j in 1:dim(all.conf.scores)[2]) {
 			median.conf.scores[i,j] <- median(all.conf.scores[i,j,])
 		}
-	}	
+	}
 	return(median.conf.scores)
 }
 
@@ -57,25 +57,25 @@ getMeanNetworkFromBootstraps <- function(allRes, pipeline = "MCZ.MixCLR.Inf"){
 		for(j in 1:dim(all.conf.scores)[2]) {
 			mean.conf.scores[i,j] <- mean(all.conf.scores[i,j,])
 		}
-	}	
+	}
 	return(mean.conf.scores)
 }
 
 #function to make double knockout predictions
 #--INPUT--#
-#1) S              - matrix of confidence scores for each regulatory interaction 
+#1) S              - matrix of confidence scores for each regulatory interaction
 #                  (can be the scores derived from any pipeline, though we typicall use MCZ-dervied scores)
-#2) models_bias    - a vector containing the bias for each model 
+#2) models_bias    - a vector containing the bias for each model
 #3) beta.mat       - matrix of dynamical parameters for each regulatory interaction
 #4) single_ko      - matrix of single knockouts
 #5) wild_type      - what we use for wt values, could be the given wt values, or the ones we calculate (ie. median over all conditions)
-#6) pred.mat.lnet  - matrix similar to beta.mat but instead of dynamical parameters contains the contribution of 
+#6) pred.mat.lnet  - matrix similar to beta.mat but instead of dynamical parameters contains the contribution of
 #                    each parameter to the explanatory power of the model
-#7) inCut          - the percentile value that determines which percent of predicted interactions we replace with wild-type  
+#7) inCut          - the percentile value that determines which percent of predicted interactions we replace with wild-type
 #8) dblKo          - the list of double knockout indices for ehich predictions are to be made
 #9) initChoice     - determines what we use as our null prediction...choices:
 #                   "origWt" - use wt values(whichever way we calculate them) as null predictions
-#                   "koMean" - take columns i,j of single_ko (where i and j are the genes being knocked out), and use the mean of them as null prediction  
+#                   "koMean" - take columns i,j of single_ko (where i and j are the genes being knocked out), and use the mean of them as null prediction
 #                   "combine" - combine columns i,j of single_ko as a weighted sum based on sores of i,j in S
 #--OUTPUT--#
 #one list containing
@@ -85,14 +85,14 @@ makePredictions <- function(S,models_bias,beta.mat,single_ko, wild_type, pred.ma
 	maxVec <- apply(single_ko,2,max)
 	predWeights <- apply(pred.mat.lnet,1,sum)
 	wtWeights <- 1 - predWeights
-	
+
 	dblKoPreds <- matrix(, nrow(dblKo),ncol(single_ko))
 	bestCutOffVal <- quantile(S, inCut/100)
-	
+
 	for( dblInd in 1:nrow(dblKo)){
 		curKos <- dblKo[dblInd,]
 		curWt <- c()
-		
+
 		curS <- apply( S[,curKos],1,max )
 		if( initChoice == "origWt"){
 			curWt <- wild_type
@@ -105,28 +105,28 @@ makePredictions <- function(S,models_bias,beta.mat,single_ko, wild_type, pred.ma
 				zOne <- S[toChange,curKos[1]]
 				zTwo <- S[toChange,curKos[2]]
 				curWt[toChange] <- (zOne*single_ko[ toChange,curKos[1] ] + zTwo*single_ko[ toChange,curKos[2] ])/(zOne + zTwo)
-			}	
+			}
 		}
-		
-		curInitCond <- curWt 
-		curInitCond[ curKos ] <- 0 
+
+		curInitCond <- curWt
+		curInitCond[ curKos ] <- 0
 		curInitCond <- c(1, curInitCond) #here initCond is just a column vector, we add a one to it to account
                                      #for the bias term
-	
+
 		#we make the predictions
 		curPrediction <- modelWeights%*%curInitCond
-		
+
 		#now we squash between zero and max we see
 		curPrediction[ curPrediction > maxVec ] <- maxVec[ curPrediction > maxVec ]
 		curPrediction[ curPrediction < 0] <- 0
-		
+
 		#now weight our prediction based on explanatory power of each model
 		curPrediction <- curPrediction*predWeights + curWt*wtWeights
-		
+
 		#now filter based on S
 		curIndsToReset <- which( curS < bestCutOffVal )
 		curPrediction[ curIndsToReset ] <- wild_type[ curIndsToReset ]
-		
+
 		#now set the predicted values for the genes we just knocked out to zero
 		curPrediction[ curKos ] <- 0
 		dblKoPreds[ dblInd, ] <- curPrediction
@@ -143,7 +143,7 @@ makePredictions <- function(S,models_bias,beta.mat,single_ko, wild_type, pred.ma
 #5) wild_type    - what we use for wt values, could be the given wt values, or the ones we calculate (ie. median over all conditions)
 #6) whichNull    - determines what we use as our null prediction...choices:
 #                   "origWt" - use wt values(whichever way we calculate them) as null predictions
-#                   "meanKo" - take columns i,j of dream_ko (where i and j are the genes being knocked out), and use the mean of them as null prediction  
+#                   "meanKo" - take columns i,j of dream_ko (where i and j are the genes being knocked out), and use the mean of them as null prediction
 #--OUTPUT--#
 #one list containing
 #1) rmsdPred - error(in terms of RMSD) of our prediction to the true answer
@@ -160,8 +160,8 @@ calcDblKoRmsd <- function( predictions, goldStandard, ko_inds, single_ko, wild_t
 			curNull <- apply( single_ko[,ko_inds[i,]], 1, mean)#wt_meas
 		}
 		curNull[ ko_inds[i,] ] <- 0
-		rmsdPred[i,1] <- sum((predictions[i,] - goldStandard[i,])^2)/ncol(predictions) 
-		rmsdNull[i,1] <- sum((curNull - goldStandard[i,])^2)/ncol(predictions) 
+		rmsdPred[i,1] <- sum((predictions[i,] - goldStandard[i,])^2)/ncol(predictions)
+		rmsdNull[i,1] <- sum((curNull - goldStandard[i,])^2)/ncol(predictions)
 	}
 	names(rmsdPred) <- paste(ko_inds[,1],"_",ko_inds[,2],sep="")
 	names(rmsdNull) <- paste(ko_inds[,1],"_",ko_inds[,2],sep="")
@@ -170,7 +170,7 @@ calcDblKoRmsd <- function( predictions, goldStandard, ko_inds, single_ko, wild_t
 
 plotDblKoPreds <- function( allResults, medEnsPred, dblKoInd, saveToDir ){
 	pdf(file=paste(saveToDir,"/doubleKnockoutPrediction.pdf",sep=""))
-	
+
 	predEnsemble <- matrix(0,length(allResults), length(medEnsPred[[1]]))
 	dblKoNames <- paste(dblKoInd[,1],",",dblKoInd[,2],sep="")
 	for(i in 1:length(allResults)){
@@ -180,7 +180,7 @@ plotDblKoPreds <- function( allResults, medEnsPred, dblKoInd, saveToDir ){
 	boxplot(predEnsemble,ylim=c(-.002,round(maxVal,4)),axes=F,col=rgb(0,0,0,.8),xlab="knocked out indices",ylab="mean squared error",outline=FALSE)
 	axis(2,at=seq(0,round(maxVal,4),by=round(maxVal/10,3)))
 	axis(1,at=seq(1,20,by=1),labels=F,line=-2.5)
-	text(seq(1,20,by=1),rep(-.002,20),dblKoNames,cex=.7,srt=45)	
+	text(seq(1,20,by=1),rep(-.002,20),dblKoNames,cex=.7,srt=45)
 	points(medEnsPred[[1]],col=colors()[374],pch=15)
 	points(medEnsPred[[2]],col=colors()[62],pch=16)
 	title("Predicting Double-Knockouts (MSE for each knockout")
@@ -195,7 +195,7 @@ calcFoldChange <- function( perturbedData, wildType, epsZero ){
 	rownames( foldChange ) <- rownames( perturbedData )
 	colnames( foldChange ) <- colnames( perturbedData )
 	for( i in 1:nrow(perturbedData)){
-	  foldChange[,i] <- t((perturbedData[,i] - wildType)/(wildType + epsZero))	
+	  foldChange[,i] <- t((perturbedData[,i] - wildType)/(wildType + epsZero))
 		#rownames(foldChange) <- rownames( perturbedData )
 	}
 	return( foldChange )
@@ -205,20 +205,20 @@ calcFoldChange <- function( perturbedData, wildType, epsZero ){
 calcZscores <- function( inData, otherData, wtData, sigmaZero, numRem, calcSDOverAll = FALSE ){ #sigma-zero is a correction term
  	#eventually want a psuedocount
 	sigmaZero <- sigmaZero#.00375 #can also try .005 or .0025 #is most useful for dream3, not so much for dream4
-	
+
 	zScores <- matrix(,nrow(inData), ncol(inData))
 	rownames( zScores ) <- rownames( inData )
 	colnames( zScores ) <- colnames( inData )
-	
+
 	allSds <- c()
-	
+
 	numRem <- numRem#c() #number of outliers to remove in each direction when calculating sd
 #	if( nrow(inData) == 10){
 #		numRem <- 0 #prev value was 1
 #	}else{
 #		numRem <- 0 #prev val was 5
 #	}
-	
+
 	for( i in 1:nrow(inData)){
 		highest <- sort(inData[i,], decreasing=T, index.return=T)$ix
 		highest <- highest[ -which( highest == i ) ]
@@ -226,7 +226,7 @@ calcZscores <- function( inData, otherData, wtData, sigmaZero, numRem, calcSDOve
 		lowest <- lowest[ -which( lowest == i ) ]
 		self <- i
 		toRemove <- unique( c(lowest[1:numRem], highest[1:numRem], self))
-		
+
 		if(calcSDOverAll){
 			otherHighest <- sort(otherData[i,], decreasing=T, index.return=T)$ix
 			otherHighest <- otherHighest[ -which( otherHighest == i ) ]
@@ -235,14 +235,14 @@ calcZscores <- function( inData, otherData, wtData, sigmaZero, numRem, calcSDOve
 			otherSelf <- i
 			otherToRemove <- unique( c(otherLowest[1:numRem], otherHighest[1:numRem], otherSelf))
 		}
-		
-		if(calcSDOverAll){
-			allSds[i] <- sd( c(inData[i,-toRemove], otherData[i,-otherToRemove]) )
-		}else{
+
+		#if(calcSDOverAll){
+			#allSds[i] <- sd( c(inData[i,-toRemove], otherData[i,-otherToRemove]) )
+		#}else{
 			allSds[i] <- sd( inData[i,-toRemove] )
-		}
+		#}
 	}
-	
+
 	for(i in 1:ncol(inData)){
 		#cat("using sigma zero! \n")
 		zScores[,i] <- (inData[,i] - wtData)/(allSds + sigmaZero)
@@ -259,7 +259,7 @@ splitDreamDataByType <- function(inData){
 		source("r_scripts/init_util.R")
 		dataSet <- let_usr_choose_dataset()
 		allData <- get_usr_chosen_dataset(dataSet)
-		ratios <- allData[[1]]	
+		ratios <- allData[[1]]
 		gs <- allData[[5]]
 		dreamPred <- allData[[6]]
 	}else{
@@ -269,15 +269,15 @@ splitDreamDataByType <- function(inData){
 	#return( list(dream4_ts,dream4_ko,dream4_kd,dream4_wt) )
 	wtCols <- grep( "wt", colnames(ratios) )
 	dream3_wt <-  ratios[,wtCols[1]]
-	
-	tsCols <- grep( "TS", colnames(ratios)) 
+
+	tsCols <- grep( "TS", colnames(ratios))
 	dream3_ts <- ratios[ ,tsCols]
-	
+
 	koCols <- grep( "-/-", colnames(ratios) )
 	dream3_ko <- ratios[,koCols]
-	
+
 	ssCols <- grep("SS",colnames(ratios))
-	
+
 	#nonKd <- c(wtCols,koCols,tsCols)
 	if(any(ssCols)){
 		kdCols <- c(1:ncol(ratios))[ -c(wtCols,koCols,tsCols,ssCols) ]
@@ -285,8 +285,8 @@ splitDreamDataByType <- function(inData){
 		kdCols <- c(1:ncol(ratios))[ -c(wtCols,koCols,tsCols) ]
 	}
 	dream3_kd <- ratios[ ,kdCols]
-	
-	return ( list( dream3_ts, dream3_ko, dream3_kd, dream3_wt))	
+
+	return ( list( dream3_ts, dream3_ko, dream3_kd, dream3_wt))
 }
 
 
@@ -333,7 +333,7 @@ add_weight_beta <- function(betaList,model_errors,n,pS,pD,col=4,col_name = "prd_
 	return(wBetaList)
 }
 
-# Add a bias term for each non-zero wighted predictor	
+# Add a bias term for each non-zero wighted predictor
 # bT - bias term
 # bL - beta list
 
@@ -343,7 +343,7 @@ add_bias_term <- function(bL,bT,col=7,col_name = "bias"){
 		colnames(bL[[j]])[length(colnames(bL[[j]]))] = col_name
 		for(i in 1:nrow(bL[[j]])){
 			bL[[j]][i,col_name] = bT[bL[[j]][i,"trgt"],j]
-		}		
+		}
 	}
 	return(bL)
 }
@@ -417,7 +417,7 @@ add_zscore <- function(bL,M1,M2=NULL,col=5,col_name = "clr_zs"){
 
 ######################################
 make_sparse2 <- function(M)
-{	
+{
 	non_zero_idx = which(M != 0,arr.ind = TRUE)
 	w = matrix(0,nrow(non_zero_idx),3)
 	w[,1] = non_zero_idx[,1]

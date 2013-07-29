@@ -132,6 +132,42 @@ class Network:
 
                 self.network[gene_list[i]][gene_list[j]] = val
 
+    def read_netmatrix_transpose(self, network_list, gene_list, signed=True, binary=False, thresh=0, cutoff=0):
+        """ This function takes an NxN list of network connections either in
+        binary or floating point format between nodes.  Gene list is a simple
+        list of gene names that are ordered in the same way that the NxN
+        network matrix is, and then a bool as to whether or not they are
+        signed."""
+
+        self.gene_list = gene_list
+        self.signed = signed
+        self.binary = binary
+        self.thresh = thresh
+        self.original_network = network_list
+        self.network = {}
+
+        #print network_list
+
+        for i in xrange(len(network_list)):
+            for j in xrange(len(network_list)):
+                val = 0
+                if gene_list[j] not in self.network.keys():
+                    self.network[gene_list[j]] = {}
+
+                if self.signed:
+                    val = float(network_list[i][j])
+                else:
+                    val = abs(float(network_list[i][j]))
+
+                if self.binary:
+                    if val > self.thresh:
+                        val = 1
+                    else:
+                        val = 0
+
+                self.network[gene_list[j]][gene_list[i]] = val
+
+
     def read_netmatrix_file(self, file, gene_list, signed=True, binary=False, thresh=0, cutoff=0):
         """ This function takes an NxN list of network connections either in
         binary or floating point format between nodes.  Gene list is a simple
@@ -149,6 +185,25 @@ class Network:
             net.append(line)
 
         self.read_netmatrix(net, gene_list, signed, binary, thresh, cutoff)
+
+    def read_netmatrix_file_transpose(self, file, gene_list, signed=True, binary=False, thresh=0, cutoff=0):
+        """ This function takes an NxN list of network connections either in
+        binary or floating point format between nodes.  Gene list is a simple
+        list of gene names that are ordered in the same way that the NxN
+        network matrix is, and then a bool as to whether or not they are
+        signed."""
+
+        output = open(file, 'r')
+        header = output.readline()
+        #gene_list = header.split()
+        net = []
+        for line in output:
+            line = line.split()[1:]
+            #print line
+            net.append(line)
+
+        self.read_netmatrix_transpose(net, gene_list, signed, binary, thresh, cutoff)
+
 
     def write_network(self, filename, binary=False):
         output = open(filename, 'w')
@@ -279,7 +334,7 @@ class Network:
         for i,row in enumerate(ranking):
             if i / float(len(self.gene_list) * len(self.gene_list)) * 100 < topn:
                 gene1, gene2, val = row
-                ranking[i] = (gene1, gene2, val)
+                ranking[i] = (gene1, gene2, 1)
             else:
                 gene1, gene2, val = row
                 ranking[i] = (gene1, gene2, 0)

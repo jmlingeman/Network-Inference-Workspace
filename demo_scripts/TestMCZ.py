@@ -49,7 +49,7 @@ wildtype_storage = ReadData(wt_file[0], "wildtype")
 # Setup job manager
 jobman = JobManager(settings)
 
-# Make BANJO jobs
+# Make MCZ job
 mczjob = MCZ()
 mczjob.setup(knockout_storage, wildtype_storage, settings, timeseries_storage, knockdown_storage, "MCZ")
 jobman.queueJob(mczjob)

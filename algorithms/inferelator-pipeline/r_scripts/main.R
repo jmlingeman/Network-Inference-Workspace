@@ -80,12 +80,15 @@ rm(list=ls())
 		allSds <- calcZscores( X_ko, X_kd, x_wt, sigmaZero=.05, numRem= 0, TRUE )[[2]]
 		X_ko_z <- calcZscores( X_ko, X_kd, x_wt, sigmaZero= median(allSds)/2, numRem= 0, TRUE )[[1]]
 		rm(allSds)
-	}else{
+	}else if (!is.null(X_ko)){
 		#the return from this function is a list, with 1) z-scores, and 2) standard deviations
 		X_ko_z <- calcZscores( X_ko, X_kd, x_wt, sigmaZero=0, numRem= 0, FALSE )[[1]]
+	    diag(X_ko_z) <- 0
+    }else if (!is.null(X_kd)){
 		X_kd_z <- calcZscores( X_kd, X_ko, x_wt, sigmaZero=0, numRem= 0, FALSE )[[1]]
-	}
-	diag(X_ko_z) <- 0
+	}else {
+        X_ko_z <- NULL
+    }
 
 ##  .-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.
 # 3- setup for bootstrap: create Pi-perm_vector/matrix, Y^pi,X^pi

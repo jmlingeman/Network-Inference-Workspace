@@ -1,7 +1,10 @@
-import os, sys
+import os
+import sys
+
 def get_immediate_subdirectories(dir):
     return [name for name in os.listdir(dir) if os.path.isdir(os.path.join(dir, name))]
 sys.path += get_immediate_subdirectories("./")
+
 from datetime import datetime
 from DataStore import *
 from ReadData import *

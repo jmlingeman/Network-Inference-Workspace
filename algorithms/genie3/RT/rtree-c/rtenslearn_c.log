@@ -1,0 +1,17 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=mex 2011.7.3)  17 APR 2013 16:28
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**rtenslearn_c.c
+(./rtenslearn_c.c
+This is MeX  Version 1.05  18 XII 1993  (B. Jackowski & M. Ry\'cko)
+! You can't use `macro parameter character #' in vertical mode.
+l.10 #
+      include <math.h>
+? 
+! Emergency stop.
+l.10 #
+      include <math.h>
+End of file on the terminal!
+
+No pages of output.

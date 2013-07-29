@@ -113,8 +113,8 @@ def get_example_data_files(name, settings):
     ts_file = settings["global"]["dream410_network_timeseries_file"].split()
     wt_file = settings["global"]["dream410_network_wildtype_file"].split()
     mf_file = settings["global"]["dream410_network_multifactorial_file"].split()
-    dko_file = settings["global"]["dream410_network_doubleknockout_file"].split()
-    dko_idx_file = settings["global"]["dream410_network_doubleknockout_index_file"].split()
+    #dko_file = settings["global"]["dream410_network_doubleknockout_file"].split()
+    #dko_idx_file = settings["global"]["dream410_network_doubleknockout_index_file"].split()
 
   elif name == "dream410_2":
     goldnet.read_goldstd(settings["global"]["dream410_2_network_goldnet_file"])

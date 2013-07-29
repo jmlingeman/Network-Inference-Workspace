@@ -47,7 +47,7 @@ jobman = JobManager(settings)
 
 # Make BANJO jobs
 infjob = InferelatorPipeline()
-infjob.setup(knockout_storage, wildtype_storage, settings, timeseries_storage, knockdown_storage, "InferelatorPipeline")
+infjob.setup(None, wildtype_storage, settings, timeseries_storage, None, "InferelatorPipeline")
 jobman.queueJob(infjob)
 
 print jobman.queue

@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 #include "mex.h"
 
@@ -39,14 +40,16 @@ void set_tree_param(mxArray *treeparam) {
   int nmin=1, bestfirst=0, extratrees=0, adjustdefaultk=1, extratreesk=1, maxnbsplits=5, savepred=1, rf=0;
   float varmin=0.0;
   float a_r=1.0;
-  
+
+  srand(time(NULL));
+
   char *fname;
-  
+
   if (!mxIsStruct(treeparam))
     mexErrMsgTxt("Fourth argument must be a structure\n");
-  
+
   nbfield=mxGetNumberOfFields(treeparam);
-  
+
   for (ifield=0;ifield<nbfield;ifield++) {
     fname=(char *)mxGetFieldNameByNumber(treeparam,ifield);
     if (strcmp(fname,"nmin")==0) {
@@ -65,21 +68,21 @@ void set_tree_param(mxArray *treeparam) {
       rf=(int)mxGetScalar(mxGetFieldByNumber(treeparam,0,ifield));
     } else if (strcmp(fname,"adjustdefaultk")==0) {
       adjustdefaultk=(int)mxGetScalar(mxGetFieldByNumber(treeparam,0,ifield));
-    } else if (strcmp(fname,"savepred")==0) {      
+    } else if (strcmp(fname,"savepred")==0) {
       savepred=(int)mxGetScalar(mxGetFieldByNumber(treeparam,0,ifield));
     } else
       mexPrintf("Field %s non recognized\n",fname);
   }
-  
+
   init_multiregr_trees(nmin,varmin,a_r,savepred);
-  
+
   set_test_classical();
-  
+
   set_best_first(bestfirst,0,maxnbsplits);
 
   if (adjustdefaultk==1)
     extratreesk=ceil(sqrt(nb_attributes));
-  
+
   if (extratrees==1) {
     find_a_threshold_num=find_a_threshold_at_random_multiregr;
     find_a_threshold_symb=find_the_best_threshold_symb_multiregr;
@@ -87,7 +90,7 @@ void set_tree_param(mxArray *treeparam) {
     find_a_threshold_num=find_the_best_threshold_multiregr;
     find_a_threshold_symb=find_the_best_threshold_symb_multiregr;
   }
-  
+
   if (extratrees==1) {
     find_a_split=find_a_split_at_random_et;
     nb_of_random_tests=extratreesk;
@@ -120,7 +123,7 @@ void set_ensemble_param(mxArray *treeparam) {
 
   /* analyse les parametres passees en arguments */
   nbfield=mxGetNumberOfFields(treeparam);
-  
+
   for (ifield=0;ifield<nbfield;ifield++) {
     fname=(char *)mxGetFieldNameByNumber(treeparam,ifield);
     if (strcmp(fname,"nbterms")==0) {
@@ -129,9 +132,9 @@ void set_ensemble_param(mxArray *treeparam) {
       bootstrap=(int)mxGetScalar(mxGetFieldByNumber(treeparam,0,ifield));
     } else if (strcmp(fname,"rtparam")==0) {
       set_tree_param(mxGetFieldByNumber(treeparam,0,ifield));
-    } else if (strcmp(fname,"mart")==0) {      
+    } else if (strcmp(fname,"mart")==0) {
       mart=(int)mxGetScalar(mxGetFieldByNumber(treeparam,0,ifield));
-    } else if (strcmp(fname,"martmu")==0) {      
+    } else if (strcmp(fname,"martmu")==0) {
       martmu=(float)mxGetScalar(mxGetFieldByNumber(treeparam,0,ifield));
     } else
       mexPrintf("Field %s non recognized\n",fname);
@@ -178,7 +181,7 @@ void create_struct_from_tree(int t, mxArray *structvector) {
   tmp=mxCreateNumericMatrix(1,1,mxINT32_CLASS,mxREAL);
   *((int *)mxGetPr(tmp))=nodenumber;
   mxSetFieldByNumber(structvector,t,0,tmp);
-  
+
   /* TESTATTRIBUTE */
 
   tmp=mxCreateNumericMatrix(nodenumber,1,mxINT32_CLASS,mxREAL);
@@ -194,7 +197,7 @@ void create_struct_from_tree(int t, mxArray *structvector) {
   for (i=start; i<end;i++,ptr_float++)
     *ptr_float=threshold[i].f;
   mxSetFieldByNumber(structvector,t,2,tmp);
-  
+
   /* CHILDREN */
 
   tmp=mxCreateNumericMatrix(nodenumber,2,mxINT32_CLASS,mxREAL);
@@ -204,7 +207,7 @@ void create_struct_from_tree(int t, mxArray *structvector) {
   for (i=start; i<end;i++,ptr_int++)
     *ptr_int=i+right_successor[i]-start+1;
   mxSetFieldByNumber(structvector,t,3,tmp);
-  
+
   /* LS, OBJECTWEIGHTS */
 
   tmp=mxCreateNumericMatrix(save_ensemble_ls_size[t],1,mxINT32_CLASS,mxREAL);
@@ -244,7 +247,7 @@ void create_struct_from_tree(int t, mxArray *structvector) {
 	*ptr_int=prediction[i]-pos_prediction_values+1;
     }
     mxSetFieldByNumber(structvector,t,8,tmp);
-    
+
     /* PREDICTIONS */
     nb_pred=(nodenumber+1)/2;
     tmp=mxCreateNumericMatrix(nb_pred,nb_goal_multiregr,mxSINGLE_CLASS,mxREAL);
@@ -256,9 +259,9 @@ void create_struct_from_tree(int t, mxArray *structvector) {
       }
     }
     mxSetFieldByNumber(structvector,t,9,tmp);
-    
+
     pos_prediction_values+=nb_pred;
-    
+
   }
 
   /* NODESIZE */
@@ -267,7 +270,7 @@ void create_struct_from_tree(int t, mxArray *structvector) {
   for (i=start; i<end;i++,ptr_float++)
     *ptr_float=node_size[i];
   mxSetFieldByNumber(structvector,t,10,tmp);
-  
+
 }
 
 mxArray *create_struct_from_current_ensemble() {
@@ -285,7 +288,7 @@ mxArray *create_struct_from_current_ensemble() {
   }
 
   structvector=mxCreateStructMatrix(current_nb_of_ensemble_terms,1,11,fieldnames);
-  
+
   for (t=0; t<current_nb_of_ensemble_terms; t++) {
     /* cree la structure pour chaque arbre */
     create_struct_from_tree(t,structvector);
@@ -340,13 +343,13 @@ mxArray *compute_ts_predictions_matlab_multiregr(int nts,float *xts) {
       ptr_float[j*nts+i]=tmp[j];
     }
   }
-  
+
   mxFree(tmp);
 
   /* on remet la coretable (pour les variables importances) */
   core_table=saved_core_table;
   nb_obj_in_core_table=saved_nb_obj_in_core_table;
-  
+
   return table;
 }
 
@@ -364,8 +367,8 @@ mxArray *compute_variable_imp_matlab() {
   for (i=0;i<nb_attributes*nb_goal_multiregr; i++){
     varimpptr[i]=0.0;
   }
-  compute_ltrees_variable_importance_multiregr_separate(varimpptr,-1);    
-  
+  compute_ltrees_variable_importance_multiregr_separate(varimpptr,-1);
+
   return varimp;
 }
 
@@ -379,7 +382,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
   mxArray *xData,*yData, *wData, *lsData, *treeparamData, *goaltypematlab, *attdes;
   float *xValues, *yValues;
   int i,j,pos,verbose,length_ls_vector,nbweights,maxnbnodes, *ptr_int;
-  
+
   if ((nrhs<6)||(nrhs>7)) {
     mexErrMsgTxt("\n\nToo many or too few arguments\nThis function takes the following arguments\n  - X: a single float table with input data\n  - Y: a single float table with output data\n  - ls: the index of the objects in X and Y that are using for growing the tree\n  - w: a vector of object weights\n  - param: a structure that contains the parameter of the method\n  (- XTS: a single float table with input data for the test case)\n  - verbose: 0 to disable outputs during training\n\nThe function returns:\n  (- YTS: output predictions for the test examples if XTS is provided)\n  - a matlab structure containing the tree\n  - Variable importance as measured by the function (not yet implemented)\n\nBe carefull, argument types are not checked\n ");
   }
@@ -398,7 +401,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
 
   /* initialise les entrees */
   nb_attributes=mxGetN(xData);
-  nb_obj_in_core_table=mxGetM(xData);  
+  nb_obj_in_core_table=mxGetM(xData);
   core_table=(CORETABLE_TYPE *)mxGetPr(xData);
 
   attribute_descriptors=(int *)mxMalloc((size_t)nb_attributes*sizeof(int));
@@ -406,16 +409,16 @@ void mexFunction(int nlhs, mxArray *plhs[],
   /* */
 
   length_attribute_descriptors=nb_attributes;
-  
+
   attdes=mxGetField(treeparamData,0,"attdesc");
   if (attdes==NULL) {
     for (i=0;i<nb_attributes;i++)
-      attribute_descriptors[i]=0; /* on suppose tous les att numeriques, on pourrait facilement traiter des symboliques */  
+      attribute_descriptors[i]=0; /* on suppose tous les att numeriques, on pourrait facilement traiter des symboliques */
   } else {
     ptr_int=(int *)mxGetPr(attdes);
     for (i=0; i<nb_attributes; i++,ptr_int++)
       attribute_descriptors[i]=(*ptr_int);
-  } 
+  }
 
   nb_classes=0;
   attribute_vector=mxMalloc((size_t)nb_attributes*sizeof(int));
@@ -456,7 +459,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
   for (i=0;i<nb_goal_multiregr; i++)
     goal_multiregr[i]=i;
   getobjy_multiregr_learn=getobjy_multiregr_learn_matlab;
-  
+
   /* on fixe les parametres des arbres */
   set_ensemble_param(treeparamData);
 
@@ -466,14 +469,14 @@ void mexFunction(int nlhs, mxArray *plhs[],
   maxnbnodes=number_of_ensemble_terms*(best_first*(2*best_first_max_nb_tests+1)+(1-best_first)*(2*length_ls_vector-1));
   allocate_tree_tables(maxnbnodes,ceil((maxnbnodes+number_of_ensemble_terms)/2),multiregr_savepred*nb_goal_multiregr,0);
   allocate_multiregr_table_score(nb_goal_multiregr);
-    
+
   clean_all_trees();
 
   /* construction de l'ensemble d'arbres */
-  
+
   build_one_tree_ensemble(NULL, 0);
 
-  
+
   /* on retourne le tout */
 
   if (nlhs>0) {
@@ -504,7 +507,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
 	if (verbose==1) {
 	  mexPrintf("\n");
 	}
-      }      
+      }
     } else {
       if (verbose==1) {
 	mexPrintf("Creation de la structure...");

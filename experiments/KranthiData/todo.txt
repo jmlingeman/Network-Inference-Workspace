@@ -1,0 +1,4 @@
+- Get the time series ordered correctly and into different members of the list
+- Get the time series times correct
+- Check the data to make sure the numbers are not being duplicated
+- Run full suite

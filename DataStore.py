@@ -93,7 +93,7 @@ class MicroarrayData:
         f.gene_list = filtered_gene_list
         filtered_experiments.append(f)
     self.experiments = filtered_experiments
-    self.gene_list = filtered_gene_list
+    self.gene_list = list( set(filtered_gene_list) & set(self.gene_list) )
 
 
     for gene in self.gene_list:
@@ -151,7 +151,7 @@ class MicroarrayData:
         file = open(input_file, 'r')
         file = file.readlines()
 
-        header = line_split.split(file[0])
+        header = line_split.split(file[0].strip(',').strip())
 
         names = []
         for i, exp_name in enumerate(header):

@@ -20,8 +20,9 @@ def ReadData(input_file, type):
           if type.lower() == "timeseries":
               file.pop(0) # Burn first line
               genes = header[1:] # removing the time column from the header
-              for ds in xrange(file.count('\n')):
-                  input_file = "Timeseries-Rep" + str(ds) + ".csv"
+              for ds in xrange(file.count('\n') + 1):
+                  input_file = "Timeseries-Rep" + str(ds)
+                  print file.count('\n'), input_file
 
                   # Read in each MicroArray
                   datasets.append(MicroarrayData(input_file, type, ds))
@@ -34,8 +35,11 @@ def ReadData(input_file, type):
               prev_row = 0
               for exp in xrange(len(datasets)):
                   #print prev_row, file.index('\n')
-                  sep_exps.append(file[prev_row:file.index('\n')])
-                  file = file[file.index('\n') + 1:len(file)]
+                  if '\n' in file[prev_row:]:
+                    sep_exps.append(file[prev_row:file.index('\n')])
+                    file = file[file.index('\n') + 1:len(file)]
+                  else:
+                    sep_exps.append(file[prev_row:])
               # Create the experiments for each time point in the
               # MicroarrayData class
               for i, exp in enumerate(sep_exps):
@@ -48,7 +52,7 @@ def ReadData(input_file, type):
 
           # Return steady state dataset
           elif type == "dex":
-              exp_names = header
+              gene_list = header
               microarray = MicroarrayData(input_file, type)
               gene_list = []
 
@@ -69,15 +73,37 @@ def ReadData(input_file, type):
               microarray.gene_list = gene_list
               return microarray
 
+          elif type == "kranthi_data":
+              exp_names = header[2:]
+              microarray = MicroarrayData(input_file, type)
+              gene_list = []
+
+              for e in exp_names:
+                  microarray.experiments.append(Experiment(e, input_file, type))
+
+              for row in file:
+                  row.replace("\r\n","")
+                  row.replace("\n", "")
+                  row = row.strip()
+                  l = line_split.split(row)
+                  gene = l[1]
+                  gene_list.append(gene)
+                  expressions = l[2:]
+                  for i, e in enumerate(expressions):
+                      microarray.experiments[i].ratios[gene] = float(e)
+
+              microarray.gene_list = gene_list
+              return microarray
+
           elif type == "dex_ts":
               exp_names = header
               # Take header, split into replicates and times
               gene = l[0]
               gene_list.append(gene)
 
-
           else:
               genes = map(str.strip, header)
+              print genes
               microarray = MicroarrayData(input_file, type)
               microarray.gene_list = genes
               expmatrix = {}
