@@ -37,5 +37,7 @@ PARS$eval.on.subset <- FALSE
 PARS$method <- '{{method}}'
 PARS$prior.weight <- {{prior_weight}}
 
+PARS$max.steps <- {{max_steps}}
+
 PARS$save.to.dir <- paste('{{output_dir}}', "/output", sep="")
 

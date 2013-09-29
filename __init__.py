@@ -23,6 +23,7 @@ from nirest import *
 from tdaracne import *
 from tlclr import *
 from inferelator import *
+from inferelator2 import *
 from inferelator_pipeline import *
 
 
@@ -31,13 +32,5 @@ from inferelator_pipeline import *
 settings = {}
 settings = ReadConfig(settings)
 settings["global"]["working_dir"] = os.getcwd() + '/'
-settings["global"]["experiment_name"] = "DFG4GRN-"+sys.argv[1]
-if len(sys.argv) > 2:
-  settings["global"]["experiment_name"] += "-" + sys.argv[2]
 
-# Set up output directory
-t = datetime.now().strftime("%Y-%m-%d_%H.%M.%S")
-settings["global"]["output_dir"] = settings["global"]["output_dir"] + "/" + \
-    settings["global"]["experiment_name"] + "-" + t + "/"
-os.mkdir(settings["global"]["output_dir"])
 

@@ -48,6 +48,7 @@ PARS$perc.tp <- 0
 PARS$perm.tp <- 1
 PARS$perc.fp <- 0
 PARS$perm.fp <- 1
+PARS$max.steps <- 0
 
 PARS$eval.on.subset <- FALSE
 
@@ -249,7 +250,7 @@ for (prior.name in names(priors)) {
                     plot.it=PARS$enet.plot.it,
                     plot.file.name=PARS$enet.plot.file.name,
                     weights.mat=weights.mat, no.pr.val=no.pr.weight,
-                    mc.cores=PARS$cores)
+                    mc.cores=PARS$cores, max.steps=PARS$max.steps)
     }
     cat('\n')
 

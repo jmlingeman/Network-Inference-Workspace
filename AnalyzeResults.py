@@ -262,7 +262,7 @@ def GenerateROC(inferred_network, goldnet, fig=None, ax=None, plot=False, show=F
     predictions = []
     for gene1 in inferred_network.gene_list:
         for gene2 in inferred_network.gene_list:
-            print gene1, gene2
+            #print gene1, gene2
             labels.append(goldnet.network[gene1][gene2])
             predictions.append(inferred_network.network[gene1][gene2])
 
