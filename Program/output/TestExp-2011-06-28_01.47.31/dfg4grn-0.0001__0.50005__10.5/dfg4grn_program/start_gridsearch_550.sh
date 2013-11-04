@@ -1,1 +1,0 @@
-/share/apps/matlab/R2009b/bin/matlab -nodesktop -nodisplay -nosplash -r "addpath(genpath('./')); GRN_DistribSearch('Arabidopsis_550genes','Script_550_Arabidopsis_LeaveOutLast',5,'error_trend_r2','gamma',[0.1],'tau',[9],'lambda_w',[0.0001])"
