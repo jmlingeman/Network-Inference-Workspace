@@ -1,0 +1,1 @@
+/Users/jesse/Workspace/School/MastersThesis/Program/output//MCZ-DFG-Pipeline-dream410-2012-02-03_01.02.57//CLR-DFG4GRN_30-Edges_BothPriors//dfg4grn_settings.m

@@ -157,7 +157,7 @@ goldnet.read_goldstd(goldnet_file)
 settings = {}
 settings = ReadConfig(settings)
 settings["global"]["working_dir"] = os.getcwd() + '/'
-settings["global"]["experiment_name"] = "Kranthi-SimDex"
+settings["global"]["experiment_name"] = "Kranthi-SimDex-NBoot-{0}".format(nboot)
 
 settings["global"]["n_processors"] = 1
 
@@ -226,116 +226,92 @@ jobman.waitToClear()
 meth = "MEN"
 cores = 6
 
-for step in range(2, 12):
+for i in range(10):
+    for step in range(2, 12):
 
-    inf = Inferelator2(settings)
-    settings["inferelator2"]["num_cores"] = cores
-    settings["inferelator2"]["num_bootstraps"] = nboot
+        inf = Inferelator2(settings)
+        settings["inferelator2"]["num_cores"] = cores
+        settings["inferelator2"]["num_bootstraps"] = nboot
 #settings["inferelator2"]["num_bootstraps"] = 3
-    settings["inferelator2"]["permtp"] = 1
-    settings["inferelator2"]["permfp"] = 1
-    settings["inferelator2"]["delta_t_max"] = 50
-    settings["inferelator2"]["delta_t_min"] = 0
-    settings["inferelator2"]["tau"] = 45
-    settings["inferelator2"]["nCv"] = 10
-    settings["inferelator2"]["perctp"] = 0
-    settings["inferelator2"]["percfp"] = 0
-    settings["inferelator2"]["prior_weight"] = 10.0
-    settings["inferelator2"]["method"] = meth
-    settings["global"]["time_series_delta_t"] = 10.0
-    inf.setup(pert_data, ss_data, settings, timeseries_data, None, "Inferelator2_TS_SS-Steps-{0}".format(step), None, prior=genie3job.network, split_ts=False, leave_outs=leave_out)
+        settings["inferelator2"]["permtp"] = 1
+        settings["inferelator2"]["permfp"] = 1
+        settings["inferelator2"]["delta_t_max"] = 50
+        settings["inferelator2"]["delta_t_min"] = 0
+        settings["inferelator2"]["tau"] = 45
+        settings["inferelator2"]["nCv"] = 10
+        settings["inferelator2"]["perctp"] = 0
+        settings["inferelator2"]["percfp"] = 0
+        settings["inferelator2"]["prior_weight"] = 10.0
+        settings["inferelator2"]["method"] = meth
+        settings["global"]["time_series_delta_t"] = 10.0
+        inf.setup(pert_data, ss_data, settings, timeseries_data, None, "Inferelator2_TS_SS-Steps-{0}-Boot-{1}".format(step, i), None, prior=genie3job.network, split_ts=False, leave_outs=leave_out)
 #inf.setup(None, ss_data, settings, [kcl_ts_data], None, "Inferelator2_TS_SS".format(meth, "inf_test"), prior=genie3job.network, split_ts=False, gold_std=None, leave_outs=leave_out)
-    jobman.queueJob(inf)
+        jobman.queueJob(inf)
 
-    inf = Inferelator2(settings)
-    settings["inferelator2"]["num_cores"] = cores
-    settings["inferelator2"]["num_bootstraps"] = nboot
+        inf = Inferelator2(settings)
+        settings["inferelator2"]["num_cores"] = cores
+        settings["inferelator2"]["num_bootstraps"] = nboot
 #settings["inferelator2"]["num_bootstraps"] = 3
-    settings["inferelator2"]["permtp"] = 1
-    settings["inferelator2"]["permfp"] = 1
-    settings["inferelator2"]["delta_t_max"] = 50
-    settings["inferelator2"]["delta_t_min"] = 0
-    settings["inferelator2"]["nCv"] = 10
-    settings["inferelator2"]["tau"] = 45
-    settings["inferelator2"]["perctp"] = 0
-    settings["inferelator2"]["percfp"] = 0
-    settings["inferelator2"]["prior_weight"] = 0.0
-    settings["inferelator2"]["method"] = meth
-    settings["global"]["time_series_delta_t"] = 10.0
-    inf.setup(pert_data, ss_data, settings, timeseries_data, None, "Inferelator2_TS_SS_NOPRIOR-Steps-{0}".format(step), None, prior=None, split_ts=False, leave_outs=leave_out)
+        settings["inferelator2"]["permtp"] = 1
+        settings["inferelator2"]["permfp"] = 1
+        settings["inferelator2"]["delta_t_max"] = 50
+        settings["inferelator2"]["delta_t_min"] = 0
+        settings["inferelator2"]["nCv"] = 10
+        settings["inferelator2"]["tau"] = 45
+        settings["inferelator2"]["perctp"] = 0
+        settings["inferelator2"]["percfp"] = 0
+        settings["inferelator2"]["prior_weight"] = 0.0
+        settings["inferelator2"]["method"] = meth
+        settings["global"]["time_series_delta_t"] = 10.0
+        inf.setup(pert_data, ss_data, settings, timeseries_data, None, "Inferelator2_TS_SS_NOPRIOR-Steps-{0}-Boot-{1}".format(step, i), None, prior=None, split_ts=False, leave_outs=leave_out)
 #inf.setup(None, ss_data, settings, [kcl_ts_data], None, "Inferelator2_TS_SS_NOPRIOR".format(meth, "inf_test"), None, prior=genie3job.network, split_ts=False, leave_outs=leave_out)
-    jobman.queueJob(inf)
+        jobman.queueJob(inf)
 
 #jobman.runQueue()
 #jobman.waitToClear()
 
-    inf = Inferelator2(settings)
-    settings["inferelator2"]["num_cores"] = cores
-    settings["inferelator2"]["num_bootstraps"] = nboot
+        inf = Inferelator2(settings)
+        settings["inferelator2"]["num_cores"] = cores
+        settings["inferelator2"]["num_bootstraps"] = nboot
 #settings["inferelator2"]["num_bootstraps"] = 3
-    settings["inferelator2"]["permtp"] = 1
-    settings["inferelator2"]["permfp"] = 1
-    settings["inferelator2"]["delta_t_max"] = 50
-    settings["inferelator2"]["delta_t_min"] = 1
-    settings["inferelator2"]["nCv"] = 10
-    settings["inferelator2"]["tau"] = 45
-    settings["inferelator2"]["perctp"] = 0
-    settings["inferelator2"]["percfp"] = 0
-    settings["inferelator2"]["prior_weight"] = 10.0
-    settings["inferelator2"]["method"] = meth
-    settings["global"]["time_series_delta_t"] = 10.0
-    inf.setup(multifactorial_data, None, settings, timeseries_data, None, "Inferelator2_TS_SS_NOPERT-Steps{0}".format(step), None, prior=genie3job.network, split_ts=False, leave_outs=leave_out)
+        settings["inferelator2"]["permtp"] = 1
+        settings["inferelator2"]["permfp"] = 1
+        settings["inferelator2"]["delta_t_max"] = 50
+        settings["inferelator2"]["delta_t_min"] = 1
+        settings["inferelator2"]["nCv"] = 10
+        settings["inferelator2"]["tau"] = 45
+        settings["inferelator2"]["perctp"] = 0
+        settings["inferelator2"]["percfp"] = 0
+        settings["inferelator2"]["prior_weight"] = 10.0
+        settings["inferelator2"]["method"] = meth
+        settings["global"]["time_series_delta_t"] = 10.0
+        inf.setup(multifactorial_data, None, settings, timeseries_data, None, "Inferelator2_TS_SS_NOPERT-Steps{0}-Boot-{1}".format(step, i), None, prior=genie3job.network, split_ts=False, leave_outs=leave_out)
 #inf.setup(None, ss_data, settings, [kcl_ts_data], None, "Inferelator2_TS_SS".format(meth, "inf_test"), prior=genie3job.network, split_ts=False, gold_std=None, leave_outs=leave_out)
-    jobman.queueJob(inf)
+        jobman.queueJob(inf)
 
-    inf = Inferelator2(settings)
-    settings["inferelator2"]["num_cores"] = cores
-    settings["inferelator2"]["num_bootstraps"] = nboot
+        inf = Inferelator2(settings)
+        settings["inferelator2"]["num_cores"] = cores
+        settings["inferelator2"]["num_bootstraps"] = nboot
 #settings["inferelator2"]["num_bootstraps"] = 3
-    settings["inferelator2"]["permtp"] = 1
-    settings["inferelator2"]["permfp"] = 1
-    settings["inferelator2"]["delta_t_max"] = 50
-    settings["inferelator2"]["delta_t_min"] = 1
-    settings["inferelator2"]["nCv"] = 5
-    settings["inferelator2"]["tau"] = 45
-    settings["inferelator2"]["perctp"] = 0
-    settings["inferelator2"]["percfp"] = 0
-    settings["inferelator2"]["prior_weight"] = 0.0
-    settings["inferelator2"]["method"] = meth
-    settings["inferelator2"]["max_steps"] = step
-    settings["global"]["time_series_delta_t"] = 10.0
-    inf.setup(multifactorial_data, None, settings, timeseries_data, None, "Inferelator2_TS_SS_NOPRIOR_NOPERT-Steps-{0}".format(step), None, prior=None, split_ts=False, leave_outs=leave_out)
+        settings["inferelator2"]["permtp"] = 1
+        settings["inferelator2"]["permfp"] = 1
+        settings["inferelator2"]["delta_t_max"] = 50
+        settings["inferelator2"]["delta_t_min"] = 1
+        settings["inferelator2"]["nCv"] = 5
+        settings["inferelator2"]["tau"] = 45
+        settings["inferelator2"]["perctp"] = 0
+        settings["inferelator2"]["percfp"] = 0
+        settings["inferelator2"]["prior_weight"] = 0.0
+        settings["inferelator2"]["method"] = meth
+        settings["inferelator2"]["max_steps"] = step
+        settings["global"]["time_series_delta_t"] = 10.0
+        inf.setup(multifactorial_data, None, settings, timeseries_data, None, "Inferelator2_TS_SS_NOPRIOR_NOPERT-Steps-{0}-Boot-{1}".format(step, i), None, prior=None, split_ts=False, leave_outs=leave_out)
 #inf.setup(None, ss_data, settings, [kcl_ts_data], None, "Inferelator2_TS_SS_NOPRIOR".format(meth, "inf_test"), None, prior=genie3job.network, split_ts=False, leave_outs=leave_out)
-    jobman.queueJob(inf)
+        jobman.queueJob(inf)
 
 
 jobman.runQueue()
 jobman.waitToClear()
-
-#for job in jobman.finished:
-    #job.alg.network.normalize()
-
-#for job in jobman.finished:
-    #tprs, fprs, rocs = GenerateMultiROC([job], None, False, settings["global"]["output_dir"] + "/" + job.alg.name + ".pdf")
-    #ps, rs, precs = GenerateMultiPR([job], None, False, settings["global"]["output_dir"] + "/" + job.alg.name + ".pdf")
-
-#SaveResults(jobman.finished, None, settings)
-
-#results = []
-##for job in jobman.finished:
-    ##results.append([job.alg.name, job.alg.network.num_correct_100, job.alg.network.per_correct_100, job.alg.network.num_correct_10p, job.alg.network.per_correct_10p])
-
-#print "Results:"
-#print results
-##out = open(settings["global"]["output_dir"] + "/results.txt",'w')
-##for r in results:
-    ##out.write(r[0] + "\t" + str(r[1]) + "\t" + str(r[2]) + "\t"+str(r[3])+"\t"+str(r[4])+"\n")
-
-#out = open(settings["global"]["output_dir"] + "/results-sorted.txt",'w')
-#results.sort(key=lambda x: x[3])
-#for r in results:
-    #out.write(r[0] + "\t" + str(r[1]) + "\t" + str(r[2]) + "\t" + str(r[3])+ "\t" + str(r[4])+  "\n")
-#out.close()
 
 # Read in the results from each algorithm and then compare the up/down
 # while doing the naive results

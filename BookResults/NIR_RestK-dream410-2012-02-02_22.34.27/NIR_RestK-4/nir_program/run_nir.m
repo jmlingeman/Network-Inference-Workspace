@@ -1,0 +1,1 @@
+/Users/jesse/Workspace/School/MastersThesis/Program/output//NIR_RestK-dream410-2012-02-02_22.34.27//NIR_RestK-4//nir_settings.m

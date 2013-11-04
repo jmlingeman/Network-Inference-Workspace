@@ -1,0 +1,21 @@
+searcherChoice =                              Greedy
+proposerChoice =                       AllLocalMoves
+
+inputDirectory =       data/release2.0/dynamic/input
+observationsFile =                  dynamic.data.txt   
+
+outputDirectory =     data/release2.0/dynamic/output
+reportFile =                      dynamic.report.txt
+
+
+variableCount =                                   20
+
+minMarkovLag =                                     1
+maxMarkovLag =                                     1
+dbnMandatoryIdentityLags =                         1
+equivalentSampleSize =                           1.0
+
+nBestNetworks =                                    5
+bestNetworksAre =             nonidenticalThenPruned
+
+maxTime =                                       10 m	 

@@ -1,0 +1,114 @@
+###-------------------------------------------------
+### Input parameter settings file for 
+###
+###       BA         Bayesian 
+###         N        Network Inference
+###          J       with Java
+###           O      Objects
+###
+### Banjo is licensed from Duke University.
+### Copyright (c) 2005 by Alexander J. Hartemink.
+### All rights reserved.
+###
+### Settings file consistent with version 1.0.0
+###-------------------------------------------------
+
+###-------------------------------------------------
+### Project information
+###-------------------------------------------------
+
+project =                      banjo dynamic example
+user =                                          demo
+dataset =         20-vars-2000-temporal-observations
+notes =           dynamic bayesian network inference
+
+###-------------------------------------------------
+### Search component specifications
+###-------------------------------------------------
+
+searcherChoice =                              Greedy
+proposerChoice =                       AllLocalMoves
+evaluatorChoice =                            default
+deciderChoice =                              default
+
+###-------------------------------------------------
+### Input and output locations
+###-------------------------------------------------
+
+inputDirectory =       data/release1.0/dynamic/input
+observationsFile =                  dynamic.data.txt   
+outputDirectory =     data/release1.0/dynamic/output
+reportFile =                      dynamic.report.txt
+
+###-------------------------------------------------
+### We require this only to validate the input
+###-------------------------------------------------
+
+variableCount =                                   20
+
+###-------------------------------------------------
+### Pre-processing options
+###-------------------------------------------------
+
+discretizationPolicy =                          none  
+discretizationExceptions =  
+
+###-------------------------------------------------
+### Network structure properties
+###-------------------------------------------------
+
+minMarkovLag =                                     1
+maxMarkovLag =                                     1
+dbnMandatoryIdentityLags =                         1
+equivalentSampleSize =                           1.0
+maxParentCount =                                   5
+
+###-------------------------------------------------
+### Network structure properties, optional
+###-------------------------------------------------
+
+initialStructureFile = 
+mustBePresentEdgesFile = 
+mustNotBePresentEdgesFile = 
+
+###-------------------------------------------------
+### Stopping criteria
+###-------------------------------------------------
+
+maxTime = 
+maxProposedNetworks =                        1000000
+maxRestarts = 
+minNetworksBeforeChecking =                     1000
+
+###-------------------------------------------------
+### Search monitoring properties
+###-------------------------------------------------
+
+nBestNetworks =                                    5
+numberOfIntermediateProgressReports =             10
+writeToFileInterval =                              0
+
+###-------------------------------------------------
+### Parameters used by specific search methods
+###-------------------------------------------------
+
+### For simulated annealing:
+initialTemperature =                            1000
+coolingFactor =                                  0.9
+reannealingTemperature =                         500
+maxAcceptedNetworksBeforeCooling =              1000
+maxProposedNetworksBeforeCooling =             10000
+minAcceptedNetworksBeforeReannealing =           200
+
+### For greedy:
+minProposedNetworksAfterHighScore =             1000
+minProposedNetworksBeforeRestart =              3000
+maxProposedNetworksBeforeRestart =              5000
+restartWithRandomNetwork =                       yes
+maxParentCountForRestart =                         3
+
+###-------------------------------------------------
+### Command line user interface options
+###-------------------------------------------------
+
+askToVerifySettings =                             no

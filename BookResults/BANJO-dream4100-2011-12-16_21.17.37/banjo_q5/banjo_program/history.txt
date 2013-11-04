@@ -1,0 +1,48 @@
+ ============================================================
+     Banjo (Bayesian Network Inference with Java Objects)   
+                      Version History
+ ============================================================
+ 
+
+Release 2.2 - April 2008
+
+
+
+	New feature: execution on cluster environments: export and harvesting of result files in XML format
+
+
+
+
+Release 2.1 - December 2007
+
+
+
+	New feature: multi-threaded execution
+
+
+
+Release 2.0.1 -  September 2007
+
+	Maintenance: bug related to internationalization
+                 (use of different symbols for decimal points and separators)
+
+Release 2.0 - April 2007
+
+	Large number of new features (please see User and Developer Guides)
+
+Release 1.0.7 - June 2006
+
+	Maintenance: bug fix in checking of index of disallowed parents
+
+Release 1.0.6 - December 2005
+
+	Maintenance: bug fix in condition for checking varCount versus maxParentCount
+		         bug fix in computation of parent counts in the subtractMatrix method
+
+Release 1.0.5 - November 2005
+
+	Maintenance: bug fix in interval discretization
+
+Release 1.0 (1.0.4) - October 2005
+
+	Initial public release

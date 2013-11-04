@@ -1,0 +1,7 @@
+
+-----------------------------------------------------------------------------
+(Final Checkpoint, after search completion) A final check revealed the following issues that were encountered during Banjo's execution:
+-----------------------------------------------------------------------------
+(Invalid setting choice) The supplied value 'no value found' is not a valid option for the setting 'searcherChoice'.
+
+(Alert: (general)) The value of setting 'bestNetworksAre' has been corrected to 'nonidentical' (because minMarkovlag>0).

@@ -1,0 +1,173 @@
+==================
+Licensing Overview
+==================
+
+You may license this software either under the non-commercial use license
+shown below or under a specially-negotiated non-exclusive commercial use
+license.  You may choose which type of license is more appropriate for your
+needs.  For strictly non-commercial use of the software, you may prefer to
+license the software under the non-commercial use license below.  The term
+'commercial use' is defined broadly: if the software is used for commercial
+gain or to further any commercial purpose, a commercial use license is
+required.  If you have any question about whether your use would be
+considered commercial, or if you would like to negotiate a non-exclusive
+commercial use license, please contact us.  Our addresses in Apr 2008 are:
+
+   Alexander J. Hartemink, Ph.D.
+   Assistant Professor
+   Department of Computer Science
+   Duke University 
+   Box 90129
+   Durham, NC 27708-0129
+   amink@cs.duke.edu
+
+   Henry Berger, Ph.D.
+   Licensing Director for Pratt School of Engineering
+   Office of Licensing & Ventures
+   Duke University
+   Box 90083
+   Durham, NC 27708-0083
+   hrberger@duke.edu
+
+
+====================================
+Non-Commercial Use License Agreement
+====================================
+
+IMPORTANT NOTICE: PLEASE READ THE TERMS AND CONDITIONS OF THIS
+LICENSE AGREEMENT CAREFULLY BEFORE PROCEEDING TO USE THE SOFTWARE.
+
+ 1. DEFINITIONS:
+
+    "Licensor" means Duke University.
+    "Licensee" means You, if you accept the terms of this Agreement.
+    "Authors" means Alexander J. Hartemink and Jurgen Sladeczek.
+    "Software" means the Banjo (Bayesian Network Inference with Java
+      Objects) software package, including executable and source code
+      versions, and any subsequent upgrades, updates, or modifications
+      to Banjo provided by Authors or Licensor. 
+    "Commercial Use" means any attempt, whether intentional or not, to
+      copy, use, modify, or distribute, in whole or in part, Software or
+      related documentation for financial or commercial gain, or to further
+      the aims of any company, including but not limited to use of Software
+      in the research division of a company, use of Software to improve a
+      business or financial model, production of derivative works based on
+      Software that will be sold or offered for sale, incorporation of
+      Software into a product or collection of products that will be sold
+      or offered for sale, or distribution of Software commercially.
+
+ 2. LICENSE GRANT.  Licensor grants to Licensee a non-exclusive, worldwide,
+    royalty-free, perpetual, non-transferable, single-user license to copy,
+    use, modify, and distribute executable and source code versions of
+    Software and related documentation for any use that is not Commercial
+    Use.  Licensee is free to make modified versions of Software, provided
+    that executable and source code versions of such derivative works are
+    made readily available to others on these same terms, without fee or
+    any other charge.  Unmodified Software or related documentation should
+    be distributed by providing a link to Licensor's Software website (the
+    URL in Apr 2008 is http://www.cs.duke.edu/~amink/software/banjo/).
+    This license does not entitle Licensee to any installation support,
+    technical support, telephone assistance, maintenance, or enhancements,
+    modifications, or updates to Software.
+
+ 3. RESTRICTIONS.  Except as otherwise expressly permitted in this
+    Agreement, Licensee may not (i) sell, rent, lease, or sublicense rights
+    in Software; (ii) remove or alter any trademark, logo, copyright, or
+    other proprietary notices, legends, symbols, or labels in Software or
+    related documentation; or (iii) use the name of Licensor or Authors in
+    any manner related to Software without their prior written permission.
+
+ 4. FEES.  Software is provided without fee, provided that Licensee's use
+    is not Commercial Use.  If Licensee is interested in Commercial Use of
+    Software, Licensee shall contact Licensor to negotiate a non-exclusive
+    commercial use license, which may include a license fee.  If Licensee
+    fails to negotiate such a license, but nevertheless uses Software for
+    any Commercial Use, Licensee shall be deemed in material breach of this
+    Agreement and agrees to pay monetary damages to Licensor, compensatory
+    and possibly punitive.  In the event of a successful action brought to
+    enforce this provision, Licensor shall be further entitled to recover
+    reasonable attorney's fees and costs.
+
+ 5. TERMINATION.  License and the rights granted hereunder shall terminate
+    automatically if Licensee breaches any of the terms or conditions of
+    this Agreement, unless Licensee receives written permission from
+    Licensor to exercise rights under the license in spite of a breach.
+    Upon termination, Licensee agrees to destroy all copies of Software and
+    related documentation, including copies made for backup purposes.
+
+ 6. PROPRIETARY RIGHTS.  Software and related documentation constitute
+    published works and are protected by copyright and other intellectual
+    property laws and by international treaties.  All rights, title to, and
+    ownership interest in Software, including all intellectual property
+    rights therein, belong to and shall remain with Licensor.  Licensee
+    acknowledges such ownership and intellectual property rights and agrees
+    not to take any action that jeopardizes, limits, undermines, or in any
+    manner interferes with Licensor's ownership and intellectual property
+    rights with respect to Software.
+
+ 7. MANDATORY NOTICE.  Both the notice below and the full terms of this
+    Agreement shall be embedded in any location or medium in which Software
+    or related documentation is stored, copied, or reproduced, and shall be
+    loaded into computer memory for use, display, or reproduction in any
+    copy of Software or related documentation, including derivative works.
+    The notice to accompany the full terms of this Agreement shall state:
+
+               "Banjo is licensed from Duke University.  
+           Copyright (c) 2005-2008 by Alexander J. Hartemink.
+                         All rights reserved."
+
+ 8. DISCLAIMER OF WARRANTY.  SOFTWARE IS PROVIDED IN ACCORDANCE WITH THE
+    TERMS AND CONDITIONS OF THIS AGREEMENT ON AN "AS IS" BASIS.  LICENSOR
+    MAKES NO REPRESENTATIONS OF AND SPECIFICALLY DISCLAIMS WARRANTIES OF
+    ANY KIND, EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT
+    LIMITED TO WARRANTIES THAT SOFTWARE IS MERCHANTABLE, FIT FOR A
+    PARTICULAR PURPOSE, NON-INFRINGING, ACCURATE, OR FREE FROM DEFECTS,
+    WHETHER DISCOVERABLE OR NOT.  LICENSEE BEARS THE ENTIRE RISK AS TO THE
+    QUALITY AND PERFORMANCE OF SOFTWARE.  SHOULD SOFTWARE PROVE DEFECTIVE
+    IN ANY RESPECT, LICENSEE ASSUMES SOLE RESPONSIBILITY AND LIABILITY FOR
+    THE ENTIRE COST OF ANY SERVICE AND REPAIR IN CONNECTION THEREWITH.
+    THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS
+    AGREEMENT.  NO USE OF SOFTWARE IS AUTHORIZED HEREUNDER EXCEPT UNDER
+    THIS DISCLAIMER.
+
+ 9. LIMITATION OF LIABILITY.  IN NO EVENT AND UNDER NO CIRCUMSTANCES WILL
+    LICENSOR BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, CONSEQUENTIAL,
+    SPECIAL, INCIDENTAL, PUNITIVE, OR EXEMPLARY DAMAGES OF ANY KIND
+    WHATSOEVER ARISING OUT OF THE USE OF OR INABILITY TO USE ANY PORTION OF
+    SOFTWARE, INCLUDING BUT NOT LIMITED TO DAMAGES FOR LOSS OF GOODWILL,
+    WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER
+    DAMAGES OR LOSSES, EVEN IF ADVISED OF THE POSSIBILITY THEREOF, AND
+    WITHOUT REGARD TO WHETHER SUCH CLAIM OR ALLEGATION IS BASED IN
+    CONTRACT, TORT, OR ANY OTHER LEGAL OR EQUITABLE THEORY.  TO THE EXTENT
+    PERMITTED UNDER APPLICABLE LAW, LICENSOR'S ENTIRE LIABILITY UNDER ANY
+    PROVISION OF THIS AGREEMENT SHALL NOT EXCEED IN THE AGGREGATE THE SUM
+    OF THE FEES LICENSEE PAID FOR THIS LICENSE (IF ANY).
+
+10. MISCELLANEOUS.  (a) This Agreement constitutes the entire Agreement
+    between the parties concerning the subject matter hereof.  (b) This
+    Agreement may be amended only by mutual written agreement, signed by
+    both parties.  (c) Except to the extent applicable law, if any,
+    provides otherwise, this Agreement shall be governed by the laws of the
+    State of North Carolina, U.S.A., excluding its conflict of law
+    provisions.  (d) This Agreement shall not be governed by the United
+    Nations Convention on Contracts for the International Sale of Goods.
+    (e) If any provision in this Agreement should be held invalid or
+    unenforceable by a court having jurisdiction, such provision shall be
+    modified to the minimum extent necessary to render it enforceable
+    without losing its intent, or severed from this Agreement if no such
+    modification is possible, and other provisions of this Agreement shall
+    remain in full force and effect.  (f) A waiver by either party of any
+    term or condition of this Agreement or any breach thereof, in any one
+    instance, shall not waive such term or condition or any subsequent
+    breach thereof.  (g) The provisions of this Agreement which require or
+    contemplate performance after the termination of this Agreement shall
+    be enforceable notwithstanding said termination.  (h) Licensee may not
+    assign or otherwise transfer by operation of law or otherwise this
+    Agreement or any rights or obligations herein.  (i) This Agreement
+    shall be binding upon and shall inure to the benefit of the parties,
+    their successors, and permitted assigns.  (j) The relationship between
+    Licensor and Licensee is that of independent contractors and neither
+    Licensee nor its agents shall have any authority to bind Licensor in
+    any way.  (k) The headings to the sections of this Agreement are used
+    for convenience only and shall have no substantive meaning.
+

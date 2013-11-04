@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SCRIPT_NAME=$1
+OUT_FILE=$2
+NUM_MODELS=$3
+
+PAR1=$4
+VAL1=$5
+PAR2=$6
+VAL2=$7
+PAR3=$8
+VAL3=$9
+
+QSUB_PRIORITY=-1
+
+QSUB_CMD="./send_statespace.sh $SCRIPT_NAME $OUT_FILE $NUM_MODELS $PAR1 $VAL1 $PAR2 $VAL2 $PAR3 $VAL3"
+echo "Sending the following command to QSUB: $QSUB_CMD"
+
+#$QSUB_CMD
+qsub $QSUB_CMD
+

@@ -1,0 +1,279 @@
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.05, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.01, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 3,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 7,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.1, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 6.33333,  = 
+_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.2, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.3, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.4, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.5, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.6, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.7, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.8, tau = 8.55556,  = 
+parameters gamma = 0.8, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 7.22222,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 0.9, tau = 9,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 5,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 5.44444,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 5.88889,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 6.33333,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 7.22222,  = 
+parameters gamma = 1, tau = 6.77778,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 7.66667,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 8.11111,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 8.55556,  = 
+Starting 30 models, script Script_Clustered_Arabidopsis_LeaveOutLast_Voting_Max
+parameters gamma = 1, tau = 9,  = 

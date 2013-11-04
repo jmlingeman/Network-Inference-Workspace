@@ -1,0 +1,32 @@
+java.io.IOException: Cannot run program "invalid": java.io.IOException: error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:475)
+	at java.lang.Runtime.exec(Runtime.java:610)
+	at java.lang.Runtime.exec(Runtime.java:448)
+	at java.lang.Runtime.exec(Runtime.java:345)
+	at edu.duke.cs.banjo.utility.PostProcessor.executeExternalProgram(PostProcessor.java:864)
+	at edu.duke.cs.banjo.utility.PostProcessor.createDotGraphic(PostProcessor.java:812)
+	at edu.duke.cs.banjo.utility.PostProcessor.execute(PostProcessor.java:1135)
+	at edu.duke.cs.banjo.application.Banjo.runMultipleInstances(Banjo.java:406)
+	at edu.duke.cs.banjo.application.Banjo.execute(Banjo.java:150)
+	at edu.duke.cs.banjo.application.Banjo.main(Banjo.java:447)
+Caused by: java.io.IOException: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:164)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:81)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:468)
+	... 9 more
+java.io.IOException: Cannot run program "invalid": java.io.IOException: error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:475)
+	at java.lang.Runtime.exec(Runtime.java:610)
+	at java.lang.Runtime.exec(Runtime.java:448)
+	at java.lang.Runtime.exec(Runtime.java:345)
+	at edu.duke.cs.banjo.utility.PostProcessor.executeExternalProgram(PostProcessor.java:864)
+	at edu.duke.cs.banjo.utility.PostProcessor.createDotGraphic(PostProcessor.java:812)
+	at edu.duke.cs.banjo.utility.PostProcessor.execute(PostProcessor.java:1261)
+	at edu.duke.cs.banjo.application.Banjo.runMultipleInstances(Banjo.java:406)
+	at edu.duke.cs.banjo.application.Banjo.execute(Banjo.java:150)
+	at edu.duke.cs.banjo.application.Banjo.main(Banjo.java:447)
+Caused by: java.io.IOException: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:164)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:81)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:468)
+	... 9 more

@@ -1,0 +1,52 @@
+
+R version 2.13.1 (2011-07-08)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> ## /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ / / \ \ / / \ \
+> ##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
+> ## May 2010 Dream3/4 pipeline (MCZ,tlCLR,Inferelator)
+> ## Bonneau lab - "Aviv Madar" <am2654@nyu.edu>, 
+> ##  		     "Alex Greenfield" <ag1868@nyu.edu> 
+> ## NYU - Center for Genomics and Systems Biology
+> ##  .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.   .-.-.
+> ## /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ /|/ \|\ / / \ \ / / \ \
+> ##`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   `-`-'   ' '
+> 
+> # this main function implements the type of analysis that we have performed for DREAM4
+> # It will also work on the DREAM3 dataset, and DREAM2.
+> # one known bug is that DREAM2 net 1 run fails as Input .RData files are corrupt.
+> # If you have more than one processor on your machine please install package multicore
+> # and change init.R PARAMS[["general"]][["processorsNumber"]] to the number of processors
+> # you want to dedicate for the run (important when bootstraping).
+> # please report bugs to the inferelator google group
+> 
+> rm(list=ls())
+> 
+> ##  .-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.
+> # 1- reads params, design and response matrices, found in PARAMS and INPUT list respectively
+> ##  .-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.***.-.-.
+> 
+> 	source("./r_scripts/init.R")
+Loading required package: lars
+Loaded lars 0.9-8 
+Error in menu(c("DREAM2", "DREAM3", "DREAM4"), graphics = FALSE, title = "Run for:") : 
+  menu() cannot be used non-interactively
+Calls: source ... eval.with.vis -> eval.with.vis -> let_usr_choose_dataset -> menu
+Execution halted

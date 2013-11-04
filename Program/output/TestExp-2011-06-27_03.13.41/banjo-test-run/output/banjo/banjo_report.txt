@@ -1,0 +1,804 @@
+-----------------------------------------------------------------------------
+- Banjo                        Bayesian Network Inference with Java Objects -
+- Release 2.2.0                                                 15 Apr 2008 -
+- Licensed from Duke University                                             -
+- Copyright (c) 2005-08 by Alexander J. Hartemink                           -
+- All rights reserved                                                       -
+-----------------------------------------------------------------------------
+- Project:                                                          BANJO Run
+- User:                                                                      
+- Dataset:                                                     Inference Data
+- Notes:                                                                     
+-----------------------------------------------------------------------------
+- Settings file:                                                             
+-----------------------------------------------------------------------------
+- Input directory:  /home/jesse/Workspace/School/MastersThesis/Program/output//TestExp-2011-06-27_03.13.41//banjo-test-run//data/
+- Observations file:                                       Dream4-Noise-0.csv
+- Number of observations (in file):                                        21
+- Number of observations used for learning DBN:                            20
+- Number of variables:                                                     10
+- Discretization policy:                                                   q4
+- Exceptions to the discretization policy:                               none
+-----------------------------------------------------------------------------
+- Initial structure file:                                                    
+- 'Must be present' edges file:                                              
+- 'Must not be present' edges file:                                          
+- Min. Markov lag:                                                          1
+- Max. Markov lag:                                                          1
+- DBN mandatory identity lag(s):                                            1
+- Max. parent count:                                                        5
+- Equivalent sample size for Dirichlet parameter prior:                   1.0
+-----------------------------------------------------------------------------
+- Searcher:                                                    SearcherGreedy
+- Proposer:                              defaulted to ProposerRandomLocalMove
+- Evaluator:                                        defaulted to EvaluatorBDe
+- Decider:                                         defaulted to DeciderGreedy
+-----------------------------------------------------------------------------
+- Pre-compute logGamma:                                                   yes
+- Cache:                                                           fastLevel2
+- Cycle checking method:                                   Depth-first Search
+-----------------------------------------------------------------------------
+- Min. proposed networks after high score:                               1000
+- Min. proposed networks before restart:                                 3000
+- Max. proposed networks before restart:                                 5000
+- Restart method:                                          use random network
+-   with max. parent count:                                                 3
+-----------------------------------------------------------------------------
+- Output directory:                                          ../output/banjo/
+- Report file:                                               banjo_report.txt
+- Number of best networks tracked:                                         10
+- Best networks are:                                             nonidentical
+- Max. time:                                                           15.0 m
+- Min. networks before checking:                                         1000
+- Screen reporting interval:                                           20.0 s
+- File reporting interval:                                             10.0 m
+-----------------------------------------------------------------------------
+- Compute influence scores:                                               yes
+- Compute consensus graph:                                                yes
+- Create consensus graph as HTML:                                         yes
+- Create 'dot' output:                                                    yes
+- Location of 'dot':                                             not supplied
+-----------------------------------------------------------------------------
+- XML output directory:                                      ../output/banjo/
+- XML Report file:                                                           
+- XML settings to export:                                                    
+- XML parser:                             org.apache.xerces.parsers.SAXParser
+- Banjo XML format version:                                               1.0
+-----------------------------------------------------------------------------
+- Seed for starting search:                                     1309158826301
+-----------------------------------------------------------------------------
+- Number of threads:                                                        1
+-----------------------------------------------------------------------------
+- Warnings:                                                                  
+-----------------------------------------------------------------------------
+(Alert: (general)) The value of setting 'bestNetworksAre' has been corrected to 'nonidentical' (because minMarkovlag>0).
+(Alert: the path to dot is not specified) To automatically create dot output, the path where dot is located on your system needs to be specified in the setting 'fullPathToDotExecutable'.
+(Alert: (general)) The value of setting 'bestNetworksAre' has been corrected to 'nonidentical' (because minMarkovlag>0).
+-----------------------------------------------------------------------------
+
+Memory info before starting the search: Banjo is using 5 mb of memory
+Prep. time used: 317.0 ms
+Beginning to search: expect a status report every 20.0 s
+
+Status:  Networks 4241000
+         Time     20.0 s (2.2% of max. 15.0 m)
+         Restarts 1289
+         Banjo is using 5 mb of memory
+
+Status:  Networks 8575000
+         Time     40.0 s (4.4% of max. 15.0 m)
+         Restarts 2608
+         Banjo is using 5 mb of memory
+
+Status:  Networks 12905000
+         Time     1.0 m (6.6% of max. 15.0 m)
+         Restarts 3923
+         Banjo is using 5 mb of memory
+
+Status:  Networks 17153000
+         Time     1.33 m (8.8% of max. 15.0 m)
+         Restarts 5216
+         Banjo is using 5 mb of memory
+
+Status:  Networks 21473000
+         Time     1.67 m (11.1% of max. 15.0 m)
+         Restarts 6538
+         Banjo is using 5 mb of memory
+
+Status:  Networks 25798000
+         Time     2.0 m (13.3% of max. 15.0 m)
+         Restarts 7861
+         Banjo is using 5 mb of memory
+
+Status:  Networks 30117000
+         Time     2.33 m (15.5% of max. 15.0 m)
+         Restarts 9185
+         Banjo is using 5 mb of memory
+
+Status:  Networks 34405000
+         Time     2.67 m (17.7% of max. 15.0 m)
+         Restarts 10491
+         Banjo is using 5 mb of memory
+
+Status:  Networks 38783000
+         Time     3.0 m (20.0% of max. 15.0 m)
+         Restarts 11834
+         Banjo is using 5 mb of memory
+
+Status:  Networks 43098000
+         Time     3.33 m (22.2% of max. 15.0 m)
+         Restarts 13143
+         Banjo is using 5 mb of memory
+
+Status:  Networks 47390000
+         Time     3.67 m (24.4% of max. 15.0 m)
+         Restarts 14449
+         Banjo is using 5 mb of memory
+
+Status:  Networks 51717000
+         Time     4.0 m (26.6% of max. 15.0 m)
+         Restarts 15772
+         Banjo is using 5 mb of memory
+
+Status:  Networks 56031000
+         Time     4.33 m (28.8% of max. 15.0 m)
+         Restarts 17089
+         Banjo is using 6 mb of memory
+
+Status:  Networks 60298000
+         Time     4.67 m (31.1% of max. 15.0 m)
+         Restarts 18388
+         Banjo is using 6 mb of memory
+
+Status:  Networks 64569000
+         Time     5.0 m (33.3% of max. 15.0 m)
+         Restarts 19677
+         Banjo is using 5 mb of memory
+
+Status:  Networks 68878000
+         Time     5.33 m (35.5% of max. 15.0 m)
+         Restarts 20993
+         Banjo is using 5 mb of memory
+
+Status:  Networks 73218000
+         Time     5.67 m (37.7% of max. 15.0 m)
+         Restarts 22327
+         Banjo is using 6 mb of memory
+
+Status:  Networks 77529000
+         Time     6.0 m (40.0% of max. 15.0 m)
+         Restarts 23636
+         Banjo is using 6 mb of memory
+
+Status:  Networks 81818000
+         Time     6.33 m (42.2% of max. 15.0 m)
+         Restarts 24942
+         Banjo is using 5 mb of memory
+
+Status:  Networks 86145000
+         Time     6.67 m (44.4% of max. 15.0 m)
+         Restarts 26260
+         Banjo is using 6 mb of memory
+
+Status:  Networks 90451000
+         Time     7.0 m (46.6% of max. 15.0 m)
+         Restarts 27560
+         Banjo is using 6 mb of memory
+
+Status:  Networks 94805000
+         Time     7.33 m (48.8% of max. 15.0 m)
+         Restarts 28892
+         Banjo is using 6 mb of memory
+
+Status:  Networks 99132000
+         Time     7.67 m (51.1% of max. 15.0 m)
+         Restarts 30221
+         Banjo is using 5 mb of memory
+
+Status:  Networks 103472000
+         Time     8.0 m (53.3% of max. 15.0 m)
+         Restarts 31555
+         Banjo is using 5 mb of memory
+
+Status:  Networks 107791000
+         Time     8.33 m (55.5% of max. 15.0 m)
+         Restarts 32878
+         Banjo is using 7 mb of memory
+
+Status:  Networks 112094000
+         Time     8.67 m (57.7% of max. 15.0 m)
+         Restarts 34193
+         Banjo is using 7 mb of memory
+
+Status:  Networks 116446000
+         Time     9.0 m (60.0% of max. 15.0 m)
+         Restarts 35523
+         Banjo is using 6 mb of memory
+
+Status:  Networks 120756000
+         Time     9.33 m (62.2% of max. 15.0 m)
+         Restarts 36831
+         Banjo is using 6 mb of memory
+
+Status:  Networks 125123000
+         Time     9.67 m (64.4% of max. 15.0 m)
+         Restarts 38161
+         Banjo is using 6 mb of memory
+
+Status:  Networks 129465000
+         Time     10.0 m (66.6% of max. 15.0 m)
+         Restarts 39472
+         Banjo is using 6 mb of memory
+
+-----------------------------------------------------------------------------
+- Intermediate report                                  Best network(s) so far
+-----------------------------------------------------------------------------
+
+Network #1, score: -264.9123, first found at iteration 345553
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #2, score: -264.9145, first found at iteration 13341171
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 3 4      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #3, score: -264.9145, first found at iteration 28063868
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 3 5      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #4, score: -264.9145, first found at iteration 36380278
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 4 5      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #5, score: -264.9145, first found at iteration 345527
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 3 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #6, score: -264.9145, first found at iteration 3402556
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 3 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #7, score: -264.9145, first found at iteration 7208395
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #8, score: -264.9145, first found at iteration 13977676
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 3 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #9, score: -264.9145, first found at iteration 19293051
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 3 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #10, score: -264.9145, first found at iteration 39400515
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 3 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+-----------------------------------------------------------------------------
+
+
+Status:  Networks 133745000
+         Time     10.33 m (68.8% of max. 15.0 m)
+         Restarts 40780
+         Banjo is using 6 mb of memory
+
+Status:  Networks 138067000
+         Time     10.67 m (71.1% of max. 15.0 m)
+         Restarts 42098
+         Banjo is using 6 mb of memory
+
+Status:  Networks 142386000
+         Time     11.0 m (73.3% of max. 15.0 m)
+         Restarts 43419
+         Banjo is using 6 mb of memory
+
+Status:  Networks 146676000
+         Time     11.33 m (75.5% of max. 15.0 m)
+         Restarts 44722
+         Banjo is using 6 mb of memory
+
+Status:  Networks 150969000
+         Time     11.67 m (77.7% of max. 15.0 m)
+         Restarts 46035
+         Banjo is using 6 mb of memory
+
+Status:  Networks 155284000
+         Time     12.0 m (80.0% of max. 15.0 m)
+         Restarts 47362
+         Banjo is using 6 mb of memory
+
+Status:  Networks 159613000
+         Time     12.33 m (82.2% of max. 15.0 m)
+         Restarts 48678
+         Banjo is using 6 mb of memory
+
+Status:  Networks 163960000
+         Time     12.67 m (84.4% of max. 15.0 m)
+         Restarts 50001
+         Banjo is using 6 mb of memory
+
+Status:  Networks 168248000
+         Time     13.0 m (86.6% of max. 15.0 m)
+         Restarts 51303
+         Banjo is using 6 mb of memory
+
+Status:  Networks 172591000
+         Time     13.33 m (88.8% of max. 15.0 m)
+         Restarts 52637
+         Banjo is using 6 mb of memory
+
+Status:  Networks 176947000
+         Time     13.67 m (91.1% of max. 15.0 m)
+         Restarts 53976
+         Banjo is using 6 mb of memory
+
+Status:  Networks 181275000
+         Time     14.0 m (93.3% of max. 15.0 m)
+         Restarts 55293
+         Banjo is using 6 mb of memory
+
+Status:  Networks 185604000
+         Time     14.33 m (95.5% of max. 15.0 m)
+         Restarts 56609
+         Banjo is using 6 mb of memory
+
+Status:  Networks 189909000
+         Time     14.67 m (97.7% of max. 15.0 m)
+         Restarts 57915
+         Banjo is using 6 mb of memory
+
+Status:  Networks 194257000
+         Time     15.0 m (100.0% of max. 15.0 m)
+         Restarts 59243
+         Banjo is using 6 mb of memory
+
+
+
+-----------------------------------------------------------------------------
+- Final report                                          Best networks overall
+-----------------------------------------------------------------------------
+During the search, the 10 top-scoring non-identical networks were tracked. 
+These are the 7 non-equivalent networks left after pruning:
+
+Network #1, score: -264.9123, first found at iteration 345553
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #2, score: -264.9145, first found at iteration 13341171
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 3 4      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #3, score: -264.9145, first found at iteration 28063868
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 3 5      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #4, score: -264.9145, first found at iteration 36380278
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 4 5      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #5, score: -264.9145, first found at iteration 345527
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 3 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #6, score: -264.9145, first found at iteration 3402556
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 3 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #7, score: -264.9145, first found at iteration 7208395
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+
+-----------------------------------------------------------------------------
+- Search Statistics                                                          
+-----------------------------------------------------------------------------
+
+Statistics collected in searcher 'SearcherGreedy':
+  Number of networks examined: 194257000
+  Total time used: 15.0 m
+  High score: -264.9123, first found at iteration 345553
+  Number of restarts: 59243
+
+Statistics collected in proposer 'ProposerRandomLocalMove':
+  Additions -- proposed:    80812747
+  Deletions -- proposed:    113444252
+  Reversals -- proposed:    0 (min. Markov lag = 1)
+
+Statistics collected in cycle checker 'CycleCheckerCheckThenApply':
+  Additions -- no cyclicity test necessary
+  Deletions -- no cyclicity test necessary
+  Reversals -- none proposed
+
+Statistics collected in evaluator 'EvaluatorBDe':
+  Scores computed:          67498387
+  Scores (cache)            placed         fetched        
+      with 0 parents:       0              0              
+      with 1 parents:       10             6136054        
+      with 2 parents:       90             54289292       
+      with 3 parents:       15920453       11858610       
+      with 4 parents:       44641276       52521159       
+      with 5 parents:       6936558        2546037        
+
+Statistics collected in decider 'DeciderGreedy':
+  Additions -- considered:  80812747,  better score:  6752912
+  Deletions -- considered:  113444252,  better score:  5361133
+  Reversals -- considered:  0 (min. Markov lag = 1)
+
+No Statistics collected in equivalence checker 'EquivalenceCheckerSkip'.
+
+Memory info after completing the search: Banjo is using 6 mb of memory
+
+
+Network #1, score: -264.9123, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #2, score: -264.9145, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 3 4      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #3, score: -264.9145, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 3 5      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #4, score: -264.9145, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   4 0 2 4 5      
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   5 0 1 3 5 6    
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #5, score: -264.9145, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 3 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #6, score: -264.9145, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 3 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+Network #7, score: -264.9145, found by thread 1
+10
+ 0   1:   3 0 2 7        
+ 1   1:   1 1            
+ 2   1:   5 0 2 3 4 5    
+ 3   1:   1 3            
+ 4   1:   2 4 7          
+ 5   1:   4 1 5 6 7      
+ 6   1:   4 0 1 5 6      
+ 7   1:   3 0 7 9        
+ 8   1:   4 1 3 5 8      
+ 9   1:   3 4 5 9        
+
+-----------------------------------------------------------------------------
+- Post-processing                                            Influence scores
+-----------------------------------------------------------------------------
+
+Influence score for   (7,1) ->   (0,0)   .0000
+Influence score for   (2,1) ->   (0,0)   .0000
+Influence score for   (0,1) ->   (0,0)   .0000
+Influence score for   (1,1) ->   (1,0)   .0000
+Influence score for   (5,1) ->   (2,0)   .0000
+Influence score for   (4,1) ->   (2,0)   .0000
+Influence score for   (3,1) ->   (2,0)   .0000
+Influence score for   (2,1) ->   (2,0)   .0000
+Influence score for   (0,1) ->   (2,0)   .0000
+Influence score for   (3,1) ->   (3,0)   .0000
+Influence score for   (7,1) ->   (4,0)   .0000
+Influence score for   (4,1) ->   (4,0)   .0000
+Influence score for   (7,1) ->   (5,0)   .0000
+Influence score for   (6,1) ->   (5,0)   .0000
+Influence score for   (5,1) ->   (5,0)   .0000
+Influence score for   (1,1) ->   (5,0)   .0000
+Influence score for   (6,1) ->   (6,0)   .0000
+Influence score for   (5,1) ->   (6,0)   .0000
+Influence score for   (3,1) ->   (6,0)   .0000
+Influence score for   (1,1) ->   (6,0)   .0000
+Influence score for   (0,1) ->   (6,0)   .0000
+Influence score for   (9,1) ->   (7,0)   .0000
+Influence score for   (7,1) ->   (7,0)   .0000
+Influence score for   (0,1) ->   (7,0)   .0000
+Influence score for   (8,1) ->   (8,0)   .0000
+Influence score for   (5,1) ->   (8,0)   .0000
+Influence score for   (3,1) ->   (8,0)   .0000
+Influence score for   (1,1) ->   (8,0)   .0000
+Influence score for   (9,1) ->   (9,0)   .0000
+Influence score for   (5,1) ->   (9,0)   .0000
+Influence score for   (4,1) ->   (9,0)   .0000
+
+-----------------------------------------------------------------------------
+- Post-processing                                  DOT graphics format output
+-----------------------------------------------------------------------------
+
+digraph abstract { 
+
+label = "Banjo Version 2.2.0\nHigh scoring network, score: -264.9123\nProject: BANJO Run\nUser: \nDataset: Inference Data"; 
+labeljust="l"; 
+
+
+    2->0;
+    7->0;
+    0->2;
+    3->2;
+    4->2;
+    5->2;
+    7->4;
+    1->5;
+    6->5;
+    7->5;
+    0->6;
+    1->6;
+    3->6;
+    5->6;
+    0->7;
+    9->7;
+    1->8;
+    3->8;
+    5->8;
+    4->9;
+    5->9;
+}
+
+
+-----------------------------------------------------------------------------
+- Post-processing                                             Consensus graph
+-----------------------------------------------------------------------------
+
+10
+ 0  1:3 0 2 7  	  
+ 1  1:1 1  	  
+ 2  1:5 0 2 3 4 5  	  
+ 3  1:1 3  	  
+ 4  1:2 4 7  	  
+ 5  1:4 1 5 6 7  	  
+ 6  1:5 0 1 3 5 6  	  
+ 7  1:3 0 7 9  	  
+ 8  1:4 1 3 5 8  	  
+ 9  1:3 4 5 9  	  
+
+digraph abstract { 
+
+label = "Banjo Version 2.2.0\nConsensus graph (based on top 7 networks)\nProject: BANJO Run\nUser: \nDataset: Inference Data"; 
+labeljust="l"; 
+
+
+    2->0;
+    7->0;
+    0->2;
+    3->2;
+    4->2;
+    5->2;
+    7->4;
+    1->5;
+    6->5;
+    7->5;
+    0->6;
+    1->6;
+    3->6;
+    5->6;
+    0->7;
+    9->7;
+    1->8;
+    3->8;
+    5->8;
+    4->9;
+    5->9;
+}
+
+
+-----------------------------------------------------------------------------
+- Post-processing                   Consensus graph and n-best graphs as HTML
+-----------------------------------------------------------------------------
+For max. Markov lag > 0, this feature is not available. 
+
+
+
+-----------------------------------------------------------------------------
+(Final Checkpoint, after post-processing) A final check revealed the following issues that were encountered during Banjo's execution:
+-----------------------------------------------------------------------------
+('dot' execution) The attempted execution of 'dot' to create the graphics file '../output/banjo//top.graph.2011.06.27.03.13.46.jpg' did not succeed. No output has been produced.
+('dot' execution) The attempted execution of 'dot' to create the graphics file '../output/banjo//consensus.graph.2011.06.27.03.13.46.jpg' did not succeed. No output has been produced.
+

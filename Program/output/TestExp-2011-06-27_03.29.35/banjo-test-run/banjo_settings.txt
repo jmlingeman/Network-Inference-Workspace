@@ -1,0 +1,157 @@
+###-------------------------------------------------
+### Input parameter settings file for
+###
+###       BA         Bayesian
+###         N        Network Inference
+###          J       with Java
+###           O      Objects
+###
+### Banjo is licensed from Duke University.
+### Copyright (c) 2005-2008 by Alexander J. Hartemink.
+### All rights reserved.
+###
+### Settings file consistent with version 2.2.0
+###-------------------------------------------------
+
+###-------------------------------------------------
+### Project information
+###-------------------------------------------------
+
+project = BANJO Run
+user =
+dataset = Inference Data
+notes =
+
+###-------------------------------------------------
+### Search component specifications
+###-------------------------------------------------
+
+searcherChoice = greedy
+proposerChoice =
+evaluatorChoice =
+deciderChoice =
+
+###-------------------------------------------------
+### Input and output locations
+###-------------------------------------------------
+
+inputDirectory = /home/jesse/Workspace/School/MastersThesis/Program/output//TestExp-2011-06-27_03.29.35//banjo-test-run//data/
+observationsFile = Dream4-Noise-0.csv
+outputDirectory = ../output/banjo/
+reportFile = banjo_report.txt
+
+###-------------------------------------------------
+### We require this only to validate the input
+###-------------------------------------------------
+
+variableCount = 10
+
+### Optional:
+#variablesAreInRows =
+#variableNames =
+#observationCount =
+
+###-------------------------------------------------
+### Pre-processing options
+###-------------------------------------------------
+
+discretizationPolicy = q4
+discretizationExceptions =
+createDiscretizationReport =
+
+###-------------------------------------------------
+### Network structure properties
+###-------------------------------------------------
+
+minMarkovLag = 1
+maxMarkovLag = 1
+dbnMandatoryIdentityLags = 1
+equivalentSampleSize = 1.0
+maxParentCount = 5
+### Use with caution:
+#defaultMaxParentCount =
+
+###-------------------------------------------------
+### Network structure properties, optional
+###-------------------------------------------------
+
+initialStructureFile = 
+mustBePresentEdgesFile = 
+mustNotBePresentEdgesFile = 
+
+###-------------------------------------------------
+### Stopping criteria
+###-------------------------------------------------
+
+maxTime = 15 m
+maxProposedNetworks =
+maxRestarts =
+minNetworksBeforeChecking = 1000
+
+###-------------------------------------------------
+### Search monitoring properties
+###-------------------------------------------------
+
+nBestNetworks = 10
+bestNetworksAre = nonidenticalThenPruned
+screenReportingInterval = 20 s
+fileReportingInterval = 10 m
+
+###-------------------------------------------------
+### Parameters used by specific search methods
+###-------------------------------------------------
+
+### For simulated annealing:
+initialTemperature =                            1000
+coolingFactor =                                  0.9
+reannealingTemperature =                         500
+maxAcceptedNetworksBeforeCooling =              1000
+maxProposedNetworksBeforeCooling =             10000
+minAcceptedNetworksBeforeReannealing =           200
+
+### For greedy:
+minProposedNetworksAfterHighScore =             1000
+minProposedNetworksBeforeRestart =              3000
+maxProposedNetworksBeforeRestart =              5000
+restartWithRandomNetwork =                       yes
+maxParentCountForRestart =                         3
+
+###-------------------------------------------------
+### Command line user interface options
+###-------------------------------------------------
+
+askToVerifySettings =                             no
+
+###-------------------------------------------------
+### Memory management and performance options
+###-------------------------------------------------
+
+precomputeLogGamma =                             yes
+useCache =                                fastLevel2
+cycleCheckingMethod =                            dfs
+threads =                                          1
+
+###-------------------------------------------------
+### Misc. options
+###-------------------------------------------------
+
+displayMemoryInfo =                              yes
+displayStructures =                               no
+displayDebugInfo =                        stackTrace
+
+###-------------------------------------------------
+### Post-processing options
+###-------------------------------------------------
+
+computeInfluenceScores =                         yes
+computeConsensusGraph =                          yes
+createConsensusGraphAsHtml =                     yes
+htmlFileExtension =                             html
+fileNameForTopGraph =                 top.graph.@TS@
+fileNameForConsensusGraph =     consensus.graph.@TS@
+timeStampFormat =                yyyy.MM.dd.HH.mm.ss
+createDotOutput =                                yes
+dotGraphicsFormat =                              jpg
+dotFileExtension =                               txt
+### As an example:
+#fullPathToDotExecutable = C:/Program Files/ATT/Graphviz/bin/dot.exe

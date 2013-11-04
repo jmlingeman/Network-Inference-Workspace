@@ -1,0 +1,1 @@
+/Users/jesse/Workspace/School/MastersThesis/Program/output//SimulatedAnnealing-2012-02-03_15.47.52//SimulatedAnnealing-2012-02-03_15.57.29-dream410//NIR//nir_settings.m

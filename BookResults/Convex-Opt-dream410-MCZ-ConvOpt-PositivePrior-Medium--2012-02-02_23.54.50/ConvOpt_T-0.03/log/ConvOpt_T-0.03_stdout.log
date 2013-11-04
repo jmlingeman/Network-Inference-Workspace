@@ -1,0 +1,86 @@
+[?1h=Warning: No window system found.  Java option 'MWT' ignored
+
+                                  < M A T L A B (R) >
+                        Copyright 1984-2010 The MathWorks, Inc.
+                      Version 7.11.0.584 (R2010b) 64-bit (maci64)
+                                    August 16, 2010
+
+ 
+  To get started, type one of these: helpwin, helpdesk, or demo.
+  For product information, visit www.mathworks.com.
+ 
+[H[2J
+t_vec =
+
+    0.0300
+
+
+ans =
+
+UNSTABLE:     t =0.03     Iter =1
+
+
+ans =
+
+UNSTABLE:     t =0.03     Iter =2
+
+
+ans =
+
+UNSTABLE:     t =0.03     Iter =3
+
+
+ans =
+
+UNSTABLE:     t =0.03     Iter =4
+
+
+ans =
+
+SDP:     t =0.03     Iter =0
+
+
+ans =
+
+SDP:     t =0.03     Iter =1
+
+
+ans =
+
+SDP:     t =0.03     Iter =2
+
+
+ans =
+
+SDP:     t =0.03     Iter =3
+
+
+A_sparse_ret =
+
+  Columns 1 through 9
+
+    0.0019         0         0         0   -0.0122         0         0         0         0
+         0         0         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0         0         0
+   -0.0018   -0.0079         0   -0.0033         0   -0.0110    0.0028    0.0065    0.0016
+   -0.0053   -0.0044         0   -0.0046   -0.0022   -0.0026         0   -0.0031    0.0134
+         0    0.0028   -0.0047    0.0022         0    0.0026   -0.0031         0   -0.0124
+
+  Column 10
+
+         0
+         0
+         0
+         0
+         0
+         0
+         0
+         0
+         0
+    0.0121
+
+[?1l>

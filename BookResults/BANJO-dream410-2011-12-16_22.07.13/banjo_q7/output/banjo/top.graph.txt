@@ -1,0 +1,33 @@
+
+digraph abstract { 
+
+label = "Banjo Version 2.2.0\nHigh scoring network, score: -231.6839\nProject: BANJO Run\nUser: \nDataset: Inference Data"; 
+labeljust="l"; 
+
+
+    "(lag 2) 3"->"(lag 0) 0";
+    "(lag 2) 9"->"(lag 0) 0";
+    "(lag 1) 0"->"(lag 0) 1";
+    "(lag 1) 5"->"(lag 0) 1";
+    "(lag 1) 1"->"(lag 0) 2";
+    "(lag 2) 5"->"(lag 0) 2";
+    "(lag 2) 6"->"(lag 0) 3";
+    "(lag 1) 7"->"(lag 0) 3";
+    "(lag 1) 9"->"(lag 0) 3";
+    "(lag 1) 0"->"(lag 0) 4";
+    "(lag 2) 3"->"(lag 0) 4";
+    "(lag 2) 7"->"(lag 0) 4";
+    "(lag 1) 9"->"(lag 0) 4";
+    "(lag 1) 1"->"(lag 0) 5";
+    "(lag 1) 6"->"(lag 0) 5";
+    "(lag 2) 0"->"(lag 0) 6";
+    "(lag 1) 2"->"(lag 0) 6";
+    "(lag 1) 0"->"(lag 0) 7";
+    "(lag 1) 8"->"(lag 0) 7";
+    "(lag 1) 1"->"(lag 0) 8";
+    "(lag 1) 7"->"(lag 0) 8";
+    "(lag 1) 0"->"(lag 0) 9";
+    "(lag 1) 4"->"(lag 0) 9";
+    "(lag 2) 5"->"(lag 0) 9";
+}
+

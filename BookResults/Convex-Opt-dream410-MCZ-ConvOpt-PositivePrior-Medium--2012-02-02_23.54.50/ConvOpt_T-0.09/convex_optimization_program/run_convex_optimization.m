@@ -1,0 +1,1 @@
+/Users/jesse/Workspace/School/MastersThesis/Program/output//Convex-Opt-dream410-MCZ-ConvOpt-PositivePrior-Medium--2012-02-02_23.54.50//ConvOpt_T-0.09//convex_optimization_settings.m

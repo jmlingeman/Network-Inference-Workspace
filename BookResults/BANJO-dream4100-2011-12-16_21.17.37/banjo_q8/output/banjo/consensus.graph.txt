@@ -1,0 +1,38 @@
+
+digraph abstract { 
+
+label = "Banjo Version 2.2.0\nConsensus graph (based on top 20 networks)\nProject: BANJO Run\nUser: \nDataset: Inference Data"; 
+labeljust="l"; 
+
+
+    "(lag 2) 63"->"(lag 0) 0";
+    "(lag 1) 3"->"(lag 0) 9";
+    "(lag 2) 98"->"(lag 0) 12";
+    "(lag 1) 2"->"(lag 0) 18";
+    "(lag 1) 70"->"(lag 0) 18";
+    "(lag 2) 58"->"(lag 0) 19";
+    "(lag 2) 27"->"(lag 0) 20";
+    "(lag 1) 57"->"(lag 0) 21";
+    "(lag 1) 58"->"(lag 0) 30";
+    "(lag 1) 8"->"(lag 0) 40";
+    "(lag 2) 25"->"(lag 0) 46";
+    "(lag 2) 9"->"(lag 0) 47";
+    "(lag 1) 56"->"(lag 0) 50";
+    "(lag 1) 54"->"(lag 0) 51";
+    "(lag 1) 87"->"(lag 0) 52";
+    "(lag 2) 88"->"(lag 0) 52";
+    "(lag 2) 93"->"(lag 0) 56";
+    "(lag 1) 14"->"(lag 0) 64";
+    "(lag 1) 96"->"(lag 0) 69";
+    "(lag 1) 97"->"(lag 0) 69";
+    "(lag 1) 46"->"(lag 0) 72";
+    "(lag 2) 74"->"(lag 0) 79";
+    "(lag 1) 95"->"(lag 0) 85";
+    "(lag 2) 96"->"(lag 0) 92";
+    "(lag 2) 67"->"(lag 0) 93";
+    "(lag 2) 55"->"(lag 0) 94";
+    "(lag 1) 72"->"(lag 0) 95";
+    "(lag 2) 60"->"(lag 0) 96";
+    "(lag 1) 52"->"(lag 0) 99";
+}
+

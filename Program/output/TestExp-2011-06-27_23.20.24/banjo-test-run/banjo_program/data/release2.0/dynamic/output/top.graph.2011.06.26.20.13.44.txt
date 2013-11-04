@@ -1,0 +1,22 @@
+
+digraph abstract { 
+
+label = "Banjo Version 2.2.0\nHigh scoring network, score: -15935.2861\nProject: banjo dynamic example\nUser: demo\nDataset: 20-vars-2000-temporal-observations"; 
+labeljust="l"; 
+
+
+    7->0;
+    0->2;
+    1->2;
+    2->3;
+    1->4;
+    4->5;
+    3->7;
+    3->8;
+    5->9;
+    6->9;
+    8->10;
+    9->10;
+    10->11;
+}
+
