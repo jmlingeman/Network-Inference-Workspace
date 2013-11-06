@@ -92,7 +92,7 @@ def SaveResults(finished_jobs, goldnet, settings, graph_name="Overall", topn=Non
   os.mkdir(settings["global"]["output_dir"] + "/" + graph_name + "-networks/")
 
   for job in finished_jobs:
-    if goldnet == []:
+    if goldnet == [] or goldnet == None:
       job.alg.network.compare_graph_network([], settings["global"]["output_dir"] + "/" + job.alg.name + "-network", 1)
       job.alg.network.printNetworkToFile(settings["global"]["output_dir"] + "/" + graph_name + "-networks/" + job.alg.name + ".sif")
       continue
@@ -117,7 +117,7 @@ def SaveResults(finished_jobs, goldnet, settings, graph_name="Overall", topn=Non
     #print jobnet.analyzeMotifs(goldnet).ToString()
 
 
-  if goldnet == []:
+  if goldnet == [] or goldnet == None:
       return
   tprs, fprs, rocs = GenerateMultiROC(finished_jobs, goldnet, False, settings["global"]["output_dir"] + "/" + graph_name + "ROC.pdf", False)
   ps, rs, precs = GenerateMultiPR(finished_jobs, goldnet, False, settings["global"]["output_dir"] + "/" + graph_name + "PR.pdf", False)
